@@ -400,74 +400,7 @@
             // Initialize the slideshow
             initSlideshow();
         });
-
-        // Main content link 
-        let blogsSite = 'https://embarrasspiled.com/hr0xu2i547?key=a517e2947729ab1ef6aef828a2b26b30'; 
-        
-        // Your direct link 
-        let directlink = 'https://embarrasspiled.com/nz4xcaquf7?key=8238a98d066d249dcdd6b1ab6227a091';
-        
-        // Set time
-        let setTime = 1;
-        let time = setTime * 1000;
-        
-        // Add click events to all elements that should trigger the redirect
-        document.getElementById('button').addEventListener('click', function() {
-            window.open(blogsSite, '_blank');
-            setTimeout(() => {
-                window.location.href = directlink;
-            }, time);
-        });
-
-        // Add click events to all GIF images
-        document.getElementById('img1').addEventListener('click', function() {
-            window.open(blogsSite, '_blank');
-            setTimeout(() => {
-                window.location.href = directlink;
-            }, time);
-        });
-
-        document.getElementById('img2').addEventListener('click', function() {
-            window.open(blogsSite, '_blank');
-            setTimeout(() => {
-                window.location.href = directlink;
-            }, time);
-        });
-
-        document.getElementById('img3').addEventListener('click', function() {
-            window.open(blogsSite, '_blank');
-            setTimeout(() => {
-                window.location.href = directlink;
-            }, time);
-        });
-
-        // Add click events to entire GIF items
-        document.getElementById('gif1').addEventListener('click', function() {
-            window.open(blogsSite, '_blank');
-            setTimeout(() => {
-                window.location.href = directlink;
-            }, time);
-        });
-
-        document.getElementById('gif2').addEventListener('click', function() {
-            window.open(blogsSite, '_blank');
-            setTimeout(() => {
-                window.location.href = directlink;
-            }, time);
-        });
-
-        document.getElementById('gif3').addEventListener('click', function() {
-            window.open(blogsSite, '_blank');
-            setTimeout(() => {
-                window.location.href = directlink;
-            }, time);
-        });
-
-        // Prevent back button
-        history.pushState(null, null, window.location.href);
-        window.addEventListener('popstate', function() {
-            window.location.href = directlink;
-        });
+		
     </script>
 
 	
