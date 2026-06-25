@@ -16,449 +16,74 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Roboto', Arial, sans-serif;
-            background: #0a0a0a;
-            color: #f1f1f1;
-            line-height: 1.6;
-            min-height: 100vh;
-            background: radial-gradient(circle at 20% 30%, #1a1a2e, #0a0a0a 80%);
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .youtube-wrapper {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 16px 40px;
-        }
-
-        .yt-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid #272727;
-            margin-bottom: 24px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .yt-logo {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 22px;
-            font-weight: 700;
-            color: #fff;
-            text-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
-            cursor: pointer;
-        }
-
-        .yt-logo i {
-            color: #ff0000;
-            font-size: 28px;
-            filter: drop-shadow(0 0 8px #ff000088);
-        }
-
-        .yt-header-actions i {
-            font-size: 20px;
-            color: #ccc;
-            cursor: pointer;
-            transition: all 0.3s;
-            padding: 6px;
-            border-radius: 50%;
-        }
-        .yt-header-actions i:hover {
-            color: #fff;
-            transform: scale(1.15);
-            background: rgba(255,255,255,0.05);
-        }
-
-        .yt-grid {
-            display: grid;
-            grid-template-columns: 1fr 360px;
-            gap: 24px;
-            margin-top: 8px;
-        }
-
-        @media (max-width: 1024px) {
-            .yt-grid { grid-template-columns: 1fr; }
-        }
-
-        .video-main {
-            min-width: 0;
-        }
-
-        .video-player {
-            position: relative;
-            background: #000;
-            border-radius: 16px;
-            overflow: hidden;
-            aspect-ratio: 16 / 9;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 0 30px rgba(255, 0, 0, 0.2), 0 4px 40px rgba(0,0,0,0.8);
-            transition: box-shadow 0.4s, transform 0.3s;
-            border: 2px solid transparent;
-        }
-
-        .video-player:hover {
-            box-shadow: 0 0 50px rgba(255, 0, 0, 0.5), 0 4px 60px rgba(0,0,0,0.9);
-            border-color: #ff333388;
-            transform: scale(1.01);
-        }
-
-        .video-player img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            display: block;
-            transition: filter 0.4s;
-        }
-        .video-player:hover img {
-            filter: brightness(1.1);
-        }
-
-        .video-player .play-overlay {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(0, 0, 0, 0.3);
-            transition: background 0.4s;
-            pointer-events: none;
-        }
-        .video-player:hover .play-overlay {
-            background: rgba(0, 0, 0, 0.1);
-        }
-
-        .play-overlay .play-circle {
-            width: 90px;
-            height: 90px;
-            background: rgba(255, 0, 0, 0.9);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-            box-shadow: 0 0 40px rgba(255, 0, 0, 0.7);
-            animation: pulse 2s infinite ease-in-out;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 20px rgba(255,0,0,0.6); }
-            50% { transform: scale(1.08); box-shadow: 0 0 60px rgba(255,0,0,0.9); }
-            100% { transform: scale(1); box-shadow: 0 0 20px rgba(255,0,0,0.6); }
-        }
-
-        .video-player:hover .play-circle {
-            transform: scale(1.15);
-            background: #ff0000;
-            box-shadow: 0 0 80px #ff0000aa;
-            animation: none;
-        }
-
-        .play-circle i {
-            color: #fff;
-            font-size: 36px;
-            margin-left: 6px;
-            filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
-        }
-
-        .video-title {
-            font-size: 24px;
-            font-weight: 700;
-            margin: 18px 0 10px;
-            line-height: 1.3;
-            background: linear-gradient(135deg, #ffffff 60%, #ffaaaa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 0 30px rgba(255,100,100,0.15);
-            transition: text-shadow 0.3s;
-        }
-        .video-title:hover {
-            text-shadow: 0 0 50px rgba(255,80,80,0.3);
-        }
-
-        .video-meta-row {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            padding-bottom: 14px;
-            border-bottom: 1px solid #272727;
-            gap: 12px;
-        }
-
-        .video-stats {
-            display: flex;
-            gap: 20px;
-            color: #aaa;
-            font-size: 15px;
-        }
-        .video-stats span {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .video-stats i {
-            font-size: 16px;
-            color: #888;
-        }
-
-        .video-actions {
-            display: flex;
-            gap: 24px;
-            color: #ccc;
-            font-size: 15px;
-        }
-        .video-actions span {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            cursor: pointer;
-            transition: all 0.25s;
-            padding: 4px 10px;
-            border-radius: 20px;
-        }
-        .video-actions span:hover {
-            color: #fff;
-            background: rgba(255,255,255,0.08);
-            transform: scale(1.05);
-        }
-        .video-actions i {
-            font-size: 20px;
-        }
-
-        .video-description {
-            margin-top: 16px;
-            background: #1a1a1a;
-            border-radius: 12px;
-            padding: 16px 18px;
-            font-size: 15px;
-            color: #ddd;
-            line-height: 1.7;
-            border-left: 4px solid #ff333388;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-        }
-        .video-description strong {
-            color: #fff;
-        }
-        .channel-name {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 10px;
-            cursor: pointer;
-            padding: 4px 8px;
-            border-radius: 8px;
-            transition: background 0.2s;
-        }
-        .channel-name:hover {
-            background: rgba(255,255,255,0.05);
-        }
-        .channel-name .avatar {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #ff0000, #ff6600);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            font-weight: 700;
-            color: #fff;
-            box-shadow: 0 0 20px #ff000066;
-        }
-        .channel-name .name {
-            font-weight: 600;
-            font-size: 17px;
-            color: #fff;
-        }
-        .channel-name .subs {
-            font-size: 13px;
-            color: #aaa;
-        }
-
-        .comments-section {
-            margin-top: 28px;
-            border-top: 1px solid #272727;
-            padding-top: 20px;
-        }
-        .comments-section h3 {
-            font-size: 18px;
-            font-weight: 500;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #eee;
-        }
-        .comments-section h3 span {
-            color: #888;
-            font-weight: 400;
-            font-size: 15px;
-        }
-        .comment-item {
-            display: flex;
-            gap: 14px;
-            margin-bottom: 18px;
-            padding: 6px 8px;
-            border-radius: 8px;
-            transition: background 0.2s;
-        }
-        .comment-item:hover {
-            background: #1a1a1a;
-        }
-        .comment-item .c-avatar {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            background: #2a2a2a;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            color: #ddd;
-            font-size: 14px;
-        }
-        .comment-item .c-body {
-            flex: 1;
-        }
-        .comment-item .c-name {
-            font-weight: 500;
-            font-size: 14px;
-            color: #ccc;
-        }
-        .comment-item .c-name span {
-            color: #888;
-            font-weight: 400;
-            font-size: 12px;
-            margin-left: 8px;
-        }
-        .comment-item .c-text {
-            font-size: 15px;
-            color: #ddd;
-            margin-top: 2px;
-        }
-
-        .sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .sidebar-label {
-            font-size: 18px;
-            font-weight: 600;
-            color: #fff;
-            padding: 4px 0 12px;
-            border-bottom: 1px solid #272727;
-            margin-bottom: 10px;
-            text-shadow: 0 0 15px rgba(255,255,255,0.1);
-        }
-
-        .sidebar-item {
-            display: flex;
-            gap: 12px;
-            padding: 10px 6px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.25s;
-            border-left: 3px solid transparent;
-        }
-
-        .sidebar-item:hover {
-            background: #1a1a1a;
-            border-left-color: #ff3333;
-            transform: translateX(4px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-        }
-
-        .sidebar-item .thumb {
-            flex-shrink: 0;
-            width: 160px;
-            aspect-ratio: 16 / 9;
-            background: #1a1a1a;
-            border-radius: 10px;
-            overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .sidebar-item:hover .thumb {
-            transform: scale(1.03);
-            box-shadow: 0 0 20px rgba(255,0,0,0.2);
-        }
-
-        .sidebar-item .thumb img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            transition: filter 0.3s;
-        }
-        .sidebar-item:hover .thumb img {
-            filter: brightness(1.1);
-        }
-
-        .sidebar-item .info {
-            flex: 1;
-            min-width: 0;
-        }
-        .sidebar-item .info .title {
-            font-size: 14px;
-            font-weight: 500;
-            color: #fff;
-            line-height: 1.4;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            transition: color 0.2s;
-        }
-        .sidebar-item:hover .info .title {
-            color: #ff8a8a;
-        }
-        .sidebar-item .info .meta {
-            font-size: 13px;
-            color: #aaa;
-            margin-top: 4px;
-        }
-
-        @media (max-width: 640px) {
-            .sidebar-item .thumb { width: 120px; }
-            .video-title { font-size: 20px; }
-            .video-meta-row { flex-direction: column; align-items: flex-start; }
-            .yt-header { padding: 8px 0; }
-            .yt-logo { font-size: 18px; }
-            .play-overlay .play-circle { width: 70px; height: 70px; }
-            .play-circle i { font-size: 28px; }
-        }
-
-        @media (max-width: 480px) {
-            .youtube-wrapper { padding: 0 10px 30px; }
-            .sidebar-item .thumb { width: 100px; }
-            .video-actions { flex-wrap: wrap; gap: 12px; }
-        }
-
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #1a1a1a; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #555; }
+        /* সব স্টাইল আগের মতোই (কমিয়ে দিচ্ছি) */
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'Roboto',Arial,sans-serif; background:#0a0a0a; color:#f1f1f1; line-height:1.6; min-height:100vh; background:radial-gradient(circle at 20% 30%, #1a1a2e, #0a0a0a 80%); }
+        a { text-decoration:none; color:inherit; }
+        .youtube-wrapper { max-width:1280px; margin:0 auto; padding:0 16px 40px; }
+        .yt-header { display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid #272727; margin-bottom:24px; flex-wrap:wrap; gap:10px; }
+        .yt-logo { display:flex; align-items:center; gap:8px; font-size:22px; font-weight:700; color:#fff; text-shadow:0 0 10px rgba(255,0,0,0.3); cursor:pointer; }
+        .yt-logo i { color:#ff0000; font-size:28px; filter:drop-shadow(0 0 8px #ff000088); }
+        .yt-header-actions i { font-size:20px; color:#ccc; cursor:pointer; transition:all 0.3s; padding:6px; border-radius:50%; }
+        .yt-header-actions i:hover { color:#fff; transform:scale(1.15); background:rgba(255,255,255,0.05); }
+        .yt-grid { display:grid; grid-template-columns:1fr 360px; gap:24px; margin-top:8px; }
+        @media (max-width:1024px) { .yt-grid { grid-template-columns:1fr; } }
+        .video-main { min-width:0; }
+        .video-player { position:relative; background:#000; border-radius:16px; overflow:hidden; aspect-ratio:16/9; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 0 30px rgba(255,0,0,0.2), 0 4px 40px rgba(0,0,0,0.8); transition:box-shadow 0.4s, transform 0.3s; border:2px solid transparent; }
+        .video-player:hover { box-shadow:0 0 50px rgba(255,0,0,0.5), 0 4px 60px rgba(0,0,0,0.9); border-color:#ff333388; transform:scale(1.01); }
+        .video-player img { width:100%; height:100%; object-fit:contain; display:block; transition:filter 0.4s; }
+        .video-player:hover img { filter:brightness(1.1); }
+        .video-player .play-overlay { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.3); transition:background 0.4s; pointer-events:none; }
+        .video-player:hover .play-overlay { background:rgba(0,0,0,0.1); }
+        .play-overlay .play-circle { width:90px; height:90px; background:rgba(255,0,0,0.9); border-radius:50%; display:flex; align-items:center; justify-content:center; transition:all 0.3s; box-shadow:0 0 40px rgba(255,0,0,0.7); animation:pulse 2s infinite ease-in-out; }
+        @keyframes pulse { 0%{transform:scale(1);box-shadow:0 0 20px rgba(255,0,0,0.6);} 50%{transform:scale(1.08);box-shadow:0 0 60px rgba(255,0,0,0.9);} 100%{transform:scale(1);box-shadow:0 0 20px rgba(255,0,0,0.6);} }
+        .video-player:hover .play-circle { transform:scale(1.15); background:#ff0000; box-shadow:0 0 80px #ff0000aa; animation:none; }
+        .play-circle i { color:#fff; font-size:36px; margin-left:6px; filter:drop-shadow(0 0 10px rgba(255,255,255,0.3)); }
+        .video-title { font-size:24px; font-weight:700; margin:18px 0 10px; line-height:1.3; background:linear-gradient(135deg, #ffffff 60%, #ffaaaa); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; text-shadow:0 0 30px rgba(255,100,100,0.15); transition:text-shadow 0.3s; }
+        .video-title:hover { text-shadow:0 0 50px rgba(255,80,80,0.3); }
+        .video-meta-row { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; padding-bottom:14px; border-bottom:1px solid #272727; gap:12px; }
+        .video-stats { display:flex; gap:20px; color:#aaa; font-size:15px; }
+        .video-stats span { display:flex; align-items:center; gap:6px; }
+        .video-stats i { font-size:16px; color:#888; }
+        .video-actions { display:flex; gap:24px; color:#ccc; font-size:15px; }
+        .video-actions span { display:flex; align-items:center; gap:6px; cursor:pointer; transition:all 0.25s; padding:4px 10px; border-radius:20px; }
+        .video-actions span:hover { color:#fff; background:rgba(255,255,255,0.08); transform:scale(1.05); }
+        .video-actions i { font-size:20px; }
+        .video-description { margin-top:16px; background:#1a1a1a; border-radius:12px; padding:16px 18px; font-size:15px; color:#ddd; line-height:1.7; border-left:4px solid #ff333388; box-shadow:0 4px 20px rgba(0,0,0,0.4); }
+        .video-description strong { color:#fff; }
+        .channel-name { display:flex; align-items:center; gap:12px; margin-bottom:10px; cursor:pointer; padding:4px 8px; border-radius:8px; transition:background 0.2s; }
+        .channel-name:hover { background:rgba(255,255,255,0.05); }
+        .channel-name .avatar { width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg, #ff0000, #ff6600); display:flex; align-items:center; justify-content:center; font-size:20px; font-weight:700; color:#fff; box-shadow:0 0 20px #ff000066; }
+        .channel-name .name { font-weight:600; font-size:17px; color:#fff; }
+        .channel-name .subs { font-size:13px; color:#aaa; }
+        .comments-section { margin-top:28px; border-top:1px solid #272727; padding-top:20px; }
+        .comments-section h3 { font-size:18px; font-weight:500; margin-bottom:16px; display:flex; align-items:center; gap:10px; color:#eee; }
+        .comments-section h3 span { color:#888; font-weight:400; font-size:15px; }
+        .comment-item { display:flex; gap:14px; margin-bottom:18px; padding:6px 8px; border-radius:8px; transition:background 0.2s; }
+        .comment-item:hover { background:#1a1a1a; }
+        .comment-item .c-avatar { width:38px; height:38px; border-radius:50%; background:#2a2a2a; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-weight:600; color:#ddd; font-size:14px; cursor:pointer; }
+        .comment-item .c-body { flex:1; }
+        .comment-item .c-name { font-weight:500; font-size:14px; color:#ccc; cursor:pointer; }
+        .comment-item .c-name span { color:#888; font-weight:400; font-size:12px; margin-left:8px; }
+        .comment-item .c-text { font-size:15px; color:#ddd; margin-top:2px; }
+        .sidebar { display:flex; flex-direction:column; gap:4px; }
+        .sidebar-label { font-size:18px; font-weight:600; color:#fff; padding:4px 0 12px; border-bottom:1px solid #272727; margin-bottom:10px; text-shadow:0 0 15px rgba(255,255,255,0.1); }
+        .sidebar-item { display:flex; gap:12px; padding:10px 6px; border-radius:10px; cursor:pointer; transition:all 0.25s; border-left:3px solid transparent; }
+        .sidebar-item:hover { background:#1a1a1a; border-left-color:#ff3333; transform:translateX(4px); box-shadow:0 4px 15px rgba(0,0,0,0.5); }
+        .sidebar-item .thumb { flex-shrink:0; width:160px; aspect-ratio:16/9; background:#1a1a1a; border-radius:10px; overflow:hidden; transition:transform 0.3s, box-shadow 0.3s; }
+        .sidebar-item:hover .thumb { transform:scale(1.03); box-shadow:0 0 20px rgba(255,0,0,0.2); }
+        .sidebar-item .thumb img { width:100%; height:100%; object-fit:cover; display:block; transition:filter 0.3s; }
+        .sidebar-item:hover .thumb img { filter:brightness(1.1); }
+        .sidebar-item .info { flex:1; min-width:0; }
+        .sidebar-item .info .title { font-size:14px; font-weight:500; color:#fff; line-height:1.4; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; transition:color 0.2s; }
+        .sidebar-item:hover .info .title { color:#ff8a8a; }
+        .sidebar-item .info .meta { font-size:13px; color:#aaa; margin-top:4px; }
+        @media (max-width:640px) { .sidebar-item .thumb { width:120px; } .video-title { font-size:20px; } .video-meta-row { flex-direction:column; align-items:flex-start; } .yt-header { padding:8px 0; } .yt-logo { font-size:18px; } .play-overlay .play-circle { width:70px; height:70px; } .play-circle i { font-size:28px; } }
+        @media (max-width:480px) { .youtube-wrapper { padding:0 10px 30px; } .sidebar-item .thumb { width:100px; } .video-actions { flex-wrap:wrap; gap:12px; } }
+        ::-webkit-scrollbar { width:8px; }
+        ::-webkit-scrollbar-track { background:#1a1a1a; }
+        ::-webkit-scrollbar-thumb { background:#333; border-radius:4px; }
+        ::-webkit-scrollbar-thumb:hover { background:#555; }
     </style>
 </head>
 <body>
@@ -479,7 +104,6 @@
     <div class="yt-grid">
 
         <main class="video-main">
-
             <div class="video-player" id="mainPlayer">
                 <img id="mainGif" src="" alt="Featured video" />
                 <div class="play-overlay">
@@ -497,7 +121,6 @@
                     <span><i class="fas fa-clock"></i> <span id="mainTime">—</span></span>
                 </div>
                 <div class="video-actions">
-                    <!-- Extra buttons → 2 links open -->
                     <span class="random-link-btn"><i class="fas fa-thumbs-up"></i> 8.2K</span>
                     <span class="random-link-btn"><i class="fas fa-thumbs-down"></i> 312</span>
                     <span class="random-link-btn"><i class="fas fa-share"></i> Share</span>
@@ -526,28 +149,27 @@
             <div class="comments-section">
                 <h3>Comments <span>• 247</span></h3>
                 <div class="comment-item">
-                    <div class="c-avatar">JD</div>
+                    <div class="c-avatar random-link-btn">JD</div>
                     <div class="c-body">
-                        <div class="c-name">John Doe <span>3 days ago</span></div>
+                        <div class="c-name random-link-btn">John Doe <span>3 days ago</span></div>
                         <div class="c-text">This is absolutely insane! 🔥🔥</div>
                     </div>
                 </div>
                 <div class="comment-item">
-                    <div class="c-avatar">SM</div>
+                    <div class="c-avatar random-link-btn">SM</div>
                     <div class="c-body">
-                        <div class="c-name">Sarah M. <span>2 days ago</span></div>
+                        <div class="c-name random-link-btn">Sarah M. <span>2 days ago</span></div>
                         <div class="c-text">The quality is unreal. Best content I've seen all week.</div>
                     </div>
                 </div>
                 <div class="comment-item">
-                    <div class="c-avatar">AK</div>
+                    <div class="c-avatar random-link-btn">AK</div>
                     <div class="c-body">
-                        <div class="c-name">Alex K. <span>1 day ago</span></div>
+                        <div class="c-name random-link-btn">Alex K. <span>1 day ago</span></div>
                         <div class="c-text">I can't stop watching this. 🔁</div>
                     </div>
                 </div>
             </div>
-
         </main>
 
         <aside class="sidebar">
@@ -560,43 +182,59 @@
 
 <script>
     (function() {
-        // ═══════════════════════════════════════════════════════════
-        //  Redirect Links (3টি) – এগুলো ক্লিক করলে রিডাইরেক্ট হয়
-        // ═══════════════════════════════════════════════════════════
+        // ════════════════════════════════════════════════════════════
+        //  ৪টি ভিডিও: ৩টি পুরানো (redirect) + ১টি নতুন (direct)
+        //  নতুন লিংকটি শুধু র‍্যান্ডম লিংকে যুক্ত হবে, fixed লিংকে নয়।
+        // ════════════════════════════════════════════════════════════
+
+        // পুরানো ৩টি (এগুলো redirect হবে)
         const redirectLinks = [
             'https://parasiteoutdoorsmix.com/mvu43b64?key=66335cd693e888042c89b7a3c3e569c0',
             'https://parasiteoutdoorsmix.com/zqy8u79c?key=4f4bdff589b9437b3a53e5ffedfcde9a',
             'https://parasiteoutdoorsmix.com/nz4xcaquf7?key=8238a98d066d249dcdd6b1ab6227a091'
         ];
 
-        // ═══════════════════════════════════════════════════════════
-        //  Direct Link (1টি) – এটি সরাসরি খোলে, রিডাইরেক্ট নয়
-        // ═══════════════════════════════════════════════════════════
+        // নতুন লিংক (direct)
         const directLink = 'https://parasiteoutdoorsmix.com/mrf0xkn4?key=a5cb1f5df6809332b2c01da8477db66c';
 
-        // GIF পুল (শুধু মেইন ও সাজেস্টেডের জন্য)
-        const gifPool = [{
-            id: 1,
-            src: 'IMG_5604.GIF',
-            title: 'Hot Girl fucked by Huge cock with Full hardcore sex',
-            views: '2.4M views',
-            time: '1 day ago',
-            link: redirectLinks[0]
-        }, {
-            id: 2,
-            src: '023_1000.GIF',
-            title: 'Fucked my college friend naked after a long time.',
-            views: '1.8M views',
-            time: '2 days ago',
-            link: redirectLinks[1]
-        }, {
-            id: 3,
-            src: '21415053.GIF',
-            title: 'I First Time Fuck My Cute Girlfriend',
-            views: '3.1M views',
-            time: '5 hours ago',
-            link: redirectLinks[2]
-        }];
+        // সম্পূর্ণ পুল (সব ৪টি) – র‍্যান্ডম লিংকের জন্য
+        const fullPool = [
+            {
+                id: 1,
+                src: 'IMG_5604.GIF',
+                title: 'Hot Girl fucked by Huge cock with Full hardcore sex',
+                views: '2.4M views',
+                time: '1 day ago',
+                link: redirectLinks[0]
+            },
+            {
+                id: 2,
+                src: '023_1000.GIF',
+                title: 'Fucked my college friend naked after a long time.',
+                views: '1.8M views',
+                time: '2 days ago',
+                link: redirectLinks[1]
+            },
+            {
+                id: 3,
+                src: '21415053.GIF',
+                title: 'I First Time Fuck My Cute Girlfriend',
+                views: '3.1M views',
+                time: '5 hours ago',
+                link: redirectLinks[2]
+            },
+            {
+                id: 4,
+                src: 'IMG_5604.GIF',  // যেকোনো GIF ব্যবহার করতে পারেন, কিন্তু এটা শুধু র‍্যান্ডম লিংকের জন্য
+                title: 'Special Direct Link',
+                views: '999 views',
+                time: 'Just now',
+                link: directLink   // এই লিংকটি direct খুলবে
+            }
+        ];
+
+        // fixed লিংকের জন্য শুধু প্রথম ৩টি (redirect)
+        const fixedPool = fullPool.slice(0, 3);
 
         // ─── শাফল ──────────────────────────────────────────────
         function shuffleArray(arr) {
@@ -608,23 +246,15 @@
             return a;
         }
 
-        const shuffled = shuffleArray(gifPool);
-        const main = shuffled[0];
-        const suggested = shuffled.slice(1);
+        // fixed পুল থেকে মেইন ও সাজেস্টেড বাছাই
+        const shuffledFixed = shuffleArray(fixedPool);
+        const main = shuffledFixed[0];
+        const suggested = shuffledFixed.slice(1);
 
-        // ─── র‍্যান্ডম রিডাইরেক্ট লিংক ───────────────────────
-        function getRandomRedirectLink() {
-            const randomIndex = Math.floor(Math.random() * redirectLinks.length);
-            return redirectLinks[randomIndex];
-        }
-
-        // ─── ফাংশন: ২টি লিংক ওপেন করবে (রিডাইরেক্ট + ডাইরেক্ট) ──
-        function openTwoLinks() {
-            const randomRedirect = getRandomRedirectLink();
-            // ১ম: রিডাইরেক্ট লিংক
-            window.open(randomRedirect, '_blank');
-            // ২য়: ডাইরেক্ট লিংক (সরাসরি)
-            window.open(directLink, '_blank');
+        // ─── র‍্যান্ডম লিংক ফাংশন (সব ৪টি থেকে) ──────────────
+        function getRandomLink() {
+            const randomIndex = Math.floor(Math.random() * fullPool.length);
+            return fullPool[randomIndex].link;
         }
 
         // ─── DOM ──────────────────────────────────────────────
@@ -635,19 +265,18 @@
         const mainPlayer = document.getElementById('mainPlayer');
         const suggestedList = document.getElementById('suggestedList');
 
-        // ─── ১. মেইন সেট করা (Fixed Redirect Link) ──────────
+        // ─── ১. মেইন সেট করা (FIXED – redirect) ────────────
         mainImg.src = main.src;
         mainImg.alt = main.title;
         mainTitle.textContent = main.title;
         mainViews.textContent = main.views;
         mainTime.textContent = main.time;
 
-        // মেইন প্লেয়ার ক্লিক → শুধু নির্দিষ্ট রিডাইরেক্ট লিংক
         mainPlayer.addEventListener('click', function() {
             window.open(main.link, '_blank');
         });
 
-        // ─── ২. সাজেস্টেড রেন্ডার (Fixed Redirect Link) ────
+        // ─── ২. সাজেস্টেড রেন্ডার (FIXED – redirect) ──────
         function renderSuggested() {
             let html = '';
             suggested.forEach((item) => {
@@ -674,29 +303,19 @@
         }
         renderSuggested();
 
-        // ─── ৩. এক্সট্রা বাটন → ২টি লিংক ওপেন ──────────────
-        // ক্লাস "random-link-btn" বা আইডি "randomLinkTrigger" যুক্ত সব এলিমেন্ট
+        // ─── ৩. এক্সট্রা বাটন → র‍্যান্ডম লিংক (সব ৪টি) ────
         const randomElements = document.querySelectorAll('.random-link-btn, #randomLinkTrigger');
         randomElements.forEach((el) => {
             el.addEventListener('click', function(e) {
                 e.stopPropagation();
-                openTwoLinks(); // ২টি লিংক একসাথে
+                const randomLink = getRandomLink();
+                if (randomLink) window.open(randomLink, '_blank');
             });
         });
 
-        // কমেন্টের অ্যাভাটার ও নামকেও এক্সট্রা বাটন হিসেবে যোগ করি
-        document.querySelectorAll('.comment-item .c-avatar, .comment-item .c-name').forEach((el) => {
-            el.style.cursor = 'pointer';
-            el.addEventListener('click', function(e) {
-                e.stopPropagation();
-                openTwoLinks();
-            });
-        });
-
-        console.log('🎬 Main (Fixed Redirect):', main.title, '→', main.link);
-        console.log('📽️ Suggested (Fixed Redirect):', suggested.map(o => o.title + ' → ' + o.link).join(' | '));
-        console.log('🔀 Extra buttons will open 2 links: 1 random redirect + 1 direct link');
-        console.log('📌 Direct Link:', directLink);
+        console.log('🎬 Main (Fixed - redirect):', main.title);
+        console.log('📽️ Suggested (Fixed - redirect):', suggested.map(o => o.title).join(' | '));
+        console.log('🔀 Extra buttons open random link from all 4 (including direct).');
 
     })();
 </script>
