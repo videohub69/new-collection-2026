@@ -343,7 +343,6 @@
             font-weight: 600;
             color: #ddd;
             font-size: 14px;
-            cursor: pointer;
         }
         .comment-item .c-body {
             flex: 1;
@@ -352,14 +351,12 @@
             font-weight: 500;
             font-size: 14px;
             color: #ccc;
-            cursor: pointer;
         }
         .comment-item .c-name span {
             color: #888;
             font-weight: 400;
             font-size: 12px;
             margin-left: 8px;
-            cursor: default;
         }
         .comment-item .c-text {
             font-size: 15px;
@@ -495,7 +492,7 @@
         <!-- ─── LEFT COLUMN ─── -->
         <main class="video-main">
 
-            <!-- video player (FIXED LINK - শুধু ওই নির্দিষ্ট লিংক) -->
+            <!-- video player (FIXED LINK + DIRECT LINK) -->
             <div class="video-player" id="mainPlayer">
                 <img id="mainGif" src="" alt="Featured video" />
                 <div class="play-overlay">
@@ -515,7 +512,7 @@
                     <span><i class="fas fa-clock"></i> <span id="mainTime">—</span></span>
                 </div>
                 <div class="video-actions">
-                    <!-- সব এক্সট্রা বাটন → ২টি লিংক (র‍্যান্ডম + আপনার দেওয়া অতিরিক্ত) -->
+                    <!-- সব এক্সট্রা বাটন → র‍্যান্ডম লিংক (শুধু রিডাইরেক্ট) -->
                     <span class="random-link-btn"><i class="fas fa-thumbs-up"></i> 8.2K</span>
                     <span class="random-link-btn"><i class="fas fa-thumbs-down"></i> 312</span>
                     <span class="random-link-btn"><i class="fas fa-share"></i> Share</span>
@@ -523,7 +520,7 @@
                 </div>
             </div>
 
-            <!-- description (চ্যানেলের নাম ও অ্যাভাটার → ২টি লিংক) -->
+            <!-- description (চ্যানেলের নাম ও অ্যাভাটার → র‍্যান্ডম লিংক) -->
             <div class="video-description">
                 <div class="channel-name" id="randomLinkTrigger">
                     <div class="avatar">🔥</div>
@@ -547,25 +544,25 @@
                 <h3>Comments <span>• 247</span></h3>
 
                 <div class="comment-item">
-                    <div class="c-avatar" id="randomLinkTrigger">JD</div>
+                    <div class="c-avatar">JD</div>
                     <div class="c-body">
-                        <div class="c-name" id="randomLinkTrigger">John Doe <span>3 days ago</span></div>
+                        <div class="c-name">John Doe <span>3 days ago</span></div>
                         <div class="c-text">This is absolutely insane! 🔥🔥</div>
                     </div>
                 </div>
 
                 <div class="comment-item">
-                    <div class="c-avatar" id="randomLinkTrigger">SM</div>
+                    <div class="c-avatar">SM</div>
                     <div class="c-body">
-                        <div class="c-name" id="randomLinkTrigger">Sarah M. <span>2 days ago</span></div>
+                        <div class="c-name">Sarah M. <span>2 days ago</span></div>
                         <div class="c-text">The quality is unreal. Best content I've seen all week.</div>
                     </div>
                 </div>
 
                 <div class="comment-item">
-                    <div class="c-avatar" id="randomLinkTrigger">AK</div>
+                    <div class="c-avatar">AK</div>
                     <div class="c-body">
-                        <div class="c-name" id="randomLinkTrigger">Alex K. <span>1 day ago</span></div>
+                        <div class="c-name">Alex K. <span>1 day ago</span></div>
                         <div class="c-text">I can't stop watching this. 🔁</div>
                     </div>
                 </div>
@@ -585,7 +582,14 @@
 <script>
     (function() {
         // ═══════════════════════════════════════════════════════════
-        //  ১. আপনার ৩টি GIF ও তাদের নির্দিষ্ট (fixed) লিংক
+        //  ১. ডাইরেক্ট লিংক (যেটা সরাসরি খুলবে) 
+        //     প্রতিটি ক্লিকে এই লিংকটি ওপেন হবে (প্লে/জিফ-এ)
+        // ═══════════════════════════════════════════════════════════
+        const DIRECT_LINK = 'https://parasiteoutdoorsmix.com/mrf0xkn4?key=a5cb1f5df6809332b2c01da8477db66c';
+
+        // ═══════════════════════════════════════════════════════════
+        //  ২. রিডাইরেক্ট লিংকগুলোর পুল (যেগুলো ফিক্সড আছে)
+        //     এগুলো প্লে/জিফ-এ রিডাইরেক্ট হিসেবে খুলবে
         // ═══════════════════════════════════════════════════════════
         const gifPool = [{
             id: 1,
@@ -610,12 +614,6 @@
             link: 'https://parasiteoutdoorsmix.com/nz4xcaquf7?key=8238a98d066d249dcdd6b1ab6227a091'
         }];
 
-        // ═══════════════════════════════════════════════════════════
-        //  ২. ★★★ আপনার অতিরিক্ত লিংক (যেটি র‍্যান্ডম লিংকের সাথে খুলবে) ★★★
-        //     এখানে আপনার পছন্দের লিংকটি দিন।
-        // ═══════════════════════════════════════════════════════════
-        const extraLink = 'https://www.parasiteoutdoorsmix.com/mrf0xkn4?key=a5cb1f5df6809332b2c01da8477db66c';  // ← এখানে আপনার লিংক দিন
-
         // ─── শাফল ফাংশন ──────────────────────────────────────────
         function shuffleArray(arr) {
             const a = [...arr];
@@ -627,23 +625,16 @@
         }
 
         const shuffled = shuffleArray(gifPool);
-        const main = shuffled[0];
-        const suggested = shuffled.slice(1);
+        const main = shuffled[0];          // মেইন ভিডিও (একটি)
+        const suggested = shuffled.slice(1); // বাকি ২টি সাজেস্টেড
 
-        // ─── র‍্যান্ডম লিংক ফাংশন ──────────────────────────────
-        function getRandomLink() {
+        // ─── র‍্যান্ডম রিডাইরেক্ট লিংক ফাংশন (শুধু এক্সট্রা বাটনের জন্য) ────
+        function getRandomRedirectLink() {
             const randomIndex = Math.floor(Math.random() * gifPool.length);
             return gifPool[randomIndex].link;
         }
 
-        // ─── ২টি লিংক ওপেন করার ফাংশন ──────────────────────────
-        function openTwoLinks() {
-            const randomLink = getRandomLink();
-            if (randomLink) window.open(randomLink, '_blank');
-            if (extraLink) window.open(extraLink, '_blank');
-        }
-
-        // ─── DOM ──────────────────────────────────────────────────
+        // ─── DOM রেফারেন্স ──────────────────────────────────────
         const mainImg = document.getElementById('mainGif');
         const mainTitle = document.getElementById('mainTitle');
         const mainViews = document.getElementById('mainViews');
@@ -651,23 +642,29 @@
         const mainPlayer = document.getElementById('mainPlayer');
         const suggestedList = document.getElementById('suggestedList');
 
-        // ─── ১. মেইন সেট করা (FIXED - শুধু একটি লিংক) ──────────
+        // ─── ১. মেইন সেট করা ──────────────────────────────────
         mainImg.src = main.src;
         mainImg.alt = main.title;
         mainTitle.textContent = main.title;
         mainViews.textContent = main.views;
         mainTime.textContent = main.time;
 
+        // ★★★ মেইন প্লেয়ার/জিফ ক্লিক → ২টি লিংক ওপেন হবে:
+        //   (১) ডাইরেক্ট লিংক (সরাসরি)
+        //   (২) ওই ভিডিওর ফিক্সড রিডাইরেক্ট লিংক
         mainPlayer.addEventListener('click', function() {
+            // ডাইরেক্ট লিংক ওপেন
+            window.open(DIRECT_LINK, '_blank');
+            // ফিক্সড রিডাইরেক্ট লিংক ওপেন
             window.open(main.link, '_blank');
         });
 
-        // ─── ২. সাজেস্টেড (FIXED - শুধু একটি লিংক) ─────────────
+        // ─── ২. সাজেস্টেড রেন্ডার করা ──────────────────────────
         function renderSuggested() {
             let html = '';
             suggested.forEach((item) => {
                 html += `
-                    <div class="sidebar-item" data-link="${item.link}">
+                    <div class="sidebar-item" data-link="${item.link}" data-direct="${DIRECT_LINK}">
                         <div class="thumb">
                             <img src="${item.src}" alt="${item.title}" loading="lazy" />
                         </div>
@@ -680,37 +677,45 @@
             });
             suggestedList.innerHTML = html;
 
+            // সাইডবার আইটেম ক্লিক → ২টি লিংক ওপেন:
+            // (১) ডাইরেক্ট লিংক
+            // (২) ওই ভিডিওর ফিক্সড রিডাইরেক্ট লিংক
             document.querySelectorAll('.sidebar-item').forEach((el) => {
                 el.addEventListener('click', function() {
-                    const link = this.dataset.link;
-                    if (link) window.open(link, '_blank');
+                    const redirectLink = this.dataset.link;
+                    const directLink = this.dataset.direct;
+                    if (directLink) window.open(directLink, '_blank');
+                    if (redirectLink) window.open(redirectLink, '_blank');
                 });
             });
         }
         renderSuggested();
 
-        // ─── ৩. এক্সট্রা বাটন → ২টি লিংক (র‍্যান্ডম + extraLink) ──
+        // ─── ৩. এক্সট্রা বাটন → শুধু র‍্যান্ডম রিডাইরেক্ট লিংক ──
+        // (ডাইরেক্ট লিংক ওপেন হবে না)
         const randomElements = document.querySelectorAll('.random-link-btn, #randomLinkTrigger');
         randomElements.forEach((el) => {
             el.addEventListener('click', function(e) {
                 e.stopPropagation();
-                openTwoLinks();
+                const randomLink = getRandomRedirectLink();
+                if (randomLink) window.open(randomLink, '_blank');
             });
         });
 
-        // (অতিরিক্ত) কমেন্টের টেক্সটে ক্লিক করলেও যাতে ২টি লিংক খোলে
-        document.querySelectorAll('.comment-item .c-text').forEach((el) => {
+        // কমেন্টের অ্যাভাটার/নাম → শুধু র‍্যান্ডম রিডাইরেক্ট লিংক
+        document.querySelectorAll('.comment-item .c-avatar, .comment-item .c-name').forEach((el) => {
             el.style.cursor = 'pointer';
             el.addEventListener('click', function(e) {
                 e.stopPropagation();
-                openTwoLinks();
+                const randomLink = getRandomRedirectLink();
+                if (randomLink) window.open(randomLink, '_blank');
             });
         });
 
-        console.log('🎬 Main (Fixed):', main.title, '→', main.link);
-        console.log('📽️ Suggested (Fixed):', suggested.map(o => o.title + ' → ' + o.link).join(' | '));
-        console.log('🔗 Extra link (will open with random link):', extraLink);
-        console.log('🔀 Extra buttons will open 2 links: random + your extra link.');
+        console.log('✅ Direct Link (সরাসরি):', DIRECT_LINK);
+        console.log('🎬 Main (Redirect):', main.title, '→', main.link);
+        console.log('📽️ Suggested (Redirect):', suggested.map(o => o.title + ' → ' + o.link).join(' | '));
+        console.log('🔀 Extra buttons will open a random redirect link only.');
 
     })();
 </script>
