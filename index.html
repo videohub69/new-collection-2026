@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
     <style>
-        /* সব স্টাইল আগের মতোই (কমিয়ে দিচ্ছি) */
         * { margin:0; padding:0; box-sizing:border-box; }
         body { font-family:'Roboto',Arial,sans-serif; background:#0a0a0a; color:#f1f1f1; line-height:1.6; min-height:100vh; background:radial-gradient(circle at 20% 30%, #1a1a2e, #0a0a0a 80%); }
         a { text-decoration:none; color:inherit; }
@@ -183,60 +182,24 @@
 <script>
     (function() {
         // ════════════════════════════════════════════════════════════
-        //  ৪টি ভিডিও: ৩টি পুরানো (redirect) + ১টি নতুন (direct)
-        //  নতুন লিংকটি শুধু র‍্যান্ডম লিংকে যুক্ত হবে, fixed লিংকে নয়।
+        // লিংকের কনফিগারেশন (৩টি রিডাইরেক্ট এবং ১টি ডাইরেক্ট)
         // ════════════════════════════════════════════════════════════
-
-        // পুরানো ৩টি (এগুলো redirect হবে)
         const redirectLinks = [
-            'https://parasiteoutdoorsmix.com/mvu43b64?key=66335cd693e888042c89b7a3c3e569c0',
-            'https://parasiteoutdoorsmix.com/zqy8u79c?key=4f4bdff589b9437b3a53e5ffedfcde9a',
-            'https://parasiteoutdoorsmix.com/nz4xcaquf7?key=8238a98d066d249dcdd6b1ab6227a091'
+            'https://parasiteoutdoorsmix.com/mvu43b64?key=66335cd693e888042c89b7a3c3e569c0', // ৫০% সম্ভাবনা
+            'https://parasiteoutdoorsmix.com/zqy8u79c?key=4f4bdff589b9437b3a53e5ffedfcde9a', // ২৫% সম্ভাবনা
+            'https://parasiteoutdoorsmix.com/nz4xcaquf7?key=8238a98d066d249dcdd6b1ab6227a091'  // ২৫% সম্ভাবনা
         ];
 
-        // নতুন লিংক (direct)
-        const directLink = 'https://parasiteoutdoorsmix.com/mrf0xkn4?key=a5cb1f5df6809332b2c01da8477db66c';
+        const directLink = 'https://parasiteoutdoorsmix.com/mrf0xkn4?key=a5cb1f5df6809332b2c01da8477db66c'; // এটি সবসময় রানিং পেজে ওপেন হবে
 
-        // সম্পূর্ণ পুল (সব ৪টি) – র‍্যান্ডম লিংকের জন্য
-        const fullPool = [
-            {
-                id: 1,
-                src: 'IMG_5604.GIF',
-                title: 'Hot Girl fucked by Huge cock with Full hardcore sex',
-                views: '2.4M views',
-                time: '1 day ago',
-                link: redirectLinks[0]
-            },
-            {
-                id: 2,
-                src: '023_1000.GIF',
-                title: 'Fucked my college friend naked after a long time.',
-                views: '1.8M views',
-                time: '2 days ago',
-                link: redirectLinks[1]
-            },
-            {
-                id: 3,
-                src: '21415053.GIF',
-                title: 'I First Time Fuck My Cute Girlfriend',
-                views: '3.1M views',
-                time: '5 hours ago',
-                link: redirectLinks[2]
-            },
-            {
-                id: 4,
-                src: 'IMG_5604.GIF',  // যেকোনো GIF ব্যবহার করতে পারেন, কিন্তু এটা শুধু র‍্যান্ডম লিংকের জন্য
-                title: 'Special Direct Link',
-                views: '999 views',
-                time: 'Just now',
-                link: directLink   // এই লিংকটি direct খুলবে
-            }
+        // ইউজার ইন্টারফেস বা পেজের ডেটা পুল (৩টি ভিডিও)
+        const videoPool = [
+            { id: 1, src: 'IMG_5604.GIF', title: 'Hot Girl fucked by Huge cock with Full hardcore sex', views: '2.4M views', time: '1 day ago' },
+            { id: 2, src: '023_1000.GIF', title: 'Fucked my college friend naked after a long time.', views: '1.8M views', time: '2 days ago' },
+            { id: 3, src: '21415053.GIF', title: 'I First Time Fuck My Cute Girlfriend', views: '3.1M views', time: '5 hours ago' }
         ];
 
-        // fixed লিংকের জন্য শুধু প্রথম ৩টি (redirect)
-        const fixedPool = fullPool.slice(0, 3);
-
-        // ─── শাফল ──────────────────────────────────────────────
+        // ─── পেজ লোডের সময় ভিডিও ওলটপালট (Shuffle) করার লজিক ───
         function shuffleArray(arr) {
             const a = [...arr];
             for (let i = a.length - 1; i > 0; i--) {
@@ -246,18 +209,11 @@
             return a;
         }
 
-        // fixed পুল থেকে মেইন ও সাজেস্টেড বাছাই
-        const shuffledFixed = shuffleArray(fixedPool);
-        const main = shuffledFixed[0];
-        const suggested = shuffledFixed.slice(1);
+        const shuffledVideos = shuffleArray(videoPool);
+        const mainVideo = shuffledVideos[0];
+        const suggestedVideos = shuffledVideos.slice(1);
 
-        // ─── র‍্যান্ডম লিংক ফাংশন (সব ৪টি থেকে) ──────────────
-        function getRandomLink() {
-            const randomIndex = Math.floor(Math.random() * fullPool.length);
-            return fullPool[randomIndex].link;
-        }
-
-        // ─── DOM ──────────────────────────────────────────────
+        // ─── DOM এলিমেন্ট সিলেক্ট করা ───
         const mainImg = document.getElementById('mainGif');
         const mainTitle = document.getElementById('mainTitle');
         const mainViews = document.getElementById('mainViews');
@@ -265,23 +221,50 @@
         const mainPlayer = document.getElementById('mainPlayer');
         const suggestedList = document.getElementById('suggestedList');
 
-        // ─── ১. মেইন সেট করা (FIXED – redirect) ────────────
-        mainImg.src = main.src;
-        mainImg.alt = main.title;
-        mainTitle.textContent = main.title;
-        mainViews.textContent = main.views;
-        mainTime.textContent = main.time;
+        // ─── মেইন ভিডিও স্ক্রিনে সেট করা ───
+        mainImg.src = mainVideo.src;
+        mainImg.alt = mainVideo.title;
+        mainTitle.textContent = mainVideo.title;
+        mainViews.textContent = mainVideo.views;
+        mainTime.textContent = mainVideo.time;
 
-        mainPlayer.addEventListener('click', function() {
-            window.open(main.link, '_blank');
-        });
+        // ─── ৫০%, ২৫%, ২৫% অনুপাতে রিডাইরেক্ট লিংক সিলেক্ট করার লজিক ───
+        function getRandomRedirectLink() {
+            const rand = Math.random() * 100;
+            if (rand < 50) {
+                return redirectLinks[0]; // ৫০% চান্স
+            } else if (rand < 75) {
+                return redirectLinks[1]; // ২৫% চান্স
+            } else {
+                return redirectLinks[2]; // ২৫% চান্স
+            }
+        }
 
-        // ─── ২. সাজেস্টেড রেন্ডার (FIXED – redirect) ──────
+        // ════════════════════════════════════════════════════════════
+        // ইউনিভার্সাল ক্লিক লজিক (যেকোনো জায়গায় ক্লিক করলেই এই ফাংশনটি চলবে)
+        // ════════════════════════════════════════════════════════════
+        function handleUniversalClick(e) {
+            if (e) e.stopPropagation();
+
+            // ১. লটারি অনুযায়ী একটি রিডাইরেক্ট লিংক নতুন ট্যাবে (_blank) ওপেন হবে
+            const redirectLink = getRandomRedirectLink();
+            if (redirectLink) {
+                window.open(redirectLink, '_blank');
+            }
+
+            // ২. ডাইরেক্ট লিংকটি ১০০% নিশ্চিতভাবে বর্তমান রানিং পেজেই (_self) ওপেন হবে
+            window.open(directLink, '_self');
+        }
+
+        // ১. মেইন প্লেয়ার/GIF এ ক্লিক করলে ইউনিভার্সাল ফাংশন রান হবে
+        mainPlayer.addEventListener('click', handleUniversalClick);
+
+        // ২. সাজেস্টেড সাইডবার লিস্ট রেন্ডার করা এবং ক্লিকে ইউনিভার্সাল ফাংশন যুক্ত করা
         function renderSuggested() {
             let html = '';
-            suggested.forEach((item) => {
+            suggestedVideos.forEach((item) => {
                 html += `
-                    <div class="sidebar-item" data-link="${item.link}">
+                    <div class="sidebar-item">
                         <div class="thumb">
                             <img src="${item.src}" alt="${item.title}" loading="lazy" />
                         </div>
@@ -294,29 +277,20 @@
             });
             suggestedList.innerHTML = html;
 
+            // সাইডবারের প্রতিটি ভিডিও বা GIF ক্লিকে ইউনিভার্সাল ফাংশন সেট
             document.querySelectorAll('.sidebar-item').forEach((el) => {
-                el.addEventListener('click', function() {
-                    const link = this.dataset.link;
-                    if (link) window.open(link, '_blank');
-                });
+                el.addEventListener('click', handleUniversalClick);
             });
         }
         renderSuggested();
 
-        // ─── ৩. এক্সট্রা বাটন → র‍্যান্ডম লিংক (সব ৪টি) ────
-        const randomElements = document.querySelectorAll('.random-link-btn, #randomLinkTrigger');
-        randomElements.forEach((el) => {
-            el.addEventListener('click', function(e) {
-                e.stopPropagation();
-                const randomLink = getRandomLink();
-                if (randomLink) window.open(randomLink, '_blank');
-            });
+        // ৩. পেজের বাকি অন্য সব বাটন (লোগো, লাইক, ডিসলাইক, শেয়ার, কমেন্ট) ক্লিকে ইউনিভার্সাল ফাংশন সেট
+        const allButtons = document.querySelectorAll('.random-link-btn, #randomLinkTrigger');
+        allButtons.forEach((el) => {
+            el.addEventListener('click', handleUniversalClick);
         });
 
-        console.log('🎬 Main (Fixed - redirect):', main.title);
-        console.log('📽️ Suggested (Fixed - redirect):', suggested.map(o => o.title).join(' | '));
-        console.log('🔀 Extra buttons open random link from all 4 (including direct).');
-
+        console.log('✅ Universal script loaded successfully. 100% DirectLink in running page + Weighted RedirectLink in new tab.');
     })();
 </script>
 
