@@ -34,13 +34,13 @@
             cursor: pointer;
         }
 
-        /* 18+ Pop-up with Backdrop Blur Effect */
+        /* 18+ Pop-up with Lower Darkness & Blur for Higher Temptation */
         #ageVerification {
             position: fixed;
             inset: 0;
-            background: rgba(8, 8, 10, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: rgba(8, 8, 10, 0.55); /* ডার্কনেস ০.৮৫ থেকে কমিয়ে ০.৫৫ করা হয়েছে */
+            backdrop-filter: blur(5px); /* ব্লার ১২px থেকে কমিয়ে ৫px করা হয়েছে যেন কন্টেন্ট স্পষ্ট বুঝা যায় */
+            -webkit-backdrop-filter: blur(5px);
             z-index: 9999;
             display: flex;
             align-items: center;
@@ -48,18 +48,18 @@
             padding: 20px;
         }
         .popup-box {
-            background: #1f1f23;
-            border: 1px solid rgba(255, 51, 51, 0.3);
+            background: rgba(31, 31, 35, 0.95); /* পপআপ বক্সকে হালকা ট্রান্সপারেন্ট করা হয়েছে */
+            border: 1px solid rgba(255, 51, 51, 0.4);
             border-radius: 20px;
             padding: 40px 30px;
             max-width: 440px;
             width: 100%;
             text-align: center;
-            box-shadow: 0 15px 50px rgba(255, 0, 0, 0.2);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 0, 0, 0.2);
         }
         .popup-box i { font-size: 60px; color: #ff3333; margin-bottom: 20px; filter: drop-shadow(0 0 15px rgba(255,0,0,0.5)); }
         .popup-box h2 { font-size: 24px; margin-bottom: 12px; color: #fff; font-weight: 700; }
-        .popup-box p { color: #aaa; font-size: 14px; margin-bottom: 30px; line-height: 1.6; }
+        .popup-box p { color: #eee; font-size: 14px; margin-bottom: 30px; line-height: 1.6; font-weight: 500; }
         .popup-btns { display: flex; gap: 15px; justify-content: center; }
         .popup-btn {
             padding: 14px 30px;
@@ -87,7 +87,6 @@
         .yt-grid { display:grid; grid-template-columns:1fr 380px; gap:24px; }
         @media (max-width:1024px) { .yt-grid { grid-template-columns:1fr; gap: 16px; } }
         
-        /* High Quality Video Player with Fake Controls */
         .video-player { 
             position:relative; background:#000; border-radius:12px; overflow:hidden; aspect-ratio:16/9; 
             display:flex; align-items:center; justify-content:center; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
@@ -103,7 +102,6 @@
         @keyframes pulse { 0% { transform: scale(1); box-shadow: 0 0 15px rgba(255,0,0,0.5); } 50% { transform: scale(1.06); box-shadow: 0 0 35px rgba(255,0,0,0.8); } 100% { transform: scale(1); box-shadow: 0 0 15px rgba(255,0,0,0.5); } }
         .play-circle i { color:#fff; font-size:28px; margin-left:4px; }
         
-        /* Fake Video Controls Bar */
         .fake-controls {
             position: absolute; bottom: 0; left: 0; width: 100%; height: 40px;
             background: linear-gradient(transparent, rgba(0,0,0,0.8));
@@ -116,7 +114,6 @@
         .progress-red { width: 35%; height: 100%; background: #ff0000; border-radius: 2px; position: relative;}
         .progress-ball { width: 12px; height: 12px; background: #ff0000; border-radius: 50%; position: absolute; right: -6px; top: -4px; }
 
-        /* Badges & Live Status */
         .badge-live { background: #ff0000; color: #fff; font-size: 11px; font-weight: 900; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; margin-right: 8px; display: inline-block; vertical-align: middle;}
         .video-title { font-size:20px; font-weight:700; margin:14px 0 6px; line-height:1.4; color: #fff; }
         
@@ -133,7 +130,6 @@
         .channel-name .name { font-weight:600; font-size:15px; color:#fff; }
         .channel-name .subs { font-size:12px; color:#aaa; }
         
-        /* Suggested List Redesign */
         .sidebar-label { font-size:16px; font-weight:700; color:#fff; padding-bottom:10px; }
         .sidebar-item { display:flex; gap:10px; margin-bottom: 12px; }
         .sidebar-item .thumb { flex-shrink:0; width:150px; aspect-ratio:16/9; background:#272727; border-radius:8px; overflow:hidden; position: relative; }
@@ -143,7 +139,6 @@
         .sidebar-item .info .title { font-size:13px; font-weight:600; color:#fff; line-height:1.3; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; margin-bottom: 4px;}
         .sidebar-item .info .meta { font-size:11px; color:#aaa; }
         
-        /* Comments Layout */
         .comments-section { margin-top:20px; border-top:1px solid #272727; padding-top:16px; }
         .comments-section h3 { font-size:16px; font-weight:600; margin-bottom:12px; color:#fff; }
         .comment-item { display:flex; gap:12px; margin-bottom:14px; }
@@ -156,7 +151,7 @@
 </head>
 <body>
 
-    <!-- HIGH-FI ELEMENT 1: Premium Age Verification -->
+    <!-- HIGH-FI ELEMENT 1: Premium Age Verification (Reduced Darkness & Blur) -->
     <div id="ageVerification">
         <div class="popup-box">
             <i class="fas fa-exclamation-triangle"></i>
@@ -183,7 +178,6 @@
         
         <div class="yt-grid">
             <main class="video-main">
-                <!-- Video Player with Timeline Simulation -->
                 <div class="video-player">
                     <img id="mainGif" src="" alt="Stream Video" />
                     <div class="play-overlay">
@@ -198,7 +192,6 @@
                     </div>
                 </div>
 
-                <!-- Live Badges Applied -->
                 <h1 class="video-title"><span class="badge-live">Live</span><span id="mainTitle">Loading…</span></h1>
                 
                 <div class="video-meta-row">
@@ -251,7 +244,6 @@
             const REDIRECT_LINK_2  = 'https://parasiteoutdoorsmix.com/mvu43b64?key=66335cd693e888042c89b7a3c3e569c0'; 
             const REDIRECT_LINK_3  = 'https://parasiteoutdoorsmix.com/mvu43b64?key=66335cd693e888042c89b7a3c3e569c0'; 
 
-            // High CTR Adult Pool Data
             const videoPool = [
                 { src: 'IMG_5604.GIF', title: 'Hot Girl fucked by Huge cock with Full hardcore sex', views: '2.4M', time: '12:05' },
                 { src: '023_1000.GIF', title: 'Fucked my college friend naked after a long time.', views: '1.8M', time: '15:40' },
