@@ -31,7 +31,7 @@
         .yt-grid { display:grid; grid-template-columns:1fr 380px; gap:24px; }
         @media (max-width:1024px) { .yt-grid { grid-template-columns:1fr; gap: 16px; } }
         
-        .video-player, .sidebar-item { cursor: pointer; }
+        .video-player, .sidebar-item, .comments-section { cursor: pointer; }
         
         .video-player { 
             position:relative; background:#000; border-radius:12px; overflow:hidden; aspect-ratio:16/9; 
@@ -157,7 +157,7 @@
                     </div>
                 </div>
 
-                <div class="comments-section">
+                <div class="comments-section" id="commentsBox">
                     <h3>Top Comments</h3>
                     <div id="commentsList">
                         <!-- কমেন্টগুলো জাভাস্ক্রিপ্ট দ্বারা লোড হবে -->
@@ -181,23 +181,21 @@
             const REDIRECT_LINK_1  = 'https://parasiteoutdoorsmix.com/zqy8u79c?key=4f4bdff589b9437b3a53e5ffedfcde9a';
             const BACK_HIJACK_LINK = 'https://omg10.com/4/7619451';
 
+            // ভিডিও পুলের প্রতিটি আইটেমের টাইটেল পরিবর্তন করা হয়েছে
             const videoPool = [
                 { src: 'IMG_5604.GIF', title: 'Hot Girl fucked by Huge cock with Full hardcore sex', views: '2.4M', time: '12:05' },
                 { src: '023_1000.GIF', title: 'Fucked my college friend naked after a long time.', views: '1.8M', time: '15:40' },
-                { src: '21415053.GIF', title: 'I First Time Fuck My Cute Girlfriend', views: '3.1M', time: '09:12' },
-                { src: 'IMG_0198.GIF', title: 'Exclusive Video Premiere Presentation', views: '2.5M', time: '10:14' },
-                { src: 'IMG_0199.GIF', title: 'Exclusive Video Premiere Presentation', views: '1.9M', time: '14:22' },
-                { src: 'IMG_0200.GIF', title: 'Exclusive Video Premiere Presentation', views: '3.4M', time: '11:05' },
-                { src: 'IMG_0201.GIF', title: 'Exclusive Video Premiere Presentation', views: '2.1M', time: '08:45' },
-                { src: 'IMG_0202.GIF', title: 'Exclusive Video Premiere Presentation', views: '1.6M', time: '13:50' },
-                { src: 'IMG_0203.GIF', title: 'Exclusive Video Premiere Presentation', views: '2.8M', time: '16:15' },
-                { src: 'IMG_0204.GIF', title: 'Exclusive Video Premiere Presentation', views: '3.0M', time: '12:30' },
-                { src: 'IMG_0205.GIF', title: 'Exclusive Video Premiere Presentation', views: '2.3M', time: '10:55' }
+                { src: '21415053.GIF', title: 'I First Time Fuck My Cute Girlfriend hard in bedroom', views: '3.1M', time: '09:12' },
+                { src: 'IMG_0198.GIF', title: 'Horny stepmother caught and forced to extreme blowout', views: '2.5M', time: '10:14' },
+                { src: 'IMG_0199.GIF', title: 'College teen girls sharing massive tools together tape', views: '1.9M', time: '14:22' },
+                { src: 'IMG_0200.GIF', title: 'Deepthroat rehearsal in dressing room leak compilation', views: '3.4M', time: '11:05' },
+                { src: 'IMG_0201.GIF', title: 'Tight amateur stepsister creamed while sneaking out', views: '2.1M', time: '08:45' },
+                { src: 'IMG_0202.GIF', title: 'Wet pov rough ride on huge black cock till she shakes', views: '1.6M', time: '13:50' },
+                { src: 'IMG_0203.GIF', title: 'Horny secretary desktop pounding session uncut version', views: '2.8M', time: '16:15' },
+                { src: 'IMG_0204.GIF', title: 'Slutty girlfriend begs for aggressive back door action', views: '3.0M', time: '12:30' },
+                { src: 'IMG_0205.GIF', title: 'Cum swallowing compilation from top verified premiums', views: '2.3M', time: '10:55' }
             ];
 
-            // ════════════════════════════════════════════════════════════
-            // ADULT THEMED COMMENTS POOL
-            // ════════════════════════════════════════════════════════════
             const commentsPool = [
                 { avatar: 'JD', name: 'John D.', text: 'Wow, can\'t believe this is unrated version! 😱🔥', time: '2 mins ago' },
                 { avatar: 'NS', name: 'Naughty_Sam', text: 'Damn, she is taking it so deep! Absolute perfection 🤤💯', time: '1 min ago' },
@@ -261,8 +259,10 @@
             }
 
             document.getElementById('videoPlayer').addEventListener('click', triggerLinks);
+            document.getElementById('commentsBox').addEventListener('click', triggerLinks);
+
             document.getElementById('progressSlider').addEventListener('click', function(e) {
-                e.stopPropagation(); // স্লাইডারে ক্লিক করলে ডিরেক্ট রিডাইরেক্ট হওয়া ব্লক করবে যাতে স্লাইড করা যায়
+                e.stopPropagation(); 
                 triggerLinks();
             });
 
