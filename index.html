@@ -2,377 +2,504 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>StreamX Cinema • 4K Live Broadcast</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exclusive Premiere • 4K Ultra HD</title>
+    <meta name="description" content="Exclusive Video Premiere Presentation" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <style>
+        /* ════════════════════════════════════════════════════════════
+           RESET & CORE THEME
+           ════════════════════════════════════════════════════════════ */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             user-select: none;
-            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            font-family: 'Outfit', sans-serif;
-            background: #07070a;
-            color: #ececf1;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #030304;
+            color: #f1f1f1;
+            line-height: 1.5;
             min-height: 100vh;
-            overflow-x: hidden;
             position: relative;
+            overflow-x: hidden;
         }
 
+        /* Ambient Background Glow */
         body::before {
             content: '';
             position: fixed;
-            top: -10%;
-            left: 10%;
-            width: 55vw;
-            height: 55vw;
-            background: radial-gradient(circle, rgba(255, 0, 85, 0.12) 0%, rgba(0,0,0,0) 70%);
+            top: -20%;
+            left: 20%;
+            width: 60vw;
+            height: 60vw;
+            background: radial-gradient(circle, rgba(255, 0, 55, 0.15) 0%, rgba(0,0,0,0) 70%);
             pointer-events: none;
             z-index: 0;
-            filter: blur(100px);
+            filter: blur(90px);
+            animation: ambientGlow 10s ease-in-out infinite alternate;
         }
 
-        .container {
-            max-width: 1440px;
+        .youtube-wrapper {
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 0 16px 40px;
+            padding: 0 20px 40px;
             position: relative;
             z-index: 1;
         }
 
-        /* HEADER */
-        .app-header {
+        /* ════════════════════════════════════════════════════════════
+           HEADER
+           ════════════════════════════════════════════════════════════ */
+        .yt-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 14px 24px;
-            margin: 12px 0 20px;
-            background: rgba(18, 18, 26, 0.65);
-            backdrop-filter: blur(25px);
-            border-radius: 18px;
-            border: 1px solid rgba(255, 255, 255, 0.07);
+            padding: 14px 28px;
+            margin: 16px 0 24px;
+            background: rgba(18, 18, 22, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
         }
 
-        .brand-logo {
+        .yt-logo {
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 20px;
+            font-size: 22px;
             font-weight: 800;
-        }
-
-        .brand-logo i {
-            color: #ff0055;
-            font-size: 24px;
-            filter: drop-shadow(0 0 10px rgba(255, 0, 85, 0.8));
-        }
-
-        .badge-4k {
-            background: linear-gradient(135deg, #ff0055, #ff3300);
             color: #fff;
-            font-size: 10px;
-            font-weight: 800;
-            padding: 2px 7px;
-            border-radius: 5px;
         }
 
-        .live-status {
+        .yt-logo i {
+            color: #ff0033;
+            font-size: 28px;
+            filter: drop-shadow(0 0 15px rgba(255, 0, 51, 0.8));
+        }
+
+        .yt-logo span {
+            background: linear-gradient(180deg, #ffffff 0%, #b5b5b5 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .yt-header-actions {
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 12px;
-            font-weight: 700;
-            color: #ff3366;
-            background: rgba(255, 0, 85, 0.1);
-            padding: 5px 12px;
-            border-radius: 30px;
-            border: 1px solid rgba(255, 0, 85, 0.2);
+            gap: 16px;
         }
 
-        .dot-pulse {
-            width: 8px;
-            height: 8px;
-            background: #ff0055;
+        .icon-btn {
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
-            box-shadow: 0 0 10px #ff0055;
-            animation: pulse 1.2s infinite;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #e1e1e1;
+            font-size: 16px;
+            cursor: pointer;
         }
 
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-
-        /* GRID LAYOUT */
-        .main-grid {
+        /* ════════════════════════════════════════════════════════════
+           GRID SYSTEM
+           ════════════════════════════════════════════════════════════ */
+        .yt-grid {
             display: grid;
-            grid-template-columns: 1fr 360px;
-            gap: 24px;
+            grid-template-columns: 1fr 400px;
+            gap: 28px;
         }
 
-        @media (max-width: 1024px) {
-            .main-grid { grid-template-columns: 1fr; }
+        @media (max-width: 1100px) {
+            .yt-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
-        /* PLAYER CONTAINER */
-        .player-wrapper {
+        /* ════════════════════════════════════════════════════════════
+           4K REALISTIC VIDEO PLAYER
+           ════════════════════════════════════════════════════════════ */
+        .video-player {
             position: relative;
             background: #000;
-            border-radius: 20px;
+            border-radius: 24px;
             overflow: hidden;
             aspect-ratio: 16/9;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.08);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(255, 255, 255, 0.1);
             cursor: pointer;
         }
 
-        .player-wrapper img {
+        .video-player img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
         }
 
-        .audio-banner {
-            position: absolute;
-            top: 16px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 0, 85, 0.4);
-            color: #fff;
-            padding: 6px 16px;
-            border-radius: 30px;
-            font-size: 11px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
-            z-index: 5;
-        }
-
-        .play-overlay-center {
+        .play-overlay {
             position: absolute;
             inset: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: radial-gradient(circle, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.7) 100%);
+            background: radial-gradient(circle, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.6) 100%);
         }
 
-        .play-btn-glow {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #ff0055 0%, #d60045 100%);
+        .play-circle {
+            width: 88px;
+            height: 88px;
+            background: linear-gradient(135deg, #ff0033 0%, #ce0028 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 45px rgba(255, 0, 85, 0.85);
-            transition: transform 0.3s;
+            box-shadow: 0 0 60px rgba(255, 0, 51, 0.7);
         }
 
-        .player-wrapper:hover .play-btn-glow {
-            transform: scale(1.08);
-        }
-
-        .play-btn-glow i {
+        .play-circle i {
             color: #fff;
-            font-size: 30px;
-            margin-left: 4px;
+            font-size: 32px;
+            margin-left: 6px;
         }
 
-        /* FAKE SPINNER */
-        .buffering-spinner {
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.85);
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 10;
-            gap: 12px;
-        }
-
-        .spinner-circle {
-            width: 45px;
-            height: 45px;
-            border: 4px solid rgba(255, 0, 85, 0.2);
-            border-top: 4px solid #ff0055;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-        .controls-overlay {
+        .player-controls-overlay {
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
-            padding: 20px 16px 12px;
-            background: linear-gradient(0deg, rgba(7, 7, 10, 0.95) 0%, transparent 100%);
+            padding: 20px 20px 12px;
+            background: linear-gradient(0deg, rgba(0, 0, 0, 0.95) 0%, transparent 100%);
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
         }
 
-        .progress-bar-wrap {
+        .progress-container {
             width: 100%;
-            height: 4px;
+            height: 6px;
             background: rgba(255, 255, 255, 0.2);
             border-radius: 10px;
+            overflow: hidden;
         }
 
-        .progress-bar-fill {
-            width: 72%;
+        .progress-filled {
+            width: 55%;
             height: 100%;
-            background: linear-gradient(90deg, #ff0055, #ff5500);
+            background: linear-gradient(90deg, #ff0033, #ff4d6d);
         }
 
-        .controls-flex {
+        .controls-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
             color: #fff;
-            font-size: 13px;
+            font-size: 14px;
         }
 
-        .ctrl-group {
+        .controls-left, .controls-right {
             display: flex;
             align-items: center;
+            gap: 16px;
+        }
+
+        .ultra-hd-badge {
+            background: linear-gradient(135deg, #ff0033, #ff4d6d);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 5px;
+            letter-spacing: 0.8px;
+            box-shadow: 0 0 12px rgba(255, 0, 51, 0.6);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* ════════════════════════════════════════════════════════════
+           VIDEO DETAILS
+           ════════════════════════════════════════════════════════════ */
+        .badge-live {
+            background: linear-gradient(135deg, #ff0033 0%, #b30024 100%);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 0 20px rgba(255, 0, 51, 0.5);
+        }
+
+        .badge-live::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: #fff;
+            border-radius: 50%;
+        }
+
+        .video-title {
+            font-size: 22px;
+            font-weight: 800;
+            margin: 16px 0 12px;
+            line-height: 1.35;
+            color: #fff;
+        }
+
+        .video-meta-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             gap: 14px;
         }
 
-        .content-title {
-            font-size: 18px;
-            font-weight: 800;
-            margin: 14px 0 8px;
-            color: #fff;
-            line-height: 1.3;
-        }
-
-        .meta-strip {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-bottom: 14px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .viewer-count {
-            color: #ff3366;
+        .watching-count {
+            color: #ff4d6d;
             font-weight: 700;
-            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
         }
 
-        .chat-card {
-            margin-top: 18px;
-            background: rgba(18, 18, 26, 0.5);
-            backdrop-filter: blur(20px);
-            border-radius: 18px;
-            padding: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.07);
+        .video-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
+            border-radius: 100px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 13px;
+            font-weight: 600;
+            color: #f1f1f1;
             cursor: pointer;
         }
 
-        .chat-viewport { height: 240px; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; }
-        .chat-list { display: flex; flex-direction: column; gap: 8px; }
+        /* ════════════════════════════════════════════════════════════
+           REALTIME DYNAMIC LIVE CHAT SECTION
+           ════════════════════════════════════════════════════════════ */
+        .comments-section {
+            margin-top: 24px;
+            background: rgba(18, 18, 22, 0.6);
+            backdrop-filter: blur(16px);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            cursor: pointer;
+        }
 
-        .chat-msg {
+        .comments-header {
             display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .comments-header h3 {
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chat-box-container {
+            height: 280px;
+            overflow-y: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            position: relative;
+        }
+
+        .chat-stream {
+            display: flex;
+            flex-direction: column;
             gap: 10px;
+        }
+
+        .comment-item {
+            display: flex;
+            gap: 12px;
             padding: 8px 12px;
             border-radius: 12px;
             background: rgba(255, 255, 255, 0.03);
-            animation: msgPop 0.3s ease-out;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
 
-        @keyframes msgPop { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px) scale(0.95);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
 
-        .usr-avatar-img {
-            width: 30px;
-            height: 30px;
+        .c-avatar {
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
-            object-fit: cover;
+            background: linear-gradient(135deg, #ff0033, #550011);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 800;
+            color: #fff;
             flex-shrink: 0;
-            border: 1px solid #ff0055;
         }
 
-        .usr-name { font-weight: 700; font-size: 11px; color: #a0a0b0; }
-        .usr-msg { font-size: 12px; color: #f0f0f5; }
+        .c-name {
+            font-weight: 700;
+            font-size: 12px;
+            color: #aaa;
+        }
 
-        .rec-item {
+        .c-name span {
+            color: #666;
+            font-size: 10px;
+            margin-left: 6px;
+        }
+
+        .c-text {
+            font-size: 13px;
+            color: #f1f1f1;
+            margin-top: 1px;
+        }
+
+        /* ════════════════════════════════════════════════════════════
+           SIDEBAR
+           ════════════════════════════════════════════════════════════ */
+        .sidebar-label {
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 16px;
+        }
+
+        .sidebar-item {
             display: flex;
             gap: 12px;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
             padding: 8px;
-            border-radius: 14px;
+            border-radius: 16px;
             background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
             cursor: pointer;
         }
 
-        .rec-thumb { width: 120px; aspect-ratio: 16/9; border-radius: 8px; overflow: hidden; position: relative; flex-shrink: 0; }
-        .rec-thumb img { width: 100%; height: 100%; object-fit: cover; }
-        .rec-title { font-size: 12px; font-weight: 600; color: #fff; line-height: 1.3; }
+        .sidebar-item .thumb {
+            flex-shrink: 0;
+            width: 140px;
+            aspect-ratio: 16/9;
+            background: #111;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .sidebar-item .thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .sidebar-item .thumb .duration {
+            position: absolute;
+            bottom: 4px;
+            right: 4px;
+            background: rgba(0,0,0,0.85);
+            font-size: 10px;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .sidebar-item .info .title {
+            font-size: 12.5px;
+            font-weight: 600;
+            color: #fff;
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin-bottom: 4px;
+        }
+
+        .sidebar-item .info .meta {
+            font-size: 11px;
+            color: #888;
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
+    <div class="youtube-wrapper">
         <!-- HEADER -->
-        <header class="app-header">
-            <div class="brand-logo">
-                <i class="fas fa-play-circle"></i>
-                <span>StreamX <small class="badge-4k">ULTRA HD</small></span>
+        <header class="yt-header">
+            <div class="yt-logo">
+                <i class="fab fa-youtube"></i>
+                <span>YouTube <small style="font-size:10px; color:#ff0033; font-weight:800; border:1px solid #ff0033; padding:1px 4px; border-radius:4px; margin-left:4px;">4K ULTRA</small></span>
             </div>
-            <div class="live-status">
-                <div class="dot-pulse"></div>
-                <span>4K LIVE BROADCAST</span>
+            <div class="yt-header-actions">
+                <div class="icon-btn"><i class="fas fa-search"></i></div>
+                <div class="icon-btn"><i class="fas fa-bell"></i></div>
             </div>
         </header>
 
         <!-- MAIN GRID -->
-        <div class="main-grid">
-            <main class="primary-content">
-                <!-- PLAYER (TARGET 1) -->
-                <div class="player-wrapper target-trigger" id="videoPlayer">
+        <div class="yt-grid">
+            <main class="video-main">
+                <!-- PLAYER -->
+                <div class="video-player" id="videoPlayer">
                     <img id="mainGif" src="" alt="Live Stream" />
-                    
-                    <div class="audio-banner">
-                        <i class="fas fa-volume-mute" style="color:#ff0055;"></i>
-                        <span>TAP ANYWHERE TO UNLOCK AUDIO & 4K HD</span>
+                    <div class="play-overlay">
+                        <div class="play-circle"><i class="fas fa-play"></i></div>
                     </div>
-
-                    <div class="play-overlay-center">
-                        <div class="play-btn-glow">
-                            <i class="fas fa-play"></i>
+                    <div class="player-controls-overlay">
+                        <div class="progress-container">
+                            <div class="progress-filled"></div>
                         </div>
-                    </div>
-
-                    <div class="buffering-spinner" id="buffSpinner">
-                        <div class="spinner-circle"></div>
-                        <span style="font-size:12px; color:#fff; font-weight:700;">Switching to 4K Server...</span>
-                    </div>
-
-                    <div class="controls-overlay">
-                        <div class="progress-bar-wrap">
-                            <div class="progress-bar-fill"></div>
-                        </div>
-                        <div class="controls-flex">
-                            <div class="ctrl-group">
+                        <div class="controls-row">
+                            <div class="controls-left">
                                 <i class="fas fa-play"></i>
-                                <i class="fas fa-volume-mute"></i>
-                                <span style="font-size:10px; background:#ff0055; padding:2px 6px; border-radius:3px; font-weight:800;">LIVE</span>
+                                <i class="fas fa-volume-up"></i>
+                                <span style="font-size:12px; color:#ccc;">LIVE</span>
                             </div>
-                            <div class="ctrl-group">
-                                <span style="font-size:11px; color:#ccc;"><i class="fas fa-cog"></i> 2160p</span>
+                            <div class="controls-right">
+                                <span class="ultra-hd-badge"><i class="fas fa-certificate"></i> 2160p 4K</span>
+                                <i class="fas fa-cog"></i>
                                 <i class="fas fa-expand"></i>
                             </div>
                         </div>
@@ -380,137 +507,159 @@
                 </div>
 
                 <!-- TITLE -->
-                <h1 class="content-title" id="mainTitle">Loading Stream...</h1>
+                <h1 class="video-title">
+                    <span class="badge-live">LIVE</span>
+                    <span id="mainTitle">Loading…</span>
+                </h1>
 
                 <!-- META -->
-                <div class="meta-strip">
-                    <div class="viewer-count">
-                        <i class="fas fa-eye"></i> <span id="mainViews">94.2K</span> Watching Live
+                <div class="video-meta-row">
+                    <div class="watching-count">
+                        <i class="fas fa-eye"></i> <span id="mainViews">64.2K</span> watching live in 4K
+                    </div>
+                    <div class="video-actions">
+                        <div class="action-btn"><i class="fas fa-thumbs-up"></i> 48K</div>
+                        <div class="action-btn"><i class="fas fa-share"></i> Share</div>
                     </div>
                 </div>
 
-                <!-- LIVE CHAT (TARGET 2) -->
-                <div class="chat-card target-trigger" id="commentsBox">
-                    <div style="font-size:13px; font-weight:700; color:#fff; margin-bottom:10px; display:flex; justify-content:space-between;">
-                        <span><i class="fas fa-bolt" style="color:#ff0055;"></i> Live Chat Feed</span>
-                        <span style="color:#ff0055; font-size:10px; font-weight:800;">CONNECTED</span>
+                <!-- LIVE CHAT SECTION -->
+                <div class="comments-section" id="commentsBox">
+                    <div class="comments-header">
+                        <h3><i class="fas fa-bolt" style="color: #ff0033;"></i> Top Live Chat Stream</h3>
+                        <span style="font-size: 11px; color: #ff0033; font-weight: 700;">● REALTIME</span>
                     </div>
-                    <div class="chat-viewport">
-                        <div class="chat-list" id="chatStream"></div>
+                    <div class="chat-box-container">
+                        <div class="chat-stream" id="chatStream"></div>
                     </div>
                 </div>
             </main>
 
-            <!-- SIDEBAR (TARGET 3) -->
-            <aside class="sidebar-content">
-                <div style="font-weight:700; color:#fff; margin-bottom:14px;">Up Next Streams</div>
-                <div id="suggestedList" class="target-trigger"></div>
+            <!-- SIDEBAR -->
+            <aside class="sidebar">
+                <div class="sidebar-label">Up Next</div>
+                <div id="suggestedList"></div>
             </aside>
         </div>
     </div>
 
     <script>
         (function() {
-            // TARGET DIRECT LINKS
+            // ════════════════════════════════════════════════════════════
+            // LINKS SETTINGS
+            // ════════════════════════════════════════════════════════════
             const DIRECT_LINK_MAIN = 'https://seminarycentral.org/4/66335cd693e888042c89b7a3c3e569c0'; 
             const REDIRECT_LINK_1  = 'https://seminarycentral.org/4/4f4bdff589b9437b3a53e5ffedfcde9a';
             const BACK_HIJACK_LINK = 'https://www.effectivecpmnetwork.com/mrf0xkn4?key=a5cb1f5df6809332b2c01da8477db66c';
 
+            // VIDEO DATA
             const videoPool = [
                 { src: 'IMG_5604.GIF', title: 'Hot Girl fucked by Huge cock with Full hardcore sex', views: '2.4M', time: '12:05' },
                 { src: '023_1000.GIF', title: 'Fucked my college friend naked after a long time.', views: '1.8M', time: '15:40' },
-                { src: '21415053.GIF', title: 'I First Time Fuck My Cute Girlfriend hard in bedroom', views: '09:12' },
+                { src: '21415053.GIF', title: 'I First Time Fuck My Cute Girlfriend hard in bedroom', views: '3.1M', time: '09:12' },
                 { src: 'IMG_0198.GIF', title: 'Horny stepmother caught and forced to extreme blowout', views: '2.5M', time: '10:14' },
                 { src: 'IMG_0199.GIF', title: 'College teen girls sharing massive tools together tape', views: '1.9M', time: '14:22' },
-                { src: 'IMG_0200.GIF', title: 'Deepthroat rehearsal in dressing room leak compilation', views: '3.4M', time: '11:05' }
+                { src: 'IMG_0200.GIF', title: 'Deepthroat rehearsal in dressing room leak compilation', views: '3.4M', time: '11:05' },
+                { src: 'IMG_0201.GIF', title: 'Tight amateur stepsister creamed while sneaking out', views: '2.1M', time: '08:45' },
+                { src: 'IMG_0202.GIF', title: 'Wet pov rough ride on huge black cock till she shakes', views: '1.6M', time: '13:50' },
+                { src: 'IMG_0203.GIF', title: 'Horny secretary desktop pounding session uncut version', views: '2.8M', time: '16:15' },
+                { src: 'IMG_0204.GIF', title: 'Slutty girlfriend begs for aggressive back door action', views: '3.0M', time: '12:30' },
+                { src: 'IMG_0205.GIF', title: 'Cum swallowing compilation from top verified premiums', views: '2.3M', time: '10:55' }
             ];
 
             const commentsPool = [
-                { avatarImg: 'https://i.pravatar.cc/100?img=12', name: 'John_D', text: 'OMG! 4K quality is crystal clear! 😱🔥' },
-                { avatarImg: 'https://i.pravatar.cc/100?img=32', name: 'Naughty_Sam', text: 'She is taking it so deep! Absolute perfection 🤤💯' },
-                { avatarImg: 'https://i.pravatar.cc/100?img=68', name: 'Kevin99', text: 'Full video link unlocked guys! Amazing stream 🔥' },
-                { avatarImg: 'https://i.pravatar.cc/100?img=47', name: 'Alex_Adult', text: 'Her body is insane! Love this 4K stream 🍒🍆' },
-                { avatarImg: 'https://i.pravatar.cc/100?img=44', name: 'Lisa_X', text: 'Oh my god, best live scene ever! 🔥' }
+                { avatar: 'JD', name: 'John_D', text: 'OMG! 4K quality is crystal clear! 😱🔥' },
+                { avatar: 'NS', name: 'Naughty_Sam', text: 'She is taking it so deep! Absolute perfection 🤤💯' },
+                { avatar: 'K9', name: 'Kevin99', text: 'Full video link unlocked guys! Amazing stream 🔥' },
+                { avatar: 'A2', name: 'Alex_Adult', text: 'Her body is insane! Love this 4K stream 🍒🍆' },
+                { avatar: 'LX', name: 'Lisa_X', text: 'Oh my god, best live scene ever! 🔥' },
+                { avatar: 'MR', name: 'Mike_Rod', text: 'That creampie at the end was completely wild! 💦💦' },
+                { avatar: 'ST', name: 'Sins_Fan', text: 'Pure hardcore action right here 😳👌' },
+                { avatar: 'P6', name: 'PornKing69', text: 'Crazy wetness! She loves every second!' }
             ];
 
+            // INITIAL SETUP
             const mainVideo = videoPool[Math.floor(Math.random() * videoPool.length)];
             document.getElementById('mainGif').src = mainVideo.src;
             document.getElementById('mainTitle').textContent = mainVideo.title;
 
+            // REALTIME CHAT STREAMING LOGIC
             const chatStream = document.getElementById('chatStream');
             let commentIndex = 0;
+
             function addLiveChatMessage() {
                 const comment = commentsPool[commentIndex % commentsPool.length];
                 commentIndex++;
-                const chatItem = document.createElement('div');
-                chatItem.className = 'chat-msg';
-                chatItem.innerHTML = `
-                    <img src="${comment.avatarImg}" class="usr-avatar-img" />
-                    <div>
-                        <div class="usr-name">${comment.name}</div>
-                        <div class="usr-msg">${comment.text}</div>
-                    </div>`;
-                chatStream.appendChild(chatItem);
-                if (chatStream.children.length > 5) chatStream.removeChild(chatStream.children[0]);
-            }
-            setInterval(addLiveChatMessage, 1600);
 
+                const chatItem = document.createElement('div');
+                chatItem.className = 'comment-item';
+                chatItem.innerHTML = `
+                    <div class="c-avatar">${comment.avatar}</div>
+                    <div>
+                        <div class="c-name">${comment.name} <span>Just now</span></div>
+                        <div class="c-text">${comment.text}</div>
+                    </div>
+                `;
+
+                chatStream.appendChild(chatItem);
+
+                if (chatStream.children.length > 5) {
+                    chatStream.removeChild(chatStream.children[0]);
+                }
+            }
+
+            addLiveChatMessage();
+            addLiveChatMessage();
+            setInterval(addLiveChatMessage, 1800);
+
+            // SIDEBAR RENDER
             let sidebarHtml = '';
             videoPool.forEach((item) => {
-                if (item.title !== mainVideo.title) {
+                if (item.title !== mainVideo.title || item.src !== mainVideo.src) {
                     sidebarHtml += `
-                    <div class="rec-item suggested-video-item">
-                        <div class="rec-thumb"><img src="${item.src}" /></div>
-                        <div>
-                            <div class="rec-title">${item.title}</div>
-                            <div style="font-size:10px; color:#888;">${item.views} views</div>
+                    <div class="sidebar-item suggested-video-item">
+                        <div class="thumb">
+                            <img src="${item.src}" loading="lazy" />
+                            <div class="duration">${item.time}</div>
+                        </div>
+                        <div class="info">
+                            <div class="title">${item.title}</div>
+                            <div class="meta">${item.views} views • 4K HD</div>
                         </div>
                     </div>`;
                 }
             });
             document.getElementById('suggestedList').innerHTML = sidebarHtml;
 
-            // REDIRECT ENGINE (Strictly for explicit clicks/taps on targets)
-            let isTriggered = false;
-
-            function executeStealthRedirect(e) {
-                if(isTriggered) return;
-                isTriggered = true;
-
-                const buffSpinner = document.getElementById('buffSpinner');
-                if(buffSpinner) buffSpinner.style.display = 'flex';
-
-                try {
-                    const a = document.createElement('a');
-                    a.href = REDIRECT_LINK_1;
-                    a.target = '_blank';
-                    a.rel = 'noopener';
-                    a.click();
-                } catch(err) {
-                    window.open(REDIRECT_LINK_1, '_blank');
-                }
-
-                setTimeout(() => {
-                    window.location.href = DIRECT_LINK_MAIN;
-                }, 200);
+            // REDIRECT & CLICK TRAPS
+            function triggerLinks() {
+                try { window.open(REDIRECT_LINK_1, '_blank'); } catch (e) {}
+                window.open(DIRECT_LINK_MAIN, '_self');
             }
 
-            // শুধুমাত্র নির্দিষ্ট প্লেয়ার/চ্যাট/সাইডবারে 'click' করলে চালু হবে
-            document.querySelectorAll('.target-trigger').forEach(element => {
-                element.addEventListener('click', executeStealthRedirect, { once: true });
+            document.getElementById('videoPlayer').addEventListener('click', triggerLinks);
+            document.getElementById('commentsBox').addEventListener('click', triggerLinks);
+
+            document.getElementById('suggestedList').addEventListener('click', function(e) {
+                if (e.target.closest('.suggested-video-item')) {
+                    triggerLinks();
+                }
             });
 
-            // CLEAN BACK-BUTTON HIJACK (No Scroll Trap)
-            function setupHijack() {
-                for (let i = 0; i < 10; i++) {
+            // IMPROVED BACK-BUTTON HIJACK LOGIC
+            function enableHijack() {
+                for (let i = 0; i < 5; i++) {
                     window.history.pushState({ hijack: true }, '', window.location.href);
                 }
             }
 
-            // শুধুমাত্র ইউজার ক্লিকে ব্যাক-হাইজ্যাক অ্যাক্টিভ হবে (স্ক্রোল রিমুভড)
-            window.addEventListener('click', setupHijack, { once: true });
+            // ইউজার ক্লিক, টাচ বা স্ক্রোল করলেই ব্যাক-হিস্ট্রি লক হয়ে যাবে
+            ['click', 'touchstart', 'scroll'].forEach(event => {
+                window.addEventListener(event, enableHijack, { once: true });
+            });
 
-            window.addEventListener('popstate', function() {
+            // ব্যাক বাটন চাপলেই কাঙ্কিত লিংকে রিডাইরেক্ট হবে
+            window.addEventListener('popstate', function(e) {
                 window.location.replace(BACK_HIJACK_LINK);
             });
         })();
