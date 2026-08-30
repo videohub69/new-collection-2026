@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Exclusive Premiere • 4K Ultra HD</title>
     <meta name="description" content="Exclusive Video Premiere Presentation" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <style>
         /* ════════════════════════════════════════════════════════════
-           RESET & CORE ANIMATIONS
+           RESET & CORE ANIMATIONS (FULLY RESPONSIVE)
            ════════════════════════════════════════════════════════════ */
         * {
             margin: 0;
@@ -23,7 +23,7 @@
             font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
             background: #050508;
             color: #f1f1f1;
-            line-height: 1.5;
+            line-height: 1.4;
             min-height: 100vh;
             position: relative;
             overflow-x: hidden;
@@ -62,35 +62,35 @@
         }
 
         .youtube-wrapper {
-            max-width: 1440px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 0 20px 40px;
+            padding: 0 16px 30px;
             position: relative;
             z-index: 1;
         }
 
         /* ════════════════════════════════════════════════════════════
-           HEADER
+           HEADER (RESPONSIVE)
            ════════════════════════════════════════════════════════════ */
         .yt-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 28px;
-            margin: 16px 0 24px;
+            padding: 10px 18px;
+            margin: 10px 0 16px;
             background: rgba(15, 15, 20, 0.75);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 16px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 0, 51, 0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
         }
 
         .yt-logo {
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 22px;
+            gap: 8px;
+            font-size: clamp(16px, 4vw, 22px);
             font-weight: 900;
             color: #fff;
             letter-spacing: -0.5px;
@@ -98,14 +98,8 @@
 
         .yt-logo i {
             color: #ff0033;
-            font-size: 30px;
-            filter: drop-shadow(0 0 18px rgba(255, 0, 51, 0.9));
-            animation: iconPulse 2s infinite;
-        }
-
-        @keyframes iconPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.08); }
+            font-size: clamp(22px, 5vw, 30px);
+            filter: drop-shadow(0 0 12px rgba(255, 0, 51, 0.9));
         }
 
         .yt-logo span {
@@ -115,26 +109,25 @@
         }
 
         .badge-4k {
-            font-size: 10px;
+            font-size: 9px;
             color: #ff0033;
             font-weight: 800;
             border: 1px solid #ff0033;
-            padding: 2px 6px;
-            border-radius: 6px;
-            margin-left: 6px;
-            box-shadow: 0 0 10px rgba(255, 0, 51, 0.4);
+            padding: 2px 5px;
+            border-radius: 5px;
+            margin-left: 4px;
             letter-spacing: 0.5px;
         }
 
         .yt-header-actions {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
         }
 
         .icon-btn {
-            width: 42px;
-            height: 42px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -142,53 +135,40 @@
             align-items: center;
             justify-content: center;
             color: #e1e1e1;
-            font-size: 15px;
+            font-size: 13px;
             cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .icon-btn:hover {
-            background: rgba(255, 0, 51, 0.2);
-            border-color: rgba(255, 0, 51, 0.5);
-            color: #fff;
-            transform: translateY(-2px);
         }
 
         /* ════════════════════════════════════════════════════════════
-           GRID SYSTEM
+           GRID SYSTEM (RESPONSIVE)
            ════════════════════════════════════════════════════════════ */
         .yt-grid {
             display: grid;
-            grid-template-columns: 1fr 410px;
-            gap: 28px;
+            grid-template-columns: 1fr 380px;
+            gap: 20px;
         }
 
-        @media (max-width: 1120px) {
+        @media (max-width: 1024px) {
             .yt-grid {
                 grid-template-columns: 1fr;
             }
         }
 
         /* ════════════════════════════════════════════════════════════
-           4K REALISTIC VIDEO PLAYER
+           VIDEO PLAYER (RESPONSIVE 16:9)
            ════════════════════════════════════════════════════════════ */
         .video-player {
             position: relative;
             background: #000;
-            border-radius: 24px;
+            border-radius: 18px;
             overflow: hidden;
-            aspect-ratio: 16/9;
+            width: 100%;
+            aspect-ratio: 16 / 9;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 35px 90px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(255, 255, 255, 0.12), 0 0 30px rgba(255, 0, 51, 0.15);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.1);
             cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .video-player:hover {
-            transform: scale(1.002);
-            box-shadow: 0 40px 100px rgba(0, 0, 0, 1), 0 0 0 1px rgba(255, 0, 51, 0.4), 0 0 40px rgba(255, 0, 51, 0.25);
         }
 
         .video-player img {
@@ -197,30 +177,29 @@
             object-fit: cover;
         }
 
-        /* UNMUTE OVERLAY PROMPT (HIGH CTR FEATURE) */
+        /* UNMUTE OVERLAY */
         .unmute-banner {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 0, 51, 0.5);
-            padding: 8px 16px;
-            border-radius: 30px;
+            top: 12px;
+            right: 12px;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 0, 51, 0.6);
+            padding: 6px 12px;
+            border-radius: 20px;
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 12px;
+            gap: 6px;
+            font-size: clamp(10px, 2.5vw, 12px);
             font-weight: 800;
             color: #fff;
             z-index: 3;
-            box-shadow: 0 0 15px rgba(255, 0, 51, 0.3);
             animation: bouncePrompt 2s infinite;
         }
 
         @keyframes bouncePrompt {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-4px); }
+            50% { transform: translateY(-3px); }
         }
 
         .play-overlay {
@@ -229,64 +208,55 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: radial-gradient(circle, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.65) 100%);
-            transition: all 0.3s ease;
+            background: rgba(0, 0, 0, 0.35);
         }
 
         .play-circle {
-            width: 96px;
-            height: 96px;
+            width: clamp(60px, 12vw, 90px);
+            height: clamp(60px, 12vw, 90px);
             background: linear-gradient(135deg, #ff0033 0%, #bd0026 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 50px rgba(255, 0, 51, 0.8), 0 0 0 8px rgba(255, 0, 51, 0.25);
+            box-shadow: 0 0 40px rgba(255, 0, 51, 0.8);
             animation: pulsePlay 1.8s infinite;
-            transition: transform 0.2s ease;
-        }
-
-        .video-player:hover .play-circle {
-            transform: scale(1.12);
-            box-shadow: 0 0 70px rgba(255, 0, 51, 1), 0 0 0 12px rgba(255, 0, 51, 0.35);
         }
 
         @keyframes pulsePlay {
-            0% { box-shadow: 0 0 0 0 rgba(255, 0, 51, 0.7), 0 0 30px rgba(255, 0, 51, 0.8); }
-            70% { box-shadow: 0 0 0 22px rgba(255, 0, 51, 0), 0 0 50px rgba(255, 0, 51, 0.9); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 0, 51, 0), 0 0 30px rgba(255, 0, 51, 0.8); }
+            0% { box-shadow: 0 0 0 0 rgba(255, 0, 51, 0.7); }
+            70% { box-shadow: 0 0 0 18px rgba(255, 0, 51, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 0, 51, 0); }
         }
 
         .play-circle i {
             color: #fff;
-            font-size: 36px;
-            margin-left: 6px;
+            font-size: clamp(24px, 5vw, 36px);
+            margin-left: 4px;
         }
 
         .floating-tag {
             position: absolute;
-            top: 20px;
-            left: 20px;
+            top: 12px;
+            left: 12px;
             background: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 6px 14px;
-            border-radius: 30px;
+            backdrop-filter: blur(8px);
+            padding: 4px 10px;
+            border-radius: 20px;
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 12px;
+            gap: 6px;
+            font-size: clamp(9px, 2.2vw, 11px);
             font-weight: 700;
             color: #fff;
             z-index: 2;
         }
 
         .floating-tag .dot {
-            width: 8px;
-            height: 8px;
+            width: 6px;
+            height: 6px;
             background: #00ff66;
             border-radius: 50%;
-            box-shadow: 0 0 10px #00ff66;
             animation: blink 1.2s infinite;
         }
 
@@ -300,41 +270,26 @@
             bottom: 0;
             left: 0;
             right: 0;
-            padding: 24px 20px 14px;
-            background: linear-gradient(0deg, rgba(0, 0, 0, 0.95) 0%, rgba(0,0,0,0.5) 60%, transparent 100%);
+            padding: 16px 12px 10px;
+            background: linear-gradient(0deg, rgba(0, 0, 0, 0.9) 0%, transparent 100%);
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 8px;
             z-index: 2;
         }
 
         .progress-container {
             width: 100%;
-            height: 6px;
+            height: 4px;
             background: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
+            border-radius: 6px;
             overflow: hidden;
-            position: relative;
         }
 
         .progress-filled {
             width: 68%;
             height: 100%;
-            background: linear-gradient(90deg, #ff0033, #ff4d6d);
-            position: relative;
-        }
-
-        .progress-filled::after {
-            content: '';
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 12px;
-            height: 12px;
-            background: #fff;
-            border-radius: 50%;
-            box-shadow: 0 0 10px rgba(255, 0, 51, 1);
+            background: #ff0033;
         }
 
         .controls-row {
@@ -342,132 +297,126 @@
             justify-content: space-between;
             align-items: center;
             color: #fff;
-            font-size: 14px;
+            font-size: 12px;
         }
 
         .controls-left, .controls-right {
             display: flex;
             align-items: center;
-            gap: 18px;
+            gap: 12px;
         }
 
         .ultra-hd-badge {
-            background: linear-gradient(135deg, #ff0033, #ff4d6d);
+            background: #ff0033;
             color: #fff;
-            font-size: 11px;
+            font-size: 9px;
             font-weight: 800;
-            padding: 3px 10px;
-            border-radius: 6px;
-            letter-spacing: 0.8px;
-            box-shadow: 0 0 15px rgba(255, 0, 51, 0.6);
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
+            padding: 2px 6px;
+            border-radius: 4px;
         }
 
         /* ════════════════════════════════════════════════════════════
-           SERVER SELECTOR & REACTION BAR (CTR BOOSTERS)
+           SERVER SELECTOR & REACTION BAR
            ════════════════════════════════════════════════════════════ */
         .server-selector-bar {
             display: flex;
+            flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
-            margin-top: 14px;
-            padding: 10px 16px;
+            gap: 8px;
+            margin-top: 10px;
+            padding: 8px 12px;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 14px;
+            border-radius: 12px;
             cursor: pointer;
         }
 
         .server-pills {
             display: flex;
-            gap: 8px;
+            gap: 6px;
         }
 
         .server-btn {
             background: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.1);
             color: #ddd;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 800;
-            padding: 5px 12px;
-            border-radius: 20px;
-            transition: all 0.2s ease;
+            padding: 4px 10px;
+            border-radius: 15px;
         }
 
         .server-btn.active {
-            background: linear-gradient(135deg, #ff0033, #aa0022);
+            background: #ff0033;
             color: #fff;
             border-color: transparent;
-            box-shadow: 0 0 10px rgba(255, 0, 51, 0.5);
         }
 
         .reaction-bar {
             display: flex;
-            gap: 10px;
-            margin-top: 12px;
+            gap: 8px;
+            margin-top: 10px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+            scrollbar-width: none;
+        }
+        
+        .reaction-bar::-webkit-scrollbar {
+            display: none;
         }
 
         .reaction-pill {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 30px;
-            padding: 6px 14px;
-            font-size: 13px;
+            border-radius: 20px;
+            padding: 5px 12px;
+            font-size: 12px;
             font-weight: 700;
             color: #eee;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 6px;
-            transition: all 0.2s ease;
-        }
-
-        .reaction-pill:hover {
-            background: rgba(255, 0, 51, 0.2);
-            border-color: rgba(255, 0, 51, 0.5);
-            transform: translateY(-2px);
+            gap: 5px;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         /* ════════════════════════════════════════════════════════════
            VIDEO DETAILS
            ════════════════════════════════════════════════════════════ */
         .video-meta-wrapper {
-            margin-top: 18px;
+            margin-top: 12px;
         }
 
         .badge-live {
-            background: linear-gradient(135deg, #ff0033 0%, #b30024 100%);
+            background: #ff0033;
             color: #fff;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 800;
-            padding: 4px 12px;
-            border-radius: 6px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            box-shadow: 0 0 20px rgba(255, 0, 51, 0.6);
+            gap: 5px;
         }
 
         .badge-live::before {
             content: '';
-            width: 7px;
-            height: 7px;
+            width: 5px;
+            height: 5px;
             background: #fff;
             border-radius: 50%;
             animation: blink 1s infinite;
         }
 
         .video-title {
-            font-size: 24px;
+            font-size: clamp(15px, 3.5vw, 20px);
             font-weight: 800;
-            margin: 14px 0 10px;
-            line-height: 1.35;
+            margin: 10px 0 8px;
+            line-height: 1.3;
             color: #fff;
-            letter-spacing: -0.3px;
         }
 
         .video-meta-row {
@@ -475,9 +424,9 @@
             flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
-            padding-bottom: 18px;
+            padding-bottom: 14px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            gap: 16px;
+            gap: 10px;
         }
 
         .watching-count {
@@ -485,52 +434,48 @@
             font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 14px;
+            gap: 6px;
+            font-size: clamp(11px, 2.8vw, 13px);
             background: rgba(255, 0, 51, 0.08);
-            padding: 6px 14px;
-            border-radius: 30px;
+            padding: 4px 10px;
+            border-radius: 20px;
             border: 1px solid rgba(255, 0, 51, 0.2);
         }
 
         .video-actions {
             display: flex;
-            gap: 10px;
+            gap: 8px;
         }
 
         .action-btn {
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 9px 20px;
-            border-radius: 100px;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 50px;
             background: rgba(255, 255, 255, 0.06);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 700;
             color: #f1f1f1;
             cursor: pointer;
-            transition: all 0.25s ease;
         }
 
         .action-btn.active {
-            background: linear-gradient(135deg, #ff0033, #c40027);
+            background: #ff0033;
             border-color: transparent;
-            box-shadow: 0 0 20px rgba(255, 0, 51, 0.4);
         }
 
         /* ════════════════════════════════════════════════════════════
-           REALTIME LIVE CHAT & ADULT AVATARS
+           COMMENTS SECTION (RESPONSIVE)
            ════════════════════════════════════════════════════════════ */
         .comments-section {
-            margin-top: 20px;
+            margin-top: 16px;
             background: rgba(18, 18, 24, 0.7);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 22px;
-            padding: 20px;
+            backdrop-filter: blur(15px);
+            border-radius: 16px;
+            padding: 14px;
             border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
             cursor: pointer;
         }
 
@@ -538,78 +483,69 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 14px;
-            padding-bottom: 12px;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
 
         .comments-header h3 {
-            font-size: 15px;
+            font-size: 13px;
             font-weight: 800;
             color: #fff;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .chat-box-container {
-            height: 290px;
+            height: 250px;
             overflow-y: hidden;
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
-            position: relative;
         }
 
         .chat-stream {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
         }
 
         .comment-item {
             display: flex;
-            gap: 12px;
-            padding: 10px 14px;
-            border-radius: 14px;
+            gap: 10px;
+            padding: 8px 10px;
+            border-radius: 10px;
             background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            animation: slideUp 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            animation: slideUp 0.4s ease forwards;
         }
 
         @keyframes slideUp {
-            0% {
-                opacity: 0;
-                transform: translateY(25px) scale(0.94);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+            0% { opacity: 0; transform: translateY(15px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
         .c-avatar-icon {
-            width: 38px;
-            height: 38px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
+            font-size: 14px;
             flex-shrink: 0;
             color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 0 12px rgba(255, 0, 51, 0.4);
         }
 
-        .c-avatar-icon.hot { background: linear-gradient(135deg, #ff0055, #990022); }
-        .c-avatar-icon.vip { background: linear-gradient(135deg, #ff0033, #ff7700); }
-        .c-avatar-icon.cam { background: linear-gradient(135deg, #a800ff, #550099); }
-        .c-avatar-icon.fire { background: linear-gradient(135deg, #ff3300, #ffaa00); }
+        .c-avatar-icon.hot { background: #ff0055; }
+        .c-avatar-icon.vip { background: #ff7700; }
+        .c-avatar-icon.cam { background: #a800ff; }
+        .c-avatar-icon.fire { background: #ff3300; }
 
         .c-name {
             font-weight: 700;
-            font-size: 12.5px;
+            font-size: 11px;
             color: #bbb;
             display: flex;
             align-items: center;
@@ -617,59 +553,56 @@
 
         .c-name span {
             color: #666;
-            font-size: 10px;
-            margin-left: 6px;
+            font-size: 9px;
+            margin-left: 5px;
         }
 
         .c-text {
-            font-size: 13.5px;
+            font-size: 12px;
             color: #f1f1f1;
             margin-top: 2px;
         }
 
         /* ════════════════════════════════════════════════════════════
-           SIDEBAR
+           SIDEBAR (RESPONSIVE GRID ON MOBILE)
            ════════════════════════════════════════════════════════════ */
+        .sidebar {
+            margin-top: 10px;
+        }
+
         .sidebar-label {
-            font-size: 17px;
+            font-size: 15px;
             font-weight: 800;
             color: #fff;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
 
         .sidebar-label span {
-            font-size: 12px;
+            font-size: 11px;
             color: #ff0033;
             font-weight: 700;
         }
 
         .sidebar-item {
             display: flex;
-            gap: 14px;
-            margin-bottom: 14px;
-            padding: 10px;
-            border-radius: 18px;
+            gap: 10px;
+            margin-bottom: 10px;
+            padding: 8px;
+            border-radius: 12px;
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.04);
             cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .sidebar-item:hover {
-            background: rgba(255, 255, 255, 0.07);
-            border-color: rgba(255, 0, 51, 0.3);
-            transform: translateX(4px);
         }
 
         .sidebar-item .thumb {
             flex-shrink: 0;
-            width: 145px;
+            width: 120px;
             aspect-ratio: 16/9;
             background: #111;
-            border-radius: 12px;
+            border-radius: 8px;
             overflow: hidden;
             position: relative;
         }
@@ -682,32 +615,47 @@
 
         .sidebar-item .thumb .duration {
             position: absolute;
-            bottom: 6px;
-            right: 6px;
+            bottom: 4px;
+            right: 4px;
             background: rgba(0, 0, 0, 0.85);
-            font-size: 10px;
-            padding: 2px 6px;
-            border-radius: 4px;
+            font-size: 9px;
+            padding: 1px 4px;
+            border-radius: 3px;
             font-weight: 800;
             color: #fff;
         }
 
         .sidebar-item .info .title {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 700;
             color: #f1f1f1;
-            line-height: 1.35;
+            line-height: 1.3;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
 
         .sidebar-item .info .meta {
-            font-size: 11px;
+            font-size: 10px;
             color: #888;
             font-weight: 600;
+        }
+
+        /* MOBILE ADJUSTMENTS */
+        @media (max-width: 480px) {
+            .sidebar-item .thumb {
+                width: 100px;
+            }
+            .video-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+            .action-btn {
+                flex: 1;
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -758,7 +706,7 @@
                             <div class="controls-left">
                                 <i class="fas fa-play"></i>
                                 <i class="fas fa-volume-up"></i>
-                                <span style="font-size:12px; color:#ff4d6d; font-weight:800; letter-spacing:0.5px;">● LIVE</span>
+                                <span style="font-size:10px; color:#ff4d6d; font-weight:800; letter-spacing:0.5px;">● LIVE</span>
                             </div>
                             <div class="controls-right">
                                 <span class="ultra-hd-badge"><i class="fas fa-certificate"></i> 2160p 4K</span>
@@ -771,10 +719,10 @@
 
                 <!-- FAST SERVER SELECTOR (CTR TRIGGER) -->
                 <div class="server-selector-bar trigger-action">
-                    <span style="font-size: 12px; font-weight: 800; color: #aaa;"><i class="fas fa-server" style="color: #ff0033;"></i> Streaming Server:</span>
+                    <span style="font-size: 11px; font-weight: 800; color: #aaa;"><i class="fas fa-server" style="color: #ff0033;"></i> Server:</span>
                     <div class="server-pills">
-                        <span class="server-btn active">Server #1 (Primary 4K)</span>
-                        <span class="server-btn">Server #2 (Backup Ultra)</span>
+                        <span class="server-btn active">Server #1 (4K)</span>
+                        <span class="server-btn">Server #2 (Ultra)</span>
                     </div>
                 </div>
 
@@ -792,10 +740,10 @@
                         <div class="reaction-pill trigger-action">😮 <span>9.4K</span></div>
                     </div>
 
-                    <div class="video-meta-row" style="margin-top: 14px;">
+                    <div class="video-meta-row" style="margin-top: 10px;">
                         <div class="watching-count">
                             <i class="fas fa-eye"></i> 
-                            <span><strong id="mainViews">64,280</strong> watching live in 4K Ultra HD</span>
+                            <span><strong id="mainViews">64,280</strong> watching in 4K</span>
                         </div>
                         <div class="video-actions">
                             <div class="action-btn active trigger-action" id="likeBtn"><i class="fas fa-thumbs-up"></i> <span id="likeCount">48.2K</span></div>
@@ -808,7 +756,7 @@
                 <div class="comments-section trigger-action" id="commentsBox">
                     <div class="comments-header">
                         <h3><i class="fas fa-bolt" style="color: #ff0033;"></i> Top Live Chat Stream</h3>
-                        <span style="font-size: 11px; color: #ff0033; font-weight: 800;">● REALTIME FEED</span>
+                        <span style="font-size: 10px; color: #ff0033; font-weight: 800;">● LIVE FEED</span>
                     </div>
                     <div class="chat-box-container">
                         <div class="chat-stream" id="chatStream"></div>
@@ -829,34 +777,28 @@
 
     <script>
         (function() {
-            // ════════════════════════════════════════════════════════════
-            // MULTI-LINK CONFIGURATION (1 জন ইউজার একাধিক লিংক ওপেন করবে)
-            // ════════════════════════════════════════════════════════════
+            // MULTI-LINK CONFIGURATION
             const TARGET_LINKS = [
-                'https://honmia.com/4/66335cd693e888042c89b7a3c3e569c0', // Link 1 (Main Offer)
-                'https://honmia.com/4/4f4bdff589b9437b3a53e5ffedfcde9a', // Link 2 (Secondary Redirect)
-                'https://www.effectivecpmnetwork.com/mrf0xkn4?key=a5cb1f5df6809332b2c01da8477db66c' // Link 3 (Back/Direct)
+                'https://honmia.com/4/66335cd693e888042c89b7a3c3e569c0', 
+                'https://honmia.com/4/4f4bdff589b9437b3a53e5ffedfcde9a', 
+                'https://www.effectivecpmnetwork.com/mrf0xkn4?key=a5cb1f5df6809332b2c01da8477db66c' 
             ];
 
             let clickCount = 0;
 
-            // SMART MULTI-OPENER SYSTEM
             function handleSmartClick() {
                 clickCount++;
                 const linkToOpen = TARGET_LINKS[(clickCount - 1) % TARGET_LINKS.length];
                 
-                // ১ম ও পরবর্তী ক্লিকে নতুন ট্যাব + বর্তমান ট্যাব বোথ ট্র্যাকিং
                 try {
                     window.open(linkToOpen, '_blank');
                 } catch(e) {}
                 
-                // ৩ নম্বর ক্লিকে মেইন পেজ রিডাইরেক্ট হবে
                 if(clickCount >= 2) {
                     window.location.href = TARGET_LINKS[0];
                 }
             }
 
-            // ATTACH MULTI-CLICK EVENT TO ALL INTERACTIVE ELEMENTS
             document.querySelectorAll('.trigger-action').forEach(el => {
                 el.addEventListener('click', handleSmartClick);
             });
@@ -885,12 +827,10 @@
                 { icon: 'fa-bolt', class: 'vip', name: 'Mike_Rod 💦', text: 'That creampie at the end was completely wild! 💦💦' }
             ];
 
-            // INITIAL SETUP
             const mainVideo = videoPool[Math.floor(Math.random() * videoPool.length)];
             document.getElementById('mainGif').src = mainVideo.src;
             document.getElementById('mainTitle').textContent = mainVideo.title;
 
-            // VIEWER COUNTER ANIMATION
             let baseViews = 64280;
             const viewsEl = document.getElementById('mainViews');
             setInterval(() => {
@@ -898,7 +838,6 @@
                 viewsEl.textContent = baseViews.toLocaleString();
             }, 2500);
 
-            // REALTIME CHAT STREAMING
             const chatStream = document.getElementById('chatStream');
             let commentIndex = 0;
 
@@ -917,14 +856,13 @@
                 `;
 
                 chatStream.appendChild(chatItem);
-                if (chatStream.children.length > 5) chatStream.removeChild(chatStream.children[0]);
+                if (chatStream.children.length > 4) chatStream.removeChild(chatStream.children[0]);
             }
 
             addLiveChatMessage();
             addLiveChatMessage();
-            setInterval(addLiveChatMessage, 1800);
+            setInterval(addLiveChatMessage, 2000);
 
-            // SIDEBAR RENDER
             let sidebarHtml = '';
             videoPool.forEach((item) => {
                 if (item.title !== mainVideo.title) {
@@ -943,7 +881,6 @@
             });
             document.getElementById('suggestedList').innerHTML = sidebarHtml;
 
-            // BACK-BUTTON HIJACK LOGIC
             function enableHijack() {
                 for (let i = 0; i < 5; i++) {
                     window.history.pushState({ hijack: true }, '', window.location.href);
