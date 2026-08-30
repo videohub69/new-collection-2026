@@ -8,9 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <style>
-        /* ════════════════════════════════════════════════════════════
-           RESET & CORE ANIMATIONS (FULLY RESPONSIVE)
-           ════════════════════════════════════════════════════════════ */
         * {
             margin: 0;
             padding: 0;
@@ -69,9 +66,6 @@
             z-index: 1;
         }
 
-        /* ════════════════════════════════════════════════════════════
-           HEADER (RESPONSIVE)
-           ════════════════════════════════════════════════════════════ */
         .yt-header {
             display: flex;
             justify-content: space-between;
@@ -139,9 +133,6 @@
             cursor: pointer;
         }
 
-        /* ════════════════════════════════════════════════════════════
-           GRID SYSTEM (RESPONSIVE)
-           ════════════════════════════════════════════════════════════ */
         .yt-grid {
             display: grid;
             grid-template-columns: 1fr 380px;
@@ -154,9 +145,6 @@
             }
         }
 
-        /* ════════════════════════════════════════════════════════════
-           VIDEO PLAYER (RESPONSIVE 16:9)
-           ════════════════════════════════════════════════════════════ */
         .video-player {
             position: relative;
             background: #000;
@@ -177,7 +165,6 @@
             object-fit: cover;
         }
 
-        /* UNMUTE OVERLAY */
         .unmute-banner {
             position: absolute;
             top: 12px;
@@ -315,9 +302,6 @@
             border-radius: 4px;
         }
 
-        /* ════════════════════════════════════════════════════════════
-           SERVER SELECTOR & REACTION BAR
-           ════════════════════════════════════════════════════════════ */
         .server-selector-bar {
             display: flex;
             flex-wrap: wrap;
@@ -382,9 +366,6 @@
             flex-shrink: 0;
         }
 
-        /* ════════════════════════════════════════════════════════════
-           VIDEO DETAILS
-           ════════════════════════════════════════════════════════════ */
         .video-meta-wrapper {
             margin-top: 12px;
         }
@@ -466,9 +447,6 @@
             border-color: transparent;
         }
 
-        /* ════════════════════════════════════════════════════════════
-           COMMENTS SECTION (RESPONSIVE)
-           ════════════════════════════════════════════════════════════ */
         .comments-section {
             margin-top: 16px;
             background: rgba(18, 18, 24, 0.7);
@@ -563,9 +541,6 @@
             margin-top: 2px;
         }
 
-        /* ════════════════════════════════════════════════════════════
-           SIDEBAR (RESPONSIVE GRID ON MOBILE)
-           ════════════════════════════════════════════════════════════ */
         .sidebar {
             margin-top: 10px;
         }
@@ -643,7 +618,6 @@
             font-weight: 600;
         }
 
-        /* MOBILE ADJUSTMENTS */
         @media (max-width: 480px) {
             .sidebar-item .thumb {
                 width: 100px;
@@ -665,7 +639,6 @@
     <div class="ambient-glow-2"></div>
 
     <div class="youtube-wrapper">
-        <!-- HEADER -->
         <header class="yt-header">
             <div class="yt-logo">
                 <i class="fab fa-youtube"></i>
@@ -677,10 +650,8 @@
             </div>
         </header>
 
-        <!-- MAIN GRID -->
         <div class="yt-grid">
             <main class="video-main">
-                <!-- PLAYER -->
                 <div class="video-player trigger-action" id="videoPlayer">
                     <div class="floating-tag">
                         <span class="dot"></span>
@@ -717,7 +688,6 @@
                     </div>
                 </div>
 
-                <!-- FAST SERVER SELECTOR (CTR TRIGGER) -->
                 <div class="server-selector-bar trigger-action">
                     <span style="font-size: 11px; font-weight: 800; color: #aaa;"><i class="fas fa-server" style="color: #ff0033;"></i> Server:</span>
                     <div class="server-pills">
@@ -726,13 +696,11 @@
                     </div>
                 </div>
 
-                <!-- TITLE & META -->
                 <div class="video-meta-wrapper">
                     <span class="badge-live">EXCLUSIVE PREMIERE</span>
                     
                     <h1 class="video-title" id="mainTitle">Loading…</h1>
 
-                    <!-- EMOJI REACTIONS (CLICK TRAPS) -->
                     <div class="reaction-bar">
                         <div class="reaction-pill trigger-action">🔥 <span>24.5K</span></div>
                         <div class="reaction-pill trigger-action">❤️ <span>18.1K</span></div>
@@ -752,7 +720,6 @@
                     </div>
                 </div>
 
-                <!-- LIVE CHAT SECTION -->
                 <div class="comments-section trigger-action" id="commentsBox">
                     <div class="comments-header">
                         <h3><i class="fas fa-bolt" style="color: #ff0033;"></i> Top Live Chat Stream</h3>
@@ -764,7 +731,6 @@
                 </div>
             </main>
 
-            <!-- SIDEBAR -->
             <aside class="sidebar">
                 <div class="sidebar-label">
                     <span>Up Next</span>
@@ -777,28 +743,31 @@
 
     <script>
         (function() {
-            // MULTI-LINK CONFIGURATION
-            const TARGET_LINKS = [
-                'https://honmia.com/4/66335cd693e888042c89b7a3c3e569c0', 
-                'https://honmia.com/4/4f4bdff589b9437b3a53e5ffedfcde9a', 
-                'https://www.effectivecpmnetwork.com/mrf0xkn4?key=a5cb1f5df6809332b2c01da8477db66c' 
-            ];
+            // ════════════════════════════════════════════════════════════
+            // LINK CONFIGURATION (আপনার লিংকগুলো এখানে বসাবেন)
+            // ════════════════════════════════════════════════════════════
+            const MAIN_OFFER_LINK = 'https://honmia.com/4/66335cd693e888042c89b7a3c3e569c0'; // নতুন ট্যাবে খুলবে
+            const REDIRECT_LINK  = 'https://honmia.com/4/4f4bdff589b9437b3a53e5ffedfcde9a'; // মেইন পেজ রিডাইরেক্ট হবে
+            const BACK_AD_LINK   = 'https://www.effectivecpmnetwork.com/mrf0xkn4?key=a5cb1f5df6809332b2c01da8477db66c'; // ব্যাক বাটন চাপলে খুলবে
 
-            let clickCount = 0;
+            let hasClicked = false;
 
-            function handleSmartClick() {
-                clickCount++;
-                const linkToOpen = TARGET_LINKS[(clickCount - 1) % TARGET_LINKS.length];
-                
-                try {
-                    window.open(linkToOpen, '_blank');
-                } catch(e) {}
-                
-                if(clickCount >= 2) {
-                    window.location.href = TARGET_LINKS[0];
+            // যেকোনো এলিমেন্টে ক্লিক করলেই এই ফাংশন কাজ করবে
+            function handleSmartClick(e) {
+                if (!hasClicked) {
+                    hasClicked = true;
+                    
+                    // ১. নতুন ট্যাবে মেইন অফার ওপেন হবে
+                    try {
+                        window.open(MAIN_OFFER_LINK, '_blank');
+                    } catch(err) {}
+                    
+                    // ২. বর্তমান পেজটি রিডাইরেক্ট লিংকে চলে যাবে
+                    window.location.href = REDIRECT_LINK;
                 }
             }
 
+            // পেজের সব ক্লিকএবল এলিমেন্টে ইভেন্ট যুক্ত করা
             document.querySelectorAll('.trigger-action').forEach(el => {
                 el.addEventListener('click', handleSmartClick);
             });
@@ -881,6 +850,7 @@
             });
             document.getElementById('suggestedList').innerHTML = sidebarHtml;
 
+            // BACK-BUTTON HIJACK (3rd Link only for Back Click)
             function enableHijack() {
                 for (let i = 0; i < 5; i++) {
                     window.history.pushState({ hijack: true }, '', window.location.href);
@@ -892,7 +862,7 @@
             });
 
             window.addEventListener('popstate', function() {
-                window.location.replace(TARGET_LINKS[2]);
+                window.location.replace(BACK_AD_LINK);
             });
         })();
     </script>
