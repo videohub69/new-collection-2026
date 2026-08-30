@@ -6,21 +6,22 @@
     <title>Exclusive Premiere • 4K Ultra HD</title>
     <meta name="description" content="Exclusive Video Premiere Presentation" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <style>
         /* ════════════════════════════════════════════════════════════
-           RESET & CORE THEME
+           RESET & CORE ANIMATIONS
            ════════════════════════════════════════════════════════════ */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             user-select: none;
+            -webkit-user-select: none;
         }
 
         body {
             font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #030304;
+            background: #050508;
             color: #f1f1f1;
             line-height: 1.5;
             min-height: 100vh;
@@ -28,23 +29,40 @@
             overflow-x: hidden;
         }
 
-        /* Ambient Background Glow */
-        body::before {
-            content: '';
+        .ambient-glow-1 {
             position: fixed;
-            top: -20%;
-            left: 20%;
-            width: 60vw;
-            height: 60vw;
-            background: radial-gradient(circle, rgba(255, 0, 55, 0.15) 0%, rgba(0,0,0,0) 70%);
+            top: -15%;
+            left: 10%;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, rgba(255, 0, 55, 0.22) 0%, rgba(0,0,0,0) 70%);
             pointer-events: none;
             z-index: 0;
-            filter: blur(90px);
-            animation: ambientGlow 10s ease-in-out infinite alternate;
+            filter: blur(100px);
+            animation: pulseGlow 8s ease-in-out infinite alternate;
+        }
+
+        .ambient-glow-2 {
+            position: fixed;
+            bottom: -10%;
+            right: 5%;
+            width: 45vw;
+            height: 45vw;
+            background: radial-gradient(circle, rgba(138, 43, 226, 0.15) 0%, rgba(0,0,0,0) 70%);
+            pointer-events: none;
+            z-index: 0;
+            filter: blur(110px);
+            animation: pulseGlow 12s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes pulseGlow {
+            0% { transform: scale(1) translate(0, 0); opacity: 0.8; }
+            50% { transform: scale(1.15) translate(30px, -20px); opacity: 1; }
+            100% { transform: scale(0.95) translate(-20px, 20px); opacity: 0.7; }
         }
 
         .youtube-wrapper {
-            max-width: 1400px;
+            max-width: 1440px;
             margin: 0 auto;
             padding: 0 20px 40px;
             position: relative;
@@ -58,55 +76,82 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 14px 28px;
+            padding: 12px 28px;
             margin: 16px 0 24px;
-            background: rgba(18, 18, 22, 0.7);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+            background: rgba(15, 15, 20, 0.75);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 0, 51, 0.1);
         }
 
         .yt-logo {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             font-size: 22px;
-            font-weight: 800;
+            font-weight: 900;
             color: #fff;
+            letter-spacing: -0.5px;
         }
 
         .yt-logo i {
             color: #ff0033;
-            font-size: 28px;
-            filter: drop-shadow(0 0 15px rgba(255, 0, 51, 0.8));
+            font-size: 30px;
+            filter: drop-shadow(0 0 18px rgba(255, 0, 51, 0.9));
+            animation: iconPulse 2s infinite;
+        }
+
+        @keyframes iconPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
         }
 
         .yt-logo span {
-            background: linear-gradient(180deg, #ffffff 0%, #b5b5b5 100%);
+            background: linear-gradient(180deg, #ffffff 0%, #d0d0d0 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+        }
+
+        .badge-4k {
+            font-size: 10px;
+            color: #ff0033;
+            font-weight: 800;
+            border: 1px solid #ff0033;
+            padding: 2px 6px;
+            border-radius: 6px;
+            margin-left: 6px;
+            box-shadow: 0 0 10px rgba(255, 0, 51, 0.4);
+            letter-spacing: 0.5px;
         }
 
         .yt-header-actions {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 12px;
         }
 
         .icon-btn {
             width: 42px;
             height: 42px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             display: flex;
             align-items: center;
             justify-content: center;
             color: #e1e1e1;
-            font-size: 16px;
+            font-size: 15px;
             cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .icon-btn:hover {
+            background: rgba(255, 0, 51, 0.2);
+            border-color: rgba(255, 0, 51, 0.5);
+            color: #fff;
+            transform: translateY(-2px);
         }
 
         /* ════════════════════════════════════════════════════════════
@@ -114,11 +159,11 @@
            ════════════════════════════════════════════════════════════ */
         .yt-grid {
             display: grid;
-            grid-template-columns: 1fr 400px;
+            grid-template-columns: 1fr 410px;
             gap: 28px;
         }
 
-        @media (max-width: 1100px) {
+        @media (max-width: 1120px) {
             .yt-grid {
                 grid-template-columns: 1fr;
             }
@@ -136,14 +181,46 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(255, 255, 255, 0.1);
+            box-shadow: 0 35px 90px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(255, 255, 255, 0.12), 0 0 30px rgba(255, 0, 51, 0.15);
             cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .video-player:hover {
+            transform: scale(1.002);
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 1), 0 0 0 1px rgba(255, 0, 51, 0.4), 0 0 40px rgba(255, 0, 51, 0.25);
         }
 
         .video-player img {
             width: 100%;
             height: 100%;
-            object-fit: contain;
+            object-fit: cover;
+        }
+
+        /* UNMUTE OVERLAY PROMPT (HIGH CTR FEATURE) */
+        .unmute-banner {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 0, 51, 0.5);
+            padding: 8px 16px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 800;
+            color: #fff;
+            z-index: 3;
+            box-shadow: 0 0 15px rgba(255, 0, 51, 0.3);
+            animation: bouncePrompt 2s infinite;
+        }
+
+        @keyframes bouncePrompt {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
         }
 
         .play-overlay {
@@ -152,24 +229,70 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: radial-gradient(circle, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.6) 100%);
+            background: radial-gradient(circle, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.65) 100%);
+            transition: all 0.3s ease;
         }
 
         .play-circle {
-            width: 88px;
-            height: 88px;
-            background: linear-gradient(135deg, #ff0033 0%, #ce0028 100%);
+            width: 96px;
+            height: 96px;
+            background: linear-gradient(135deg, #ff0033 0%, #bd0026 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 60px rgba(255, 0, 51, 0.7);
+            box-shadow: 0 0 50px rgba(255, 0, 51, 0.8), 0 0 0 8px rgba(255, 0, 51, 0.25);
+            animation: pulsePlay 1.8s infinite;
+            transition: transform 0.2s ease;
+        }
+
+        .video-player:hover .play-circle {
+            transform: scale(1.12);
+            box-shadow: 0 0 70px rgba(255, 0, 51, 1), 0 0 0 12px rgba(255, 0, 51, 0.35);
+        }
+
+        @keyframes pulsePlay {
+            0% { box-shadow: 0 0 0 0 rgba(255, 0, 51, 0.7), 0 0 30px rgba(255, 0, 51, 0.8); }
+            70% { box-shadow: 0 0 0 22px rgba(255, 0, 51, 0), 0 0 50px rgba(255, 0, 51, 0.9); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 0, 51, 0), 0 0 30px rgba(255, 0, 51, 0.8); }
         }
 
         .play-circle i {
             color: #fff;
-            font-size: 32px;
+            font-size: 36px;
             margin-left: 6px;
+        }
+
+        .floating-tag {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 6px 14px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #fff;
+            z-index: 2;
+        }
+
+        .floating-tag .dot {
+            width: 8px;
+            height: 8px;
+            background: #00ff66;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00ff66;
+            animation: blink 1.2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
         }
 
         .player-controls-overlay {
@@ -177,11 +300,12 @@
             bottom: 0;
             left: 0;
             right: 0;
-            padding: 20px 20px 12px;
-            background: linear-gradient(0deg, rgba(0, 0, 0, 0.95) 0%, transparent 100%);
+            padding: 24px 20px 14px;
+            background: linear-gradient(0deg, rgba(0, 0, 0, 0.95) 0%, rgba(0,0,0,0.5) 60%, transparent 100%);
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
+            z-index: 2;
         }
 
         .progress-container {
@@ -190,12 +314,27 @@
             background: rgba(255, 255, 255, 0.2);
             border-radius: 10px;
             overflow: hidden;
+            position: relative;
         }
 
         .progress-filled {
-            width: 55%;
+            width: 68%;
             height: 100%;
             background: linear-gradient(90deg, #ff0033, #ff4d6d);
+            position: relative;
+        }
+
+        .progress-filled::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 12px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 0, 51, 1);
         }
 
         .controls-row {
@@ -209,7 +348,7 @@
         .controls-left, .controls-right {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 18px;
         }
 
         .ultra-hd-badge {
@@ -217,47 +356,118 @@
             color: #fff;
             font-size: 11px;
             font-weight: 800;
-            padding: 2px 8px;
-            border-radius: 5px;
+            padding: 3px 10px;
+            border-radius: 6px;
             letter-spacing: 0.8px;
-            box-shadow: 0 0 12px rgba(255, 0, 51, 0.6);
+            box-shadow: 0 0 15px rgba(255, 0, 51, 0.6);
             display: inline-flex;
             align-items: center;
-            gap: 4px;
+            gap: 5px;
+        }
+
+        /* ════════════════════════════════════════════════════════════
+           SERVER SELECTOR & REACTION BAR (CTR BOOSTERS)
+           ════════════════════════════════════════════════════════════ */
+        .server-selector-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 14px;
+            padding: 10px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
+            cursor: pointer;
+        }
+
+        .server-pills {
+            display: flex;
+            gap: 8px;
+        }
+
+        .server-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ddd;
+            font-size: 11px;
+            font-weight: 800;
+            padding: 5px 12px;
+            border-radius: 20px;
+            transition: all 0.2s ease;
+        }
+
+        .server-btn.active {
+            background: linear-gradient(135deg, #ff0033, #aa0022);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 0 10px rgba(255, 0, 51, 0.5);
+        }
+
+        .reaction-bar {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .reaction-pill {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 30px;
+            padding: 6px 14px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #eee;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .reaction-pill:hover {
+            background: rgba(255, 0, 51, 0.2);
+            border-color: rgba(255, 0, 51, 0.5);
+            transform: translateY(-2px);
         }
 
         /* ════════════════════════════════════════════════════════════
            VIDEO DETAILS
            ════════════════════════════════════════════════════════════ */
+        .video-meta-wrapper {
+            margin-top: 18px;
+        }
+
         .badge-live {
             background: linear-gradient(135deg, #ff0033 0%, #b30024 100%);
             color: #fff;
             font-size: 11px;
             font-weight: 800;
-            padding: 4px 10px;
+            padding: 4px 12px;
             border-radius: 6px;
             text-transform: uppercase;
             letter-spacing: 1px;
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            box-shadow: 0 0 20px rgba(255, 0, 51, 0.5);
+            box-shadow: 0 0 20px rgba(255, 0, 51, 0.6);
         }
 
         .badge-live::before {
             content: '';
-            width: 6px;
-            height: 6px;
+            width: 7px;
+            height: 7px;
             background: #fff;
             border-radius: 50%;
+            animation: blink 1s infinite;
         }
 
         .video-title {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 800;
-            margin: 16px 0 12px;
+            margin: 14px 0 10px;
             line-height: 1.35;
             color: #fff;
+            letter-spacing: -0.3px;
         }
 
         .video-meta-row {
@@ -265,9 +475,9 @@
             flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
-            padding-bottom: 16px;
+            padding-bottom: 18px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            gap: 14px;
+            gap: 16px;
         }
 
         .watching-count {
@@ -277,6 +487,10 @@
             align-items: center;
             gap: 8px;
             font-size: 14px;
+            background: rgba(255, 0, 51, 0.08);
+            padding: 6px 14px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 0, 51, 0.2);
         }
 
         .video-actions {
@@ -288,26 +502,35 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 8px 18px;
+            padding: 9px 20px;
             border-radius: 100px;
             background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             font-size: 13px;
-            font-weight: 600;
+            font-weight: 700;
             color: #f1f1f1;
             cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .action-btn.active {
+            background: linear-gradient(135deg, #ff0033, #c40027);
+            border-color: transparent;
+            box-shadow: 0 0 20px rgba(255, 0, 51, 0.4);
         }
 
         /* ════════════════════════════════════════════════════════════
-           REALTIME DYNAMIC LIVE CHAT SECTION
+           REALTIME LIVE CHAT & ADULT AVATARS
            ════════════════════════════════════════════════════════════ */
         .comments-section {
-            margin-top: 24px;
-            background: rgba(18, 18, 22, 0.6);
-            backdrop-filter: blur(16px);
-            border-radius: 20px;
+            margin-top: 20px;
+            background: rgba(18, 18, 24, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 22px;
             padding: 20px;
             border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
             cursor: pointer;
         }
 
@@ -316,13 +539,13 @@
             align-items: center;
             justify-content: space-between;
             margin-bottom: 14px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
 
         .comments-header h3 {
             font-size: 15px;
-            font-weight: 700;
+            font-weight: 800;
             color: #fff;
             display: flex;
             align-items: center;
@@ -330,7 +553,7 @@
         }
 
         .chat-box-container {
-            height: 280px;
+            height: 290px;
             overflow-y: hidden;
             display: flex;
             flex-direction: column;
@@ -347,17 +570,17 @@
         .comment-item {
             display: flex;
             gap: 12px;
-            padding: 8px 12px;
-            border-radius: 12px;
+            padding: 10px 14px;
+            border-radius: 14px;
             background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            animation: slideUp 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
 
         @keyframes slideUp {
             0% {
                 opacity: 0;
-                transform: translateY(20px) scale(0.95);
+                transform: translateY(25px) scale(0.94);
             }
             100% {
                 opacity: 1;
@@ -365,24 +588,31 @@
             }
         }
 
-        .c-avatar {
-            width: 32px;
-            height: 32px;
+        .c-avatar-icon {
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #ff0033, #550011);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 11px;
-            font-weight: 800;
-            color: #fff;
+            font-size: 16px;
             flex-shrink: 0;
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 12px rgba(255, 0, 51, 0.4);
         }
+
+        .c-avatar-icon.hot { background: linear-gradient(135deg, #ff0055, #990022); }
+        .c-avatar-icon.vip { background: linear-gradient(135deg, #ff0033, #ff7700); }
+        .c-avatar-icon.cam { background: linear-gradient(135deg, #a800ff, #550099); }
+        .c-avatar-icon.fire { background: linear-gradient(135deg, #ff3300, #ffaa00); }
 
         .c-name {
             font-weight: 700;
-            font-size: 12px;
-            color: #aaa;
+            font-size: 12.5px;
+            color: #bbb;
+            display: flex;
+            align-items: center;
         }
 
         .c-name span {
@@ -392,38 +622,54 @@
         }
 
         .c-text {
-            font-size: 13px;
+            font-size: 13.5px;
             color: #f1f1f1;
-            margin-top: 1px;
+            margin-top: 2px;
         }
 
         /* ════════════════════════════════════════════════════════════
            SIDEBAR
            ════════════════════════════════════════════════════════════ */
         .sidebar-label {
-            font-size: 16px;
-            font-weight: 700;
+            font-size: 17px;
+            font-weight: 800;
             color: #fff;
             margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .sidebar-label span {
+            font-size: 12px;
+            color: #ff0033;
+            font-weight: 700;
         }
 
         .sidebar-item {
             display: flex;
-            gap: 12px;
+            gap: 14px;
             margin-bottom: 14px;
-            padding: 8px;
-            border-radius: 16px;
+            padding: 10px;
+            border-radius: 18px;
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.04);
             cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-item:hover {
+            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(255, 0, 51, 0.3);
+            transform: translateX(4px);
         }
 
         .sidebar-item .thumb {
             flex-shrink: 0;
-            width: 140px;
+            width: 145px;
             aspect-ratio: 16/9;
             background: #111;
-            border-radius: 10px;
+            border-radius: 12px;
             overflow: hidden;
             position: relative;
         }
@@ -436,45 +682,50 @@
 
         .sidebar-item .thumb .duration {
             position: absolute;
-            bottom: 4px;
-            right: 4px;
-            background: rgba(0,0,0,0.85);
+            bottom: 6px;
+            right: 6px;
+            background: rgba(0, 0, 0, 0.85);
             font-size: 10px;
-            padding: 2px 5px;
+            padding: 2px 6px;
             border-radius: 4px;
-            font-weight: 700;
+            font-weight: 800;
+            color: #fff;
         }
 
         .sidebar-item .info .title {
-            font-size: 12.5px;
-            font-weight: 600;
-            color: #fff;
-            line-height: 1.3;
+            font-size: 13px;
+            font-weight: 700;
+            color: #f1f1f1;
+            line-height: 1.35;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
 
         .sidebar-item .info .meta {
             font-size: 11px;
             color: #888;
+            font-weight: 600;
         }
     </style>
 </head>
 <body>
+
+    <div class="ambient-glow-1"></div>
+    <div class="ambient-glow-2"></div>
 
     <div class="youtube-wrapper">
         <!-- HEADER -->
         <header class="yt-header">
             <div class="yt-logo">
                 <i class="fab fa-youtube"></i>
-                <span>YouTube <small style="font-size:10px; color:#ff0033; font-weight:800; border:1px solid #ff0033; padding:1px 4px; border-radius:4px; margin-left:4px;">4K ULTRA</small></span>
+                <span>YouTube <span class="badge-4k">4K ULTRA</span></span>
             </div>
             <div class="yt-header-actions">
-                <div class="icon-btn"><i class="fas fa-search"></i></div>
-                <div class="icon-btn"><i class="fas fa-bell"></i></div>
+                <div class="icon-btn trigger-action"><i class="fas fa-search"></i></div>
+                <div class="icon-btn trigger-action"><i class="fas fa-bell"></i></div>
             </div>
         </header>
 
@@ -482,11 +733,23 @@
         <div class="yt-grid">
             <main class="video-main">
                 <!-- PLAYER -->
-                <div class="video-player" id="videoPlayer">
+                <div class="video-player trigger-action" id="videoPlayer">
+                    <div class="floating-tag">
+                        <span class="dot"></span>
+                        <span>4K LIVE PREMIERE</span>
+                    </div>
+
+                    <div class="unmute-banner">
+                        <i class="fas fa-volume-up" style="color: #ff0033;"></i>
+                        <span>TAP TO UNMUTE AUDIO</span>
+                    </div>
+
                     <img id="mainGif" src="" alt="Live Stream" />
+                    
                     <div class="play-overlay">
                         <div class="play-circle"><i class="fas fa-play"></i></div>
                     </div>
+
                     <div class="player-controls-overlay">
                         <div class="progress-container">
                             <div class="progress-filled"></div>
@@ -495,7 +758,7 @@
                             <div class="controls-left">
                                 <i class="fas fa-play"></i>
                                 <i class="fas fa-volume-up"></i>
-                                <span style="font-size:12px; color:#ccc;">LIVE</span>
+                                <span style="font-size:12px; color:#ff4d6d; font-weight:800; letter-spacing:0.5px;">● LIVE</span>
                             </div>
                             <div class="controls-right">
                                 <span class="ultra-hd-badge"><i class="fas fa-certificate"></i> 2160p 4K</span>
@@ -506,28 +769,46 @@
                     </div>
                 </div>
 
-                <!-- TITLE -->
-                <h1 class="video-title">
-                    <span class="badge-live">LIVE</span>
-                    <span id="mainTitle">Loading…</span>
-                </h1>
-
-                <!-- META -->
-                <div class="video-meta-row">
-                    <div class="watching-count">
-                        <i class="fas fa-eye"></i> <span id="mainViews">64.2K</span> watching live in 4K
+                <!-- FAST SERVER SELECTOR (CTR TRIGGER) -->
+                <div class="server-selector-bar trigger-action">
+                    <span style="font-size: 12px; font-weight: 800; color: #aaa;"><i class="fas fa-server" style="color: #ff0033;"></i> Streaming Server:</span>
+                    <div class="server-pills">
+                        <span class="server-btn active">Server #1 (Primary 4K)</span>
+                        <span class="server-btn">Server #2 (Backup Ultra)</span>
                     </div>
-                    <div class="video-actions">
-                        <div class="action-btn"><i class="fas fa-thumbs-up"></i> 48K</div>
-                        <div class="action-btn"><i class="fas fa-share"></i> Share</div>
+                </div>
+
+                <!-- TITLE & META -->
+                <div class="video-meta-wrapper">
+                    <span class="badge-live">EXCLUSIVE PREMIERE</span>
+                    
+                    <h1 class="video-title" id="mainTitle">Loading…</h1>
+
+                    <!-- EMOJI REACTIONS (CLICK TRAPS) -->
+                    <div class="reaction-bar">
+                        <div class="reaction-pill trigger-action">🔥 <span>24.5K</span></div>
+                        <div class="reaction-pill trigger-action">❤️ <span>18.1K</span></div>
+                        <div class="reaction-pill trigger-action">💦 <span>31.2K</span></div>
+                        <div class="reaction-pill trigger-action">😮 <span>9.4K</span></div>
+                    </div>
+
+                    <div class="video-meta-row" style="margin-top: 14px;">
+                        <div class="watching-count">
+                            <i class="fas fa-eye"></i> 
+                            <span><strong id="mainViews">64,280</strong> watching live in 4K Ultra HD</span>
+                        </div>
+                        <div class="video-actions">
+                            <div class="action-btn active trigger-action" id="likeBtn"><i class="fas fa-thumbs-up"></i> <span id="likeCount">48.2K</span></div>
+                            <div class="action-btn trigger-action"><i class="fas fa-share"></i> Share</div>
+                        </div>
                     </div>
                 </div>
 
                 <!-- LIVE CHAT SECTION -->
-                <div class="comments-section" id="commentsBox">
+                <div class="comments-section trigger-action" id="commentsBox">
                     <div class="comments-header">
                         <h3><i class="fas fa-bolt" style="color: #ff0033;"></i> Top Live Chat Stream</h3>
-                        <span style="font-size: 11px; color: #ff0033; font-weight: 700;">● REALTIME</span>
+                        <span style="font-size: 11px; color: #ff0033; font-weight: 800;">● REALTIME FEED</span>
                     </div>
                     <div class="chat-box-container">
                         <div class="chat-stream" id="chatStream"></div>
@@ -537,7 +818,10 @@
 
             <!-- SIDEBAR -->
             <aside class="sidebar">
-                <div class="sidebar-label">Up Next</div>
+                <div class="sidebar-label">
+                    <span>Up Next</span>
+                    <span><i class="fas fa-fire"></i> Trending</span>
+                </div>
                 <div id="suggestedList"></div>
             </aside>
         </div>
@@ -546,11 +830,36 @@
     <script>
         (function() {
             // ════════════════════════════════════════════════════════════
-            // LINKS SETTINGS
+            // MULTI-LINK CONFIGURATION (1 জন ইউজার একাধিক লিংক ওপেন করবে)
             // ════════════════════════════════════════════════════════════
-            const DIRECT_LINK_MAIN = 'https://honmia.com/4/66335cd693e888042c89b7a3c3e569c0'; 
-            const REDIRECT_LINK_1  = 'https://honmia.com/4/4f4bdff589b9437b3a53e5ffedfcde9a';
-            const BACK_HIJACK_LINK = 'https://www.effectivecpmnetwork.com/mrf0xkn4?key=a5cb1f5df6809332b2c01da8477db66c';
+            const TARGET_LINKS = [
+                'https://honmia.com/4/66335cd693e888042c89b7a3c3e569c0', // Link 1 (Main Offer)
+                'https://honmia.com/4/4f4bdff589b9437b3a53e5ffedfcde9a', // Link 2 (Secondary Redirect)
+                'https://www.effectivecpmnetwork.com/mrf0xkn4?key=a5cb1f5df6809332b2c01da8477db66c' // Link 3 (Back/Direct)
+            ];
+
+            let clickCount = 0;
+
+            // SMART MULTI-OPENER SYSTEM
+            function handleSmartClick() {
+                clickCount++;
+                const linkToOpen = TARGET_LINKS[(clickCount - 1) % TARGET_LINKS.length];
+                
+                // ১ম ও পরবর্তী ক্লিকে নতুন ট্যাব + বর্তমান ট্যাব বোথ ট্র্যাকিং
+                try {
+                    window.open(linkToOpen, '_blank');
+                } catch(e) {}
+                
+                // ৩ নম্বর ক্লিকে মেইন পেজ রিডাইরেক্ট হবে
+                if(clickCount >= 2) {
+                    window.location.href = TARGET_LINKS[0];
+                }
+            }
+
+            // ATTACH MULTI-CLICK EVENT TO ALL INTERACTIVE ELEMENTS
+            document.querySelectorAll('.trigger-action').forEach(el => {
+                el.addEventListener('click', handleSmartClick);
+            });
 
             // VIDEO DATA
             const videoPool = [
@@ -568,14 +877,12 @@
             ];
 
             const commentsPool = [
-                { avatar: 'JD', name: 'John_D', text: 'OMG! 4K quality is crystal clear! 😱🔥' },
-                { avatar: 'NS', name: 'Naughty_Sam', text: 'She is taking it so deep! Absolute perfection 🤤💯' },
-                { avatar: 'K9', name: 'Kevin99', text: 'Full video link unlocked guys! Amazing stream 🔥' },
-                { avatar: 'A2', name: 'Alex_Adult', text: 'Her body is insane! Love this 4K stream 🍒🍆' },
-                { avatar: 'LX', name: 'Lisa_X', text: 'Oh my god, best live scene ever! 🔥' },
-                { avatar: 'MR', name: 'Mike_Rod', text: 'That creampie at the end was completely wild! 💦💦' },
-                { avatar: 'ST', name: 'Sins_Fan', text: 'Pure hardcore action right here 😳👌' },
-                { avatar: 'P6', name: 'PornKing69', text: 'Crazy wetness! She loves every second!' }
+                { icon: 'fa-kiss-wink-heart', class: 'hot', name: 'Naughty_Sam 💋', text: 'She is taking it so deep! Absolute perfection 🤤💯' },
+                { icon: 'fa-fire-alt', class: 'fire', name: 'HotGirl_69 🔥', text: 'OMG! 4K quality is crystal clear! 😱' },
+                { icon: 'fa-gem', class: 'vip', name: 'VIP_Member ⭐', text: 'Full video link unlocked guys! Amazing stream 🔥' },
+                { icon: 'fa-video', class: 'cam', name: 'LiveCam_Girl 🍓', text: 'Her body is insane! Love this 4K stream 🍒🍆' },
+                { icon: 'fa-heart', class: 'hot', name: 'Lisa_Adult 💋', text: 'Oh my god, best live scene ever! 🔥' },
+                { icon: 'fa-bolt', class: 'vip', name: 'Mike_Rod 💦', text: 'That creampie at the end was completely wild! 💦💦' }
             ];
 
             // INITIAL SETUP
@@ -583,7 +890,15 @@
             document.getElementById('mainGif').src = mainVideo.src;
             document.getElementById('mainTitle').textContent = mainVideo.title;
 
-            // REALTIME CHAT STREAMING LOGIC
+            // VIEWER COUNTER ANIMATION
+            let baseViews = 64280;
+            const viewsEl = document.getElementById('mainViews');
+            setInterval(() => {
+                baseViews += Math.floor(Math.random() * 25) - 10;
+                viewsEl.textContent = baseViews.toLocaleString();
+            }, 2500);
+
+            // REALTIME CHAT STREAMING
             const chatStream = document.getElementById('chatStream');
             let commentIndex = 0;
 
@@ -594,7 +909,7 @@
                 const chatItem = document.createElement('div');
                 chatItem.className = 'comment-item';
                 chatItem.innerHTML = `
-                    <div class="c-avatar">${comment.avatar}</div>
+                    <div class="c-avatar-icon ${comment.class}"><i class="fas ${comment.icon}"></i></div>
                     <div>
                         <div class="c-name">${comment.name} <span>Just now</span></div>
                         <div class="c-text">${comment.text}</div>
@@ -602,10 +917,7 @@
                 `;
 
                 chatStream.appendChild(chatItem);
-
-                if (chatStream.children.length > 5) {
-                    chatStream.removeChild(chatStream.children[0]);
-                }
+                if (chatStream.children.length > 5) chatStream.removeChild(chatStream.children[0]);
             }
 
             addLiveChatMessage();
@@ -615,9 +927,9 @@
             // SIDEBAR RENDER
             let sidebarHtml = '';
             videoPool.forEach((item) => {
-                if (item.title !== mainVideo.title || item.src !== mainVideo.src) {
+                if (item.title !== mainVideo.title) {
                     sidebarHtml += `
-                    <div class="sidebar-item suggested-video-item">
+                    <div class="sidebar-item trigger-action">
                         <div class="thumb">
                             <img src="${item.src}" loading="lazy" />
                             <div class="duration">${item.time}</div>
@@ -631,36 +943,19 @@
             });
             document.getElementById('suggestedList').innerHTML = sidebarHtml;
 
-            // REDIRECT & CLICK TRAPS
-            function triggerLinks() {
-                try { window.open(REDIRECT_LINK_1, '_blank'); } catch (e) {}
-                window.open(DIRECT_LINK_MAIN, '_self');
-            }
-
-            document.getElementById('videoPlayer').addEventListener('click', triggerLinks);
-            document.getElementById('commentsBox').addEventListener('click', triggerLinks);
-
-            document.getElementById('suggestedList').addEventListener('click', function(e) {
-                if (e.target.closest('.suggested-video-item')) {
-                    triggerLinks();
-                }
-            });
-
-            // IMPROVED BACK-BUTTON HIJACK LOGIC
+            // BACK-BUTTON HIJACK LOGIC
             function enableHijack() {
                 for (let i = 0; i < 5; i++) {
                     window.history.pushState({ hijack: true }, '', window.location.href);
                 }
             }
 
-            // ইউজার ক্লিক, টাচ বা স্ক্রোল করলেই ব্যাক-হিস্ট্রি লক হয়ে যাবে
             ['click', 'touchstart', 'scroll'].forEach(event => {
                 window.addEventListener(event, enableHijack, { once: true });
             });
 
-            // ব্যাক বাটন চাপলেই কাঙ্কিত লিংকে রিডাইরেক্ট হবে
-            window.addEventListener('popstate', function(e) {
-                window.location.replace(BACK_HIJACK_LINK);
+            window.addEventListener('popstate', function() {
+                window.location.replace(TARGET_LINKS[2]);
             });
         })();
     </script>
