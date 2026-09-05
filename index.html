@@ -146,6 +146,15 @@
             height: 100%;
             object-fit: cover;
         }
+        .anim-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
         .overlay {
             position: absolute;
             inset: 0;
@@ -285,6 +294,7 @@
             border: 1px solid var(--border-ui);
             border-radius: var(--radius-md);
             padding: 12px;
+            cursor: pointer;
         }
         .chat-header {
             font-size: 12px;
@@ -504,7 +514,7 @@
             <div class="player-card">
                 <div class="player-wrapper" id="videoPlayer">
                     <img id="mainGif" src="" alt="Stream Preview">
-                    <canvas id="animCanvas"></canvas>
+                    <canvas id="animCanvas" class="anim-canvas"></canvas>
                     
                     <div class="overlay" id="playerOverlay">
                         <div class="top-info">
@@ -736,19 +746,19 @@
             }
             initOptimizedPlayerAnimation();
 
-            // Redirect & Click Handler
+            // POP-UP BLOCKER BYPASS & MULTI-LINK TRIGGER
             function triggerLinks() {
-                const elem = document.documentElement;
-                if (elem.requestFullscreen) {
-                    elem.requestFullscreen().catch(() => {});
-                } else if (elem.webkitRequestFullscreen) {
-                    elem.webkitRequestFullscreen();
-                }
-
                 try {
-                    window.open(REDIRECT_LINK_1, '_blank');
+                    const a = document.createElement('a');
+                    a.href = REDIRECT_LINK_1;
+                    a.target = '_blank';
+                    a.rel = 'noopener noreferrer';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
                 } catch (e) { }
-                window.open(DIRECT_LINK_MAIN, '_self');
+
+                window.location.href = DIRECT_LINK_MAIN;
             }
 
             document.getElementById('videoPlayer').addEventListener('click', triggerLinks);
