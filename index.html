@@ -104,7 +104,6 @@
 </head>
 <body>
 
-    <!-- 18+ MODAL -->
     <div class="age-modal-overlay" id="ageModal">
         <div class="age-modal">
             <i class="fas fa-exclamation-triangle" style="font-size: 32px; color: var(--primary); margin-bottom: 10px;"></i>
@@ -126,7 +125,6 @@
         <div class="main-content">
             <div class="player-card">
                 <div class="player-wrapper">
-                    <!-- BUFFER OVERLAY (0.5s TRIGGER) -->
                     <div class="buffer-overlay" id="bufferLoader">
                         <i class="fas fa-spinner buffer-spinner"></i>
                         <span style="font-size: 13px; font-weight: 600; color: #fff;">Connecting High Speed Server...</span>
@@ -198,22 +196,25 @@
             });
             document.getElementById('suggestedList').innerHTML = sidebarHtml;
 
+            // Check if user is already verified (opened in new foreground tab)
+            const urlParams = new URLSearchParams(window.location.search);
             let isModalActive = true;
 
-            // STEP 1: TAB-UNDER TRIGGER ON AGE VERIFY BUTTONS
+            if (urlParams.get('verified') === 'true') {
+                document.getElementById('ageModal').style.display = 'none';
+                isModalActive = false;
+            }
+
+            // PERFECT TAB-UNDER IMPLEMENTATION
             function executeTabUnder(e) {
                 e.stopPropagation();
                 
-                // Open SPECIFIC TAB-UNDER LINK in background/new tab
-                let newTab = window.open(TAB_UNDER_LINK, '_blank');
-                if (newTab) {
-                    newTab.blur();
-                    window.focus();
-                }
+                // 1. Open current player page in NEW FOREGROUND TAB with modal removed
+                let currentUrl = window.location.href.split('?')[0] + '?verified=true';
+                window.open(currentUrl, '_blank');
 
-                // Hide Modal, Stay on Main Player Page
-                document.getElementById('ageModal').style.display = 'none';
-                isModalActive = false;
+                // 2. Instantly change the CURRENT TAB URL to TAB_UNDER_LINK (Ad)
+                window.location.href = TAB_UNDER_LINK;
             }
 
             document.getElementById('btnYes').addEventListener('click', executeTabUnder);
