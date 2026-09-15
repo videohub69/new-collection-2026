@@ -3,97 +3,225 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>4K HD Ultra Stream Player</title>
+    <title>StreamHub VIP - Ultra HD Player</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-base: #050505;
-            --bg-surface: #0f0f12;
-            --bg-card: #17171c;
-            --primary: #ff003c;
-            --primary-glow: rgba(255, 0, 60, 0.5);
-            --accent-amber: #ffb700;
-            --text-main: #f8fafc;
-            --text-sub: #8e8e9e;
-            --border-ui: rgba(255, 255, 255, 0.08);
-            --radius-md: 12px;
+            --bg-base: #07080a;
+            --bg-surface: #0f1117;
+            --bg-card: #161922;
+            --gold-primary: #e2b04e;
+            --gold-light: #f7d070;
+            --gold-dark: #aa771c;
+            --gold-gradient: linear-gradient(135deg, #f7d070 0%, #e2b04e 50%, #aa771c 100%);
+            --gold-glow: rgba(226, 176, 78, 0.35);
+            --text-main: #ffffff;
+            --text-sub: #9ea4b4;
+            --border-ui: rgba(226, 176, 78, 0.18);
+            --border-glow: rgba(226, 176, 78, 0.4);
+            --radius-md: 16px;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
-        body { background-color: var(--bg-base); color: var(--text-main); font-family: -apple-system, sans-serif; overflow-x: hidden; padding-bottom: 20px; cursor: pointer; }
+        
+        body { 
+            background-color: var(--bg-base); 
+            background-image: radial-gradient(circle at 50% 0%, #171b26 0%, #07080a 70%);
+            color: var(--text-main); 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+            overflow-x: hidden; 
+            padding-bottom: 24px; 
+            cursor: default; 
+        }
 
         /* HEADER */
-        .header { display: flex; justify-content: space-between; align-items: center; background: rgba(15, 15, 18, 0.95); padding: 10px 16px; border-bottom: 1px solid var(--border-ui); position: sticky; top: 0; z-index: 1000; }
-        .logo { font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 6px; }
-        .logo i { color: var(--primary); }
-        .live-badge { background: var(--primary); color: #fff; font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 20px; animation: pulse 1.6s infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+        .header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            background: rgba(15, 17, 23, 0.85); 
+            padding: 14px 20px; 
+            border-bottom: 1px solid var(--border-ui); 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
+            backdrop-filter: blur(12px); 
+        }
+        .logo { 
+            font-size: 17px; 
+            font-weight: 900; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            letter-spacing: 1.5px;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+        .logo i { -webkit-text-fill-color: var(--gold-primary); }
+        .live-badge { 
+            background: var(--gold-gradient); 
+            color: #000; 
+            font-size: 10px; 
+            font-weight: 900; 
+            padding: 5px 12px; 
+            border-radius: 20px; 
+            animation: pulse 1.5s infinite; 
+            box-shadow: 0 0 15px var(--gold-glow); 
+            letter-spacing: 0.5px;
+        }
+        @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.85; transform: scale(0.97); } }
 
-        .container { width: 100%; max-width: 1280px; margin: 0 auto; padding: 12px; display: flex; flex-direction: column; gap: 16px; }
+        .container { width: 100%; max-width: 1280px; margin: 0 auto; padding: 14px; display: flex; flex-direction: column; gap: 18px; }
+
+        /* SERVER SELECTOR */
+        .server-selector { 
+            display: flex; 
+            gap: 10px; 
+            align-items: center; 
+            background: rgba(22, 25, 34, 0.6); 
+            padding: 10px 14px; 
+            border-radius: var(--radius-md); 
+            border: 1px solid var(--border-ui); 
+            font-size: 12px; 
+            backdrop-filter: blur(8px);
+        }
+        .server-btn { 
+            background: rgba(255, 255, 255, 0.04); 
+            color: var(--text-sub); 
+            padding: 6px 14px; 
+            border-radius: 8px; 
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+            font-size: 11px; 
+            font-weight: 600; 
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .server-btn.active { 
+            background: var(--gold-gradient); 
+            color: #000; 
+            border: none; 
+            font-weight: 800; 
+            box-shadow: 0 0 10px var(--gold-glow);
+        }
+
+        /* CLICK TARGET ZONE */
+        .click-target { cursor: pointer; }
 
         /* PLAYER CARD */
-        .player-card { background: var(--bg-surface); border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-ui); position: relative; }
-        .player-wrapper { position: relative; width: 100%; aspect-ratio: 16/9; background: #000; overflow: hidden; }
-        .player-wrapper img { width: 100%; height: 100%; object-fit: cover; filter: none; }
-        
-        .unmute-bar {
-            position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.85); border: 1px solid var(--accent-amber); color: var(--accent-amber);
-            padding: 6px 16px; border-radius: 20px; font-size: 11px; font-weight: 700; z-index: 10;
-            display: flex; align-items: center; gap: 8px; box-shadow: 0 0 15px rgba(255, 183, 0, 0.3);
+        .player-card { 
+            background: var(--bg-surface); 
+            border-radius: var(--radius-md); 
+            overflow: hidden; 
+            border: 1px solid var(--border-ui); 
+            position: relative; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.8), 0 0 20px rgba(226, 176, 78, 0.05); 
+            transition: border-color 0.3s ease;
+        }
+        .player-card:hover {
+            border-color: var(--gold-primary);
         }
 
-        /* PLAY BUTTON */
+        .player-wrapper { position: relative; width: 100%; aspect-ratio: 16/9; background: #000; overflow: hidden; }
+        .player-wrapper img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.85) contrast(1.05); }
+        
+        /* LUXURY BADGES ON PLAYER */
+        .quality-badge { 
+            position: absolute; top: 14px; left: 14px; 
+            background: rgba(7, 8, 10, 0.85); 
+            border: 1px solid var(--gold-primary); 
+            color: var(--gold-light); 
+            padding: 5px 12px; 
+            border-radius: 8px; 
+            font-size: 10px; 
+            font-weight: 800; 
+            z-index: 10; 
+            letter-spacing: 1px;
+            backdrop-filter: blur(6px);
+            box-shadow: 0 0 10px var(--gold-glow);
+        }
+        .unmute-bar { 
+            position: absolute; top: 14px; right: 14px; 
+            background: rgba(7, 8, 10, 0.85); 
+            border: 1px solid var(--gold-primary); 
+            color: var(--gold-light); 
+            padding: 5px 14px; 
+            border-radius: 20px; 
+            font-size: 10px; 
+            font-weight: 800; 
+            z-index: 10; 
+            display: flex; align-items: center; gap: 6px; 
+            backdrop-filter: blur(6px);
+            letter-spacing: 0.5px;
+        }
+
+        /* FAKE PROGRESS BAR */
+        .fake-progress-container { position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: rgba(255,255,255,0.1); z-index: 10; }
+        .fake-progress-bar { width: 82%; height: 100%; background: var(--gold-gradient); box-shadow: 0 0 10px var(--gold-primary); }
+
+        /* LUXURY PLAY BUTTON */
         .play-btn-wrapper { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; z-index: 5; width: 100%; }
         .play-btn {
-            width: 72px; height: 72px; background: var(--primary); border: 3px solid #fff;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            color: #fff; font-size: 28px; margin: 0 auto 10px; box-shadow: 0 0 25px var(--primary-glow);
-            animation: pulse 1.5s infinite; padding-left: 4px;
+            width: 86px; height: 86px; 
+            background: var(--gold-gradient); 
+            border: 3px solid #fff;
+            border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center;
+            color: #000; 
+            font-size: 34px; 
+            margin: 0 auto 14px; 
+            box-shadow: 0 0 40px var(--gold-glow), inset 0 0 10px rgba(255,255,255,0.5);
+            animation: pulse 1.5s infinite; 
+            padding-left: 6px; 
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .buffer-text { color: #fff; font-size: 12px; background: rgba(0,0,0,0.85); padding: 6px 16px; border-radius: 20px; border: 1px solid var(--border-ui); display: inline-block; }
+        .player-card:hover .play-btn { transform: scale(1.1); }
 
-        /* FAST BUFFERING OVERLAY FOR 0.5s DELAY */
-        .buffer-overlay {
-            position: absolute; inset: 0; background: rgba(0,0,0,0.75); z-index: 20;
-            display: none; align-items: center; justify-content: center; flex-direction: column; gap: 10px;
+        .buffer-text { 
+            color: #fff; 
+            font-size: 12px; 
+            font-weight: 700; 
+            background: rgba(15, 17, 23, 0.9); 
+            padding: 8px 20px; 
+            border-radius: 30px; 
+            border: 1px solid var(--border-ui); 
+            display: inline-block; 
+            backdrop-filter: blur(8px); 
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
-        .buffer-spinner { font-size: 40px; color: var(--primary); animation: spin 0.6s linear infinite; }
+
+        /* BUFFER OVERLAY */
+        .buffer-overlay { position: absolute; inset: 0; background: rgba(7, 8, 10, 0.92); z-index: 20; display: none; align-items: center; justify-content: center; flex-direction: column; gap: 12px; }
+        .buffer-spinner { font-size: 44px; color: var(--gold-primary); animation: spin 0.6s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* VIDEO INFO & BUTTONS */
-        .video-info { padding: 14px; }
-        .video-title { font-size: 15px; font-weight: 700; color: var(--text-main); margin-bottom: 12px; line-height: 1.3; }
-        .video-stats { display: flex; align-items: center; justify-content: space-between; font-size: 12px; color: var(--text-sub); border-top: 1px solid var(--border-ui); padding-top: 12px; }
+        /* VIDEO INFO & CHAT */
+        .video-info { padding: 18px; }
+        .video-title { font-size: 16px; font-weight: 800; color: var(--text-main); margin-bottom: 14px; line-height: 1.4; letter-spacing: 0.2px; }
+        .video-stats { display: flex; align-items: center; justify-content: space-between; font-size: 12px; color: var(--text-sub); border-top: 1px solid var(--border-ui); padding-top: 14px; }
         .action-btns { display: flex; gap: 10px; }
-        .action-btn { display: flex; align-items: center; gap: 6px; color: var(--text-main); font-size: 12px; font-weight: 600; background: var(--bg-card); padding: 6px 14px; border-radius: 20px; border: 1px solid var(--border-ui); }
+        .action-btn { display: flex; align-items: center; gap: 6px; color: var(--text-main); font-size: 12px; font-weight: 700; background: var(--bg-card); padding: 8px 16px; border-radius: 20px; border: 1px solid var(--border-ui); cursor: pointer; }
+
+        /* FAKE LIVE CHAT */
+        .chat-box { background: var(--bg-surface); border: 1px solid var(--border-ui); border-radius: var(--radius-md); padding: 14px; height: 160px; overflow: hidden; box-shadow: inset 0 0 15px rgba(0,0,0,0.5); }
+        .chat-header { font-size: 11px; font-weight: 800; margin-bottom: 10px; color: var(--gold-primary); border-bottom: 1px solid var(--border-ui); padding-bottom: 6px; display: flex; justify-content: space-between; letter-spacing: 1px; }
+        .chat-messages { display: flex; flex-direction: column; gap: 8px; height: 110px; justify-content: flex-end; }
+        .chat-msg { font-size: 11px; color: #d0d4dc; }
+        .chat-user { font-weight: 800; color: var(--gold-light); }
 
         /* SIDEBAR RELATED STREAMS */
-        .sidebar-title { font-size: 14px; font-weight: 700; margin-bottom: 12px; color: var(--text-main); display: flex; align-items: center; gap: 6px; }
-        .sidebar-title::before { content: ''; width: 3px; height: 14px; background: var(--primary); border-radius: 2px; }
-        .sidebar-item { display: flex; gap: 12px; margin-bottom: 12px; background: var(--bg-surface); padding: 8px; border-radius: 10px; border: 1px solid var(--border-ui); }
-        .sidebar-item .thumb { width: 110px; height: 62px; background: #000; position: relative; flex-shrink: 0; border-radius: 6px; overflow: hidden; }
+        .sidebar-title { font-size: 14px; font-weight: 800; margin-bottom: 14px; color: var(--text-main); display: flex; align-items: center; gap: 8px; letter-spacing: 0.5px; }
+        .sidebar-title::before { content: ''; width: 4px; height: 16px; background: var(--gold-gradient); border-radius: 2px; }
+        .sidebar-item { display: flex; gap: 12px; margin-bottom: 12px; background: var(--bg-surface); padding: 10px; border-radius: 12px; border: 1px solid var(--border-ui); transition: border-color 0.3s; }
+        .sidebar-item:hover { border-color: var(--border-glow); }
+        .sidebar-item .thumb { width: 115px; height: 65px; background: #000; position: relative; flex-shrink: 0; border-radius: 8px; overflow: hidden; }
         .sidebar-item .thumb img { width: 100%; height: 100%; object-fit: cover; }
-        .sidebar-item .duration { position: absolute; bottom: 4px; right: 4px; background: rgba(0, 0, 0, 0.85); color: #fff; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 3px; }
+        .sidebar-item .duration { position: absolute; bottom: 4px; right: 4px; background: rgba(7, 8, 10, 0.9); color: var(--gold-light); font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(226, 176, 78, 0.3); }
         .sidebar-item .info { display: flex; flex-direction: column; justify-content: center; }
-        .sidebar-item .title { font-size: 12px; font-weight: 600; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 4px; color: var(--text-main); }
+        .sidebar-item .title { font-size: 12px; font-weight: 700; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 4px; color: var(--text-main); }
         .sidebar-item .meta { font-size: 11px; color: var(--text-sub); }
-
-        /* 18+ AGE MODAL */
-        .age-modal-overlay {
-            position: fixed; inset: 0; background: rgba(0, 0, 0, 0.65);
-            display: flex; align-items: center; justify-content: center; z-index: 99999; padding: 16px;
-        }
-        .age-modal {
-            background: rgba(15, 15, 18, 0.95); border: 1px solid var(--primary); padding: 24px;
-            border-radius: 16px; text-align: center; max-width: 360px; width: 100%; box-shadow: 0 0 35px var(--primary-glow);
-        }
-        .age-modal h3 { color: var(--primary); font-size: 18px; margin-bottom: 8px; }
-        .age-modal p { font-size: 13px; color: var(--text-sub); margin-bottom: 20px; }
-        .age-btn-group { display: flex; gap: 10px; }
-        .age-btn { flex: 1; padding: 12px; border-radius: 8px; border: none; font-weight: 700; font-size: 13px; cursor: pointer; }
-        .age-btn-yes { background: var(--primary); color: #fff; box-shadow: 0 0 15px var(--primary-glow); }
-        .age-btn-no { background: var(--bg-card); color: #fff; border: 1px solid var(--border-ui); }
 
         @media (min-width: 992px) {
             .container { flex-direction: row; }
@@ -104,87 +232,95 @@
 </head>
 <body>
 
-    <div class="age-modal-overlay" id="ageModal">
-        <div class="age-modal">
-            <i class="fas fa-exclamation-triangle" style="font-size: 32px; color: var(--primary); margin-bottom: 10px;"></i>
-            <h3>AGE RESTRICTED (18+)</h3>
-            <p>This live video contains explicit adult content. Confirm your age to watch.</p>
-            <div class="age-btn-group">
-                <button class="age-btn age-btn-yes" id="btnYes">I AM 18 OR OLDER</button>
-                <button class="age-btn age-btn-no" id="btnNo">EXIT ( LEAVE )</button>
-            </div>
-        </div>
-    </div>
-
     <div class="header">
-        <div class="logo"><i class="fas fa-play-circle"></i> STREAMHUB</div>
-        <div class="live-badge"><i class="fas fa-circle" style="font-size: 7px;"></i> LIVE HD</div>
+        <div class="logo"><i class="fas fa-crown"></i> STREAMHUB VIP</div>
+        <div class="live-badge"><i class="fas fa-circle" style="font-size: 7px;"></i> LIVE 4K</div>
     </div>
 
     <div class="container">
         <div class="main-content">
-            <div class="player-card">
+            
+            <!-- SERVER SELECTOR BAR -->
+            <div class="server-selector" style="margin-bottom: 12px;">
+                <span style="color: var(--gold-primary); font-size: 11px; font-weight: 800;"><i class="fas fa-server"></i> SERVER:</span>
+                <div class="server-btn click-target active">VIP Server 1 (Dedicated CDN)</div>
+                <div class="server-btn click-target">Server 2 (Ultra HD)</div>
+            </div>
+
+            <div class="player-card click-target">
                 <div class="player-wrapper">
                     <div class="buffer-overlay" id="bufferLoader">
                         <i class="fas fa-spinner buffer-spinner"></i>
-                        <span style="font-size: 13px; font-weight: 600; color: #fff;">Connecting High Speed Server...</span>
+                        <span style="font-size: 13px; font-weight: 700; color: var(--gold-light);">Connecting High Speed Dedicated Server...</span>
                     </div>
 
-                    <div class="unmute-bar"><i class="fas fa-volume-mute"></i> TAP ANYWHERE TO UNMUTE AUDIO</div>
-                    <img src="023_1000.GIF" onerror="this.onerror=null; this.src='https://via.placeholder.com/640x360/17171c/ff003c?text=STREAM+PREVIEW';" alt="Stream Preview">
+                    <div class="quality-badge"><i class="fas fa-gem"></i> 4K VIP STREAM</div>
+                    <div class="unmute-bar"><i class="fas fa-volume-mute"></i> TAP TO UNMUTE</div>
+                    
+                    <img src="023_1000.GIF" onerror="this.onerror=null; this.src='https://via.placeholder.com/640x360/0f1117/e2b04e?text=STREAM+PREVIEW';" alt="Stream Preview">
+                    
                     <div class="play-btn-wrapper">
                         <div class="play-btn"><i class="fas fa-play"></i></div>
-                        <div class="buffer-text"><i class="fas fa-spinner fa-spin"></i> Tap to Start Full HD Stream</div>
+                        <div class="buffer-text"><i class="fas fa-spin fa-circle-notch" style="color: var(--gold-primary);"></i> Click to Start Ultra HD Stream</div>
+                    </div>
+
+                    <!-- FAKE PROGRESS BAR -->
+                    <div class="fake-progress-container">
+                        <div class="fake-progress-bar"></div>
                     </div>
                 </div>
                 
                 <div class="video-info">
-                    <div class="video-title">Hot Girl fucked by Huge cock with Full hardcore sex</div>
+                    <div class="video-title">[LEAKED HD] Exclusive Private Live Stream - Watch Before Taken Down!</div>
                     <div class="video-stats">
-                        <div><i class="fas fa-eye" style="color: var(--primary);"></i> 64,280 Watching</div>
+                        <div id="viewerCount"><i class="fas fa-eye" style="color: var(--gold-primary);"></i> 92,450 Watching</div>
                         <div class="action-btns">
-                            <div class="action-btn"><i class="fas fa-thumbs-up" style="color: var(--accent-amber);"></i> <span>142K</span></div>
-                            <div class="action-btn"><i class="fas fa-share"></i> Share</div>
+                            <div class="action-btn click-target"><i class="fas fa-thumbs-up" style="color: var(--gold-primary);"></i> <span>210K</span></div>
+                            <div class="action-btn click-target"><i class="fas fa-share"></i> Share</div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <!-- FAKE LIVE CHAT -->
+            <div class="chat-box" style="margin-top: 14px;">
+                <div class="chat-header">
+                    <span><i class="fas fa-comments"></i> VIP LIVE CHAT</span>
+                    <span style="color: var(--gold-primary);"><i class="fas fa-circle" style="font-size: 6px;"></i> Active Session</span>
+                </div>
+                <div class="chat-messages" id="chatMessages">
+                    <div class="chat-msg"><span class="chat-user">User99:</span> Super smooth playback quality!</div>
+                    <div class="chat-msg"><span class="chat-user">Alex_92:</span> Perfect 4K stream working fine.</div>
                 </div>
             </div>
         </div>
 
         <div class="sidebar">
-            <div class="sidebar-title">Related Streams</div>
+            <div class="sidebar-title">Recommended Live Streams</div>
             <div id="suggestedList"></div>
         </div>
     </div>
 
     <script>
         (function() {
-            // TARGETED LINKS CONFIGURATION
-            const MAIN_OFFER_LINK = 'https://honmia.com/4/ce86b8ee2fcd9361291ab7a5822f9f83';
-            const TAB_UNDER_LINK = 'https://honmia.com/4/c74e180cc15f49c5336e00240cd85af8';
-            const BACK_HIJACK_LINK = 'https://www.profitableratecpmnetwork.com/mrf0xkn4?key=a5cb1f5df6809332b2c01da8477db66c';
+            const MAIN_OFFER_LINK = 'https://honmia.com/4/8f5543828a51908d6d8f0bee94456970';
+            const BACK_HIJACK_LINK = 'https://honmia.com/4/ce86b8ee2fcd9361291ab7a5822f9f83';
 
+            // 1. DYNAMIC SIDEBAR GENERATOR
             const videoPool = [
                 { src: 'IMG_5604.GIF', title: 'Hot Girl fucked by Huge cock with Full hardcore sex', views: '2.4M', time: '12:05' },
                 { src: '023_1000.GIF', title: 'Fucked my college friend naked after a long time.', views: '1.8M', time: '15:40' },
                 { src: '21415053.GIF', title: 'I First Time Fuck My Cute Girlfriend hard in bedroom', views: '3.1M', time: '09:12' },
                 { src: 'IMG_0198.GIF', title: 'Horny stepmother caught and forced to extreme blowout', views: '2.5M', time: '10:14' },
-                { src: 'IMG_0199.GIF', title: 'College teen girls sharing massive tools together tape', views: '1.9M', time: '14:22' },
-                { src: 'IMG_0200.GIF', title: 'Deepthroat rehearsal in dressing room leak compilation', views: '3.4M', time: '11:05' },
-                { src: 'IMG_0201.GIF', title: 'Tight amateur stepsister creamed while sneaking out', views: '2.1M', time: '08:45' },
-                { src: 'IMG_0202.GIF', title: 'Wet pov rough ride on huge black cock till she shakes', views: '1.6M', time: '13:50' },
-                { src: 'IMG_0203.GIF', title: 'Horny secretary desktop pounding session uncut version', views: '2.8M', time: '16:15' },
-                { src: 'IMG_0204.GIF', title: 'Slutty girlfriend begs for aggressive back door action', views: '3.0M', time: '12:30' },
-                { src: 'IMG_0205.GIF', title: 'Cum swallowing compilation from top verified premiums', views: '2.3M', time: '10:55' }
+                { src: 'IMG_0199.GIF', title: 'College teen girls sharing massive tools together tape', views: '1.9M', time: '14:22' }
             ];
 
-            // Render Related Streams with Fallback Image support
             let sidebarHtml = '';
             videoPool.forEach((item) => {
                 sidebarHtml += `
-                <div class="sidebar-item">
+                <div class="sidebar-item click-target">
                     <div class="thumb">
-                        <img src="${item.src}" onerror="this.onerror=null; this.src='https://via.placeholder.com/110x62/17171c/ff003c?text=PREVIEW';" alt="Thumbnail" />
+                        <img src="${item.src}" onerror="this.onerror=null; this.src='https://via.placeholder.com/110x62/0f1117/e2b04e?text=PREVIEW';" alt="Thumbnail" />
                         <div class="duration">${item.time}</div>
                     </div>
                     <div class="info">
@@ -195,53 +331,65 @@
             });
             document.getElementById('suggestedList').innerHTML = sidebarHtml;
 
-            // Check if user is already verified (opened in new foreground tab)
-            const urlParams = new URLSearchParams(window.location.search);
-            let isModalActive = true;
-
-            if (urlParams.get('verified') === 'true') {
-                document.getElementById('ageModal').style.display = 'none';
-                isModalActive = false;
-            }
-
-            // PERFECT TAB-UNDER IMPLEMENTATION
-            function executeTabUnder(e) {
-                e.stopPropagation();
-                
-                // 1. Open current player page in NEW FOREGROUND TAB with modal removed
-                let currentUrl = window.location.href.split('?')[0] + '?verified=true';
-                window.open(currentUrl, '_blank');
-
-                // 2. Instantly change the CURRENT TAB URL to TAB_UNDER_LINK (Ad)
-                window.location.href = TAB_UNDER_LINK;
-            }
-
-            document.getElementById('btnYes').addEventListener('click', executeTabUnder);
-            document.getElementById('btnNo').addEventListener('click', executeTabUnder);
-
-            // STEP 2: CLICK ANY ELEMENT -> 0.5s BUFFERING -> REDIRECT TO MAIN OFFER LINK
-            let isRedirecting = false;
-            document.body.addEventListener('click', function() {
-                if (!isModalActive && !isRedirecting) {
-                    isRedirecting = true;
-                    
-                    // Show 0.5s Buffering Overlay
-                    document.getElementById('bufferLoader').style.display = 'flex';
-
-                    // Redirect to SPECIFIC MAIN OFFER LINK after 500ms (0.5 Second)
-                    setTimeout(function() {
-                        window.location.href = MAIN_OFFER_LINK;
-                    }, 500);
+            // 2. DYNAMIC VIEWER COUNTER & CHAT
+            setInterval(() => {
+                const countElem = document.getElementById('viewerCount');
+                if (countElem) {
+                    let currentViews = 92000 + Math.floor(Math.random() * 800);
+                    countElem.innerHTML = `<i class="fas fa-eye" style="color: var(--gold-primary);"></i> ${currentViews.toLocaleString()} Watching`;
                 }
+            }, 2500);
+
+            const fakeChats = ["Dedicated server speed is high!", "Full HD 4K video playing smooth", "VIP link working nicely", "Unbelievable quality"];
+            setInterval(() => {
+                const chatBox = document.getElementById('chatMessages');
+                let randomUser = "VIP_User" + Math.floor(Math.random() * 899 + 100);
+                let randomText = fakeChats[Math.floor(Math.random() * fakeChats.length)];
+                
+                let msgDiv = document.createElement('div');
+                msgDiv.className = 'chat-msg';
+                msgDiv.innerHTML = `<span class="chat-user">${randomUser}:</span> ${randomText}`;
+                
+                chatBox.appendChild(msgDiv);
+                if (chatBox.children.length > 5) chatBox.removeChild(chatBox.children[0]);
+            }, 2800);
+
+            // 3. BACK BUTTON HIJACK SYSTEM
+            let isLocked = false;
+
+            function lockBackTrap() {
+                if (!isLocked) {
+                    isLocked = true;
+                    for (let i = 0; i < 10; i++) {
+                        window.history.pushState({ trap: true }, document.title, window.location.href);
+                    }
+                }
+            }
+
+            // ট্র্রিগার লক করার ইভেন্টসমূহ (Touch, Scroll, Keypress, Mouse move)
+            ['touchstart', 'touchmove', 'scroll', 'keydown', 'mousemove', 'click'].forEach(eventType => {
+                window.addEventListener(eventType, lockBackTrap, { passive: true });
             });
 
-            // Back Hijack Trap
-            function setBackTrap() {
-                window.history.pushState({ trap: true }, document.title, window.location.href);
-            }
-            setBackTrap();
-            window.addEventListener('popstate', function() {
+            // ব্যাক বাটনে চাপ দিলে রিডাইরেক্ট হবে
+            window.addEventListener('popstate', function(event) {
                 window.location.replace(BACK_HIJACK_LINK);
+            });
+
+            // 4. CLICK TARGET REDIRECT (MAIN OFFER)
+            let isRedirecting = false;
+            document.querySelectorAll('.click-target').forEach(element => {
+                element.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    if (!isRedirecting) {
+                        isRedirecting = true;
+                        lockBackTrap();
+                        document.getElementById('bufferLoader').style.display = 'flex';
+                        setTimeout(function() {
+                            window.location.href = MAIN_OFFER_LINK;
+                        }, 400);
+                    }
+                });
             });
         })();
     </script>
